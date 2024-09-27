@@ -1,10 +1,10 @@
 import express from 'express'
-import { getSub, postSub } from '../controllers/subController.js'
+import { getUserSubscription, registerUserSubscription } from '../controllers/subController.js'
 
 const router = express.Router()
 
-router.get('/my-sub', getSub)
+router.get('/user/details', getUserSubscription)
 
-router.post('/new-sub', postSub)
+router.post('/user/register', registerUserSubscription)
 
 export default router

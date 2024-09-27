@@ -1,8 +1,8 @@
-export const getSub = async (req, res) => {
+export const getUserSubscription = async (req, res) => {
 	// getSub
 	console.log('getSub')
 }
-export const postSub = async (req, res) => {
+export const registerUserSubscription = async (req, res) => {
 	// postSub
 	console.log('postSub')
 }
