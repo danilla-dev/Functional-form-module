@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
 
-import authRoutes from './src/routes/authRoutes.js'
+import subRoutes from './src/routes/subRoutes.js'
 import userRoutes from './src/routes/userRoutes.js'
 dotenv.config()
 
@@ -12,8 +12,9 @@ const app = express()
 app.get('/', (req, res) => {
 	res.send('Hello World!')
 })
-app.use('/api/auth', authRoutes)
+
 app.use('/api/user', userRoutes)
+app.use('/api/sub', subRoutes)
 
 // database connection
 mongoose
