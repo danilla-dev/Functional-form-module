@@ -23,7 +23,7 @@ const NavigationLinks = ({ isDesktop, onClose }) => {
 					activeStyle={{ color: '#3cbbc7', textDecoration: 'underline' }}
 					onClick={!isDesktop && onClose}
 				>
-					<Text fontSize={24}>{link.name}</Text>
+					<Text fontSize='xl'>{link.name}</Text>
 				</Link>
 			))}
 		</Stack>

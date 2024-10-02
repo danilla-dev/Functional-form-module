@@ -8,7 +8,7 @@ import './App.css'
 
 function App() {
 	return (
-		<Grid templateRows='repeat(100vh, 1fr, 200px)' gap={1} minH='100vh'>
+		<Grid templateRows='repeat(100vh, 1fr, 200px)' minH='100vh'>
 			<GridItem as='header' minW='100%' minH='100vh'>
 				<Header />
 			</GridItem>
