@@ -11,28 +11,23 @@ const theme = extendTheme({
 	// Ustawienia typografii
 	colors: {
 		brand: {
-			50: '#f5f7ff', // napisy białe
-			100: '#F6F3FFFF', // section white bg
-			200: '#04012042', // drawer bg
-			300: '#0C013AE0', // nav bg
-			400: '#818fff',
-			500: '#6071ff',
-			600: '#4d5bcc',
-			700: '#3a4499',
-			800: '#272d66',
-			900: '#141733',
+			50: '#f5f7ff', // white text
+			100: '#F6F3FFFF', // section white background
+			200: '#040120FF', // drawer background
+			300: '#0C013AE0', // nav background
+			400: '#2A9D8F', // light green for headers and buttons
+			500: '#E76F51', // coral for headers and buttons
+			600: '#F9C74F', // sunny yellow for highlights
+			700: '#F94144', // intense red for highlights
+			800: '#264653', // dark blue-green for button backgrounds (hover)
+			900: '#A8DADC', // light blue for button backgrounds (hover)
 		},
 		accent: {
-			50: '#3cbbc7', // koror wyroznienia
-			100: '#ffedef',
-			200: '#ffced2',
-			300: '#ffb0b5',
-			400: '#ff9298',
-			500: '#ff747b',
-			600: '#cc5d62',
-			700: '#99464a',
-			800: '#662f31',
-			900: '#331719',
+			50: '#3cbbc7', // main accent color
+			100: '#00b894', // additional accent color
+			200: '#00cec9', // additional accent color
+			300: '#0984e3', // blue accent
+			400: '#d63031', // red accent
 		},
 	},
 	fonts: {

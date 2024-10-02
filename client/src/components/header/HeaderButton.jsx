@@ -7,15 +7,15 @@ const HeaderButton = ({ distance }) => {
 		<Box mt='1em'>
 			<Button
 				variant='outline'
-				color='accent.50'
-				borderColor='accent.50'
+				color='brand.500'
+				borderColor='brand.500'
 				w='180px'
 				h='40px'
 				fontSize='sm'
 				_hover={{
-					borderColor: '#FFFFFF',
-					bgColor: '#368CDD44',
-					color: '#FFFFFF',
+					borderColor: 'brand.50',
+					bgColor: 'brand.800',
+					color: 'brand.900',
 				}}
 				onClick={() => animateScroll.scrollTo(distance + 2)}
 			>
