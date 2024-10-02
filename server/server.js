@@ -25,14 +25,14 @@ app.use('/api/user', userRoutes)
 app.use('/api/sub', subRoutes)
 
 // database connection
-mongoose
-	.connect(process.env.MONGO_URI)
-	.then(() => {
-		app.listen(process.env.PORT, () => {
-			console.log('Server is running on port 4000')
-		})
-	})
-	.catch(error => {
-		console.log('Database connection failed')
-		console.log(error)
-	})
+app.listen(process.env.PORT, () => {
+	console.log('Server is running on port 4000')
+})
+// mongoose
+// 	.connect(process.env.MONGO_URI)
+// 	.then(() => {
+// 	})
+// 	.catch(error => {
+// 		console.log('Database connection failed')
+// 		console.log(error)
+// 	})
