@@ -1,13 +1,12 @@
 import React from 'react'
 import sectionImage from '../../assets/data-stock-img.png'
 import processorImage from '../../assets/processor-img.png'
-import { Box, Image, Stack, Text, VStack, useBreakpointValue, Heading, Container } from '@chakra-ui/react'
+import { Box, Image, Stack, Text, VStack, Heading, Container } from '@chakra-ui/react'
 
 import { Fade, Slide } from 'react-awesome-reveal'
 
-const HowItWorks = () => {
-	const displaySize = useBreakpointValue({ base: 'base', sm: 'mobile', md: 'tablet', lg: 'desktop' })
-	const isMobile = displaySize === 'base'
+const HowItWorks = ({ display }) => {
+	const { isMobile, isDesktop, isTablet } = display
 
 	const howItWorksTexts = [
 		'Our AI agent utilizes cutting-edge machine learning algorithms to adapt to your preferences. The more you interact with it, the better it understands your needs and can provide even more personalized recommendations.',

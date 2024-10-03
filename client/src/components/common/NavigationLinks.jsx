@@ -22,6 +22,7 @@ const NavigationLinks = ({ isDesktop, onClose }) => {
 					activeClass='active'
 					activeStyle={{ color: '#3cbbc7', textDecoration: 'underline' }}
 					onClick={!isDesktop && onClose}
+					offset={-200}
 				>
 					<Text fontSize='xl'>{link.name}</Text>
 				</Link>

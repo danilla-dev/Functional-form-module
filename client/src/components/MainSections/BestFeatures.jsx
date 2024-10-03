@@ -16,16 +16,13 @@ import {
 	Card,
 	CardBody,
 	CardHeader,
-	useBreakpointValue,
 } from '@chakra-ui/react'
 import { FaUserCog, FaComments, FaPlug } from 'react-icons/fa'
 
 import bestFeaturesImg from '../../assets/best-features-img.png'
 
-const BestFeatures = () => {
-	const displaySize = useBreakpointValue({ base: 'base', sm: 'mobile', md: 'tablet', lg: 'desktop' })
-	const isMobile = displaySize === 'base'
-	const isDesktop = displaySize === 'desktop'
+const BestFeatures = ({ display }) => {
+	const { isMobile, isDesktop, isTablet } = display
 
 	const features = [
 		{
@@ -46,7 +43,7 @@ const BestFeatures = () => {
 	]
 
 	return (
-		<Container m={0} centerContent p='3em 2em' minW='100%' pt='2em' bgColor='brand.300'>
+		<Container m={0} centerContent p='3em 2em' minW='100%' pt='2em' bgGradient='radial( brand.300 20%, brand.350)'>
 			<Stack maxW={1400} w='100%' align='center'>
 				<Heading as='h2' mb='0.5em' color='brand.500' textAlign='center' borderBottom='1px solid' w='80%' pb='.25em'>
 					Best features
@@ -69,11 +66,11 @@ const BestFeatures = () => {
 									const Icon = feature.icon
 									return (
 										<ListItem key={index}>
-											<Card bgColor='brand.300' boxShadow={`-5px -5px 10px rgba(12, 1, 58, 0.5)`}>
+											<Card bgColor='brand.300' border='1px solid' borderColor='brand.150' p='.5em' borderRadius={10}>
 												<CardHeader>
-													<HStack justify='center'>
-														<ListIcon as={Icon} color='brand.500' fontSize={38} />
-														<Heading as='h3' size='md' color='brand.500'>
+													<HStack justify={!isDesktop && 'center'}>
+														<ListIcon as={Icon} color='brand.500' fontSize={24} />
+														<Heading as='h3' size='md' color='brand.100'>
 															{feature.header}
 														</Heading>
 													</HStack>

@@ -13,8 +13,10 @@ const theme = extendTheme({
 		brand: {
 			50: '#f5f7ff', // white text
 			100: '#F6F3FFFF', // section white background
+			150: '#f7f5ff4d', // section white background alpha 30
 			200: '#040120FF', // drawer background
 			300: '#0C013AE0', // nav background
+			350: '#0C013AF5', // nav background
 			400: '#2A9D8F', // light green for headers and buttons
 			500: '#E76F51', // coral for headers and buttons
 			600: '#F9C74F', // sunny yellow for highlights
