@@ -5,8 +5,8 @@ import Navigation from '../navigation/Navigation'
 import HeaderText from './HeaderText'
 import HeaderImage from './HeaderImage'
 
-import heroImageSM from '../../assets/hero-img-sm-t.png'
-import heroImageLG from '../../assets/hero-img-lg-t.png'
+import heroImageSM from '../../assets/hero-img-sm.webp'
+import heroImageLG from '../../assets/hero-img-lg.webp'
 
 const Header = () => {
 	const displaySize = useBreakpointValue({ base: 'mobile', md: 'tablet', lg: 'desktop' })

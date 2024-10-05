@@ -15,7 +15,7 @@ function App() {
 			<GridItem as='main' minW='100%' minH='100vh'>
 				<Main />
 			</GridItem>
-			<GridItem as='footer' w='100%' h='200px'>
+			<GridItem as='footer' w='100%' h='100px'>
 				<Footer />
 			</GridItem>
 		</Grid>

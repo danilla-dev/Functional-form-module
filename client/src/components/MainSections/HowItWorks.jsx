@@ -1,6 +1,6 @@
 import React from 'react'
-import sectionImage from '../../assets/data-stock-img.png'
-import processorImage from '../../assets/processor-img.png'
+import sectionImage from '../../assets/data-stock-img.webp'
+import processorImage from '../../assets/processor-img.webp'
 import { Box, Image, Stack, Text, VStack, Heading, Container } from '@chakra-ui/react'
 
 import { Fade, Slide, Zoom } from 'react-awesome-reveal'

@@ -21,7 +21,7 @@ import { FaUserCog, FaComments, FaPlug } from 'react-icons/fa'
 
 import { Fade } from 'react-awesome-reveal'
 
-import bestFeaturesImg from '../../assets/best-features-img.png'
+import bestFeaturesImg from '../../assets/best-features-img.webp'
 
 const BestFeatures = ({ display }) => {
 	const { isMobile, isDesktop, isTablet } = display

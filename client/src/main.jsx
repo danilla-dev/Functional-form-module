@@ -91,6 +91,15 @@ const theme = extendTheme({
 			label: {
 				fontSize: ['sm', 'md'],
 			},
+			input: {
+				padding: '1em',
+			},
+			input: {
+				padding: '1em',
+			},
+			textArea: {
+				padding: '1em',
+			},
 			'.logo': {
 				fontSize: '24px',
 			},

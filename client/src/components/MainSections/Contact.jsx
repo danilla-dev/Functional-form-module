@@ -18,8 +18,7 @@ import {
 	Divider,
 } from '@chakra-ui/react'
 import { IoIosSend } from 'react-icons/io'
-import { color } from 'framer-motion'
-import contactImg from '../../assets/contact-img.png'
+import contactImg from '../../assets/contact-img.webp'
 
 const Contact = ({ display }) => {
 	const { isMobile, isDesktop, isTablet } = display
