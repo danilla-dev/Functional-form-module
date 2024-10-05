@@ -17,6 +17,9 @@ import {
 	Text,
 	Heading,
 	Center,
+	VStack,
+	Button,
+	CardFooter,
 } from '@chakra-ui/react'
 
 import { FaCheck, FaTimes } from 'react-icons/fa'
@@ -30,30 +33,31 @@ const PricingCard = ({ option, display, index }) => {
 	const { isMobile, isDesktop, isTablet } = display
 
 	return (
-		<ListItem flex={1} key={index} maxW={isDesktop ? 450 : 600} minW={300}>
+		<ListItem flex={1} key={index} w={isDesktop ? 300 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 350 : 700}>
 			<Card
 				bgColor='brand.300'
 				border={option.best && '5px solid'}
 				borderColor={option.best && 'brand.500'}
-				p='.5em'
+				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
+				h={isDesktop && 800}
 			>
 				<CardHeader>
 					<Stack justify='center'>
-						<Heading as='h3' size='xl' color='brand.100' textAlign='center'>
+						<Heading as='h3' size='lg' color='brand.100' textAlign='center' m={0}>
 							{option.name}
 						</Heading>
-						<Text color='brand.900' textAlign='center'>
+						<Text color='brand.900' fontSize='md' textAlign='center'>
 							${option.price}/month
 						</Text>
 					</Stack>
 				</CardHeader>
 				<CardBody>
-					<Text color='brand.50' textAlign='center' mb='2em'>
+					<Text color='brand.50' fontSize='md' mb='1em'>
 						{option.description}
 					</Text>
-					<Text color='brand.900' fontSize='2xl' textAlign='center' m='1em 2em' borderBottom='1px solid'>
+					<Text color='brand.900' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
 						Features:
 					</Text>
 					<List spacing='1em'>
@@ -61,14 +65,16 @@ const PricingCard = ({ option, display, index }) => {
 							return (
 								<ListItem key={index}>
 									<HStack align='center' spacing='0.5em'>
-										<ListIcon as={FaCheck} color='brand.500' fontSize={24} />
-										<Text color='brand.50'>{feature}</Text>
+										<ListIcon as={FaCheck} color='brand.500' fontSize={14} />
+										<Text color='brand.50' fontSize='sm'>
+											{feature}
+										</Text>
 									</HStack>
 								</ListItem>
 							)
 						})}
 					</List>
-					<Text color='brand.900' fontSize='2xl' textAlign='center' m='1em 2em' borderBottom='1px solid'>
+					<Text color='brand.900' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
 						Limits:
 					</Text>
 					<List spacing='1em'>
@@ -76,14 +82,35 @@ const PricingCard = ({ option, display, index }) => {
 							return (
 								<ListItem key={index}>
 									<HStack align='center' spacing='0.5em'>
-										<ListIcon as={FaTimes} color='brand.500' fontSize={24} />
-										<Text color='brand.50'>{limit}</Text>
+										<ListIcon as={FaTimes} color='brand.500' fontSize={14} />
+										<Text color='brand.50' fontSize='md'>
+											{limit}
+										</Text>
 									</HStack>
 								</ListItem>
 							)
 						})}
 					</List>
 				</CardBody>
+				<CardFooter justify='center'>
+					<Button
+						bg='transparent'
+						border='2px solid'
+						borderColor='brand.500'
+						fontSize='md'
+						w='180px'
+						h='40px'
+						_hover={{
+							borderColor: 'brand.100',
+							bgColor: 'brand.500',
+							color: 'brand.900',
+						}}
+					>
+						<Text color='brand.50' fontSize='md' textTransform='uppercase'>
+							Get it
+						</Text>
+					</Button>
+				</CardFooter>
 			</Card>
 		</ListItem>
 	)
@@ -149,19 +176,18 @@ const Pricing = ({ display }) => {
 	]
 
 	return (
-		<Container m={0} p={0} centerContent minW='100%'>
-			<Box minW='100%' pos='relative' minH='10%'>
-				<Image
-					src={!isTablet ? imagePricing : imagePricingSM}
-					bgSize='100%'
-					w='100%'
-					pos='absolute'
-					top={0}
-					left={0}
-					zIndex={5}
-				></Image>
-			</Box>
-			<Stack maxW={1400} w='100%' align='center' pt='15em' zIndex={6}>
+		<Container m={0} p={0} pb='5em' centerContent minW='100%' position='relative'>
+			<Image
+				src={!isTablet ? imagePricing : imagePricingSM}
+				bgSize='100%'
+				w='100%'
+				h='100%'
+				pos='absolute'
+				top={0}
+				left={0}
+				zIndex={5}
+			></Image>
+			<Stack maxW={1400} w='100%' align='center' pt='15em' zIndex={10} position='relative'>
 				<Heading as='h2' mb='0.5em' color='brand.400' textAlign='center' borderBottom='1px solid' w='80%' pb='.25em'>
 					Pricing
 				</Heading>
@@ -169,16 +195,15 @@ const Pricing = ({ display }) => {
 					<Stack
 						direction={isDesktop ? 'row' : 'column'}
 						align={isDesktop ? 'start' : 'center'}
-						justify='space-between'
+						justify='center'
 						w='100%'
 						p='0 1em'
 						gap={5}
+						flex={1}
 					>
-						<Zoom damping={0.4} cascade duration={2000} triggerOnce fraction={0}>
-							{pricingOptions.map((option, index) => {
-								return <PricingCard option={option} display={display} key={index} />
-							})}
-						</Zoom>
+						{pricingOptions.map((option, index) => {
+							return <PricingCard option={option} display={display} key={index} />
+						})}
 					</Stack>
 				</List>
 			</Stack>
