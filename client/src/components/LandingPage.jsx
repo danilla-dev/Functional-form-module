@@ -6,7 +6,7 @@ import Pricing from './MainSections/Pricing'
 import FAQ from './MainSections/FAQ'
 import Contact from './MainSections/Contact'
 
-const Main = () => {
+const LandingPage = () => {
 	const displaySize = useBreakpointValue({
 		base: 'base',
 		sm: 'mobile',
@@ -65,4 +65,4 @@ const Main = () => {
 	)
 }
 
-export default Main
+export default LandingPage

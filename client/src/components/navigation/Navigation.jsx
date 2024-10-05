@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { throttle } from 'lodash'
-import { Container, Stack, Button, Text, HStack, useDisclosure, Box } from '@chakra-ui/react'
+import { Container, Stack, Button, Text, HStack, useDisclosure, Box, ButtonGroup } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+
 import { GiHamburgerMenu } from 'react-icons/gi'
 
 import NavigationLinks from '../common/NavigationLinks'
@@ -51,9 +53,24 @@ const Navigation = ({ isDesktop }) => {
 						<GiHamburgerMenu fontSize={38} color='#3cbbc7' />
 					</Button>
 				) : (
-					<HStack spacing='7em' color='brand.50'>
+					<HStack spacing='7em' color='brand.50' w='100%' justify='space-between'>
 						<Logo />
 						<NavigationLinks isDesktop={isDesktop} />
+						<Button
+							borderColor='brand.50'
+							color='.50'
+							bgColor='brand.500'
+							role='button'
+							aria-label='Sign up'
+							size='lg'
+							_hover={{
+								borderColor: 'brand.100',
+								bgColor: 'brand.550',
+								color: 'brand.100',
+							}}
+						>
+							<Link to='/subscription'>Get started</Link>
+						</Button>
 					</HStack>
 				)}
 			</Stack>

@@ -98,9 +98,16 @@ const theme = extendTheme({
 			input: {
 				padding: '1em',
 			},
+			label: {
+				fontSize: ['sm', 'md'],
+			},
 			textArea: {
 				padding: '1em',
 			},
+			'.option-dark': {
+				background: 'brand.250 !important',
+			},
+
 			'.logo': {
 				fontSize: '24px',
 			},
