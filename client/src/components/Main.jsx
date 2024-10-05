@@ -4,6 +4,7 @@ import HowItWorks from './MainSections/HowItWorks'
 import BestFeatures from './MainSections/BestFeatures'
 import Pricing from './MainSections/Pricing'
 import FAQ from './MainSections/FAQ'
+import Contact from './MainSections/Contact'
 
 const Main = () => {
 	const displaySize = useBreakpointValue({ base: 'base', sm: 'mobile', md: 'tablet', lg: 'desktop' })
@@ -49,6 +50,9 @@ const Main = () => {
 			</Flex>
 			<Flex as='section' id='FAQ' direction='column' align='center' bgGradient='radial( brand.300 20%, brand.350)'>
 				<FAQ display={display} />
+			</Flex>
+			<Flex as='section' id='Contact' direction='column' align='center' bgColor='brand.50'>
+				<Contact display={display} />
 			</Flex>
 		</>
 	)

@@ -1,11 +1,12 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { ChakraProvider, extendTheme } from '@chakra-ui/react'
+import { border, ChakraProvider, extendTheme, Input } from '@chakra-ui/react'
 
 import App from './App.jsx'
 import './index.css'
 import { color } from 'framer-motion'
+import { pad } from 'lodash'
 
 const theme = extendTheme({
 	// Ustawienia typografii
@@ -86,6 +87,9 @@ const theme = extendTheme({
 			},
 			strong: {
 				color: 'accent.50',
+			},
+			label: {
+				fontSize: ['sm', 'md'],
 			},
 			'.logo': {
 				fontSize: '24px',

@@ -8,7 +8,7 @@ const NavigationLinks = ({ isDesktop, onClose }) => {
 		{ name: 'About', link: 'About' },
 		{ name: 'Pricing', link: 'Pricing' },
 		{ name: 'FAQ', link: 'FAQ' },
-		{ name: 'Contact', link: '/contact' },
+		{ name: 'Contact', link: 'Contact' },
 	]
 	return (
 		<Stack direction={isDesktop ? 'row' : 'column'} spacing='3em'>
