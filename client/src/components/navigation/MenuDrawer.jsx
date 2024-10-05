@@ -8,7 +8,11 @@ import {
 	DrawerOverlay,
 	VStack,
 	Text,
+	Button,
+	Box,
 } from '@chakra-ui/react'
+
+import { Link } from 'react-router-dom'
 
 import NavigationLinks from '../common/NavigationLinks'
 import Logo from '../common/Logo'
@@ -34,6 +38,23 @@ const MenuDrawer = ({ isOpen, onClose, isDesktop }) => {
 				<DrawerBody mt='2em' color='brand.50'>
 					<VStack fontSize='xl' align='stretch' textAlign='center' spacing='2em'>
 						<NavigationLinks isDesktop={isDesktop} onClose={onClose} />
+						<Box w='100%' alignContent='center'>
+							<Button
+								borderColor='brand.50'
+								color='.50'
+								bgColor='brand.500'
+								role='button'
+								aria-label='Sign up'
+								size='lg'
+								_hover={{
+									borderColor: 'brand.100',
+									bgColor: 'brand.550',
+									color: 'brand.100',
+								}}
+							>
+								<Link to='/subscription'>Get started</Link>
+							</Button>
+						</Box>
 					</VStack>
 				</DrawerBody>
 			</DrawerContent>
