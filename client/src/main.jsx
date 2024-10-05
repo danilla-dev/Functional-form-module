@@ -87,6 +87,7 @@ const theme = extendTheme({
 			},
 			strong: {
 				color: 'accent.50',
+				lineHeight: '1.6',
 			},
 			label: {
 				fontSize: ['sm', 'md'],

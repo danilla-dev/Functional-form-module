@@ -32,7 +32,7 @@ const Contact = ({ display }) => {
 					{isDesktop || isTablet ? (
 						<>
 							<Box w='50%'>
-								<Image w='100%' src={contactImg} filter='drop-shadow(2px 2px 2px #353535FF)'></Image>
+								<Image w='100%' h='100%' src={contactImg} filter='drop-shadow(2px 2px 2px #353535FF)'></Image>
 							</Box>
 						</>
 					) : null}

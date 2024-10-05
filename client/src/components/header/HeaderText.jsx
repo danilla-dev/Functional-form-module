@@ -1,13 +1,11 @@
 import React from 'react'
 import { Box, Heading, Text, VStack } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
 import HeaderButton from './HeaderButton'
-import { Fade, Slide, Hinge, Bounce } from 'react-awesome-reveal'
 
 const HeaderText = ({ isDesktop, distance }) => {
 	return (
-		<VStack color='brand.50' maxW={isDesktop && '55%'} align={isDesktop ? 'start' : 'center'} spacing='1em'>
-			<Heading as='h1' mb='0.5em' textAlign={!isDesktop && 'center'}>
+		<VStack color='brand.50' maxW={isDesktop ? '55%' : '100%'} align={isDesktop ? 'start' : 'center'} spacing='1em'>
+			<Heading as='h1' mb='0.5em' textAlign={!isDesktop && 'center'} minH={50}>
 				Your own modern{' '}
 				<Text as='strong' bgGradient='linear(to-r, accent.50, accent.300)' bgClip='text'>
 					AI

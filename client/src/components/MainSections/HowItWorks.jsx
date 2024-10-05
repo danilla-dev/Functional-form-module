@@ -39,6 +39,8 @@ const HowItWorks = ({ display }) => {
 											<Image
 												src={index === 0 ? processorImage : sectionImage}
 												filter='drop-shadow(2px 2px 2px #222)'
+												w='100%'
+												h='100%'
 											></Image>
 										</Box>
 									)}

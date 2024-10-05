@@ -32,10 +32,19 @@ const Header = () => {
 	}, [])
 
 	return (
-		<Flex direction='column' align='center' position='relative' id='Home' h='100%' w='100%' ref={componentRef}>
+		<Flex
+			direction='column'
+			align='center'
+			position='relative'
+			id='Home'
+			h='100%'
+			w='100%'
+			ref={componentRef}
+			minH='100vh'
+		>
 			<Navigation isDesktop={isDesktop} />
 			<Box w='100%' h='100%' pos='absolute' top={0} left={0}>
-				<Image src={isDesktop ? heroImageLG : heroImageSM} boxSize='100%' alt='Background blue image' zIndex={5} />
+				<Image src={isDesktop ? heroImageLG : heroImageSM} width='100%' height='100%' />
 			</Box>
 			<Stack
 				direction={isDesktop ? 'row' : 'column'}
