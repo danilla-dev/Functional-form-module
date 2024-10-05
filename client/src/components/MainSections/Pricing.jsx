@@ -103,6 +103,8 @@ const PricingCard = ({ option, display, key }) => {
 						color='brand.900'
 						transition='background-color 0.3s, color 0.3s, border-color 0.3s'
 						bgColor='brand.500'
+						role='button'
+						aria-label='Buy subscription'
 						_hover={{
 							borderColor: 'brand.100',
 							bgColor: 'brand.550',

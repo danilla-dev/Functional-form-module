@@ -41,6 +41,7 @@ const HowItWorks = ({ display }) => {
 												filter='drop-shadow(2px 2px 2px #222)'
 												w='100%'
 												h='100%'
+												alt='section image'
 											></Image>
 										</Box>
 									)}

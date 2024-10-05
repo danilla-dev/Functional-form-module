@@ -61,7 +61,7 @@ const BestFeatures = ({ display }) => {
 				<HStack justify='space-between' align='center' pos='relative'>
 					{isDesktop && (
 						<Box w='35%'>
-							<Image src={bestFeaturesImg} w='100%' h='100%' filter='drop-shadow(2px 2px 2px #B9B6B6FF)' />
+							<Image src={bestFeaturesImg} w='100%' h='100%' filter='drop-shadow(2px 2px 2px #B9B6B6FF)' alt='Man with desktops around'/>
 						</Box>
 					)}
 					<Box maxW={isDesktop && '55%'}>

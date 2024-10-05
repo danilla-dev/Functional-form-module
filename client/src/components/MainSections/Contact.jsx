@@ -32,7 +32,13 @@ const Contact = ({ display }) => {
 					{isDesktop || isTablet ? (
 						<>
 							<Box w='50%'>
-								<Image w='100%' h='100%' src={contactImg} filter='drop-shadow(2px 2px 2px #353535FF)'></Image>
+								<Image
+									w='100%'
+									h='100%'
+									src={contactImg}
+									filter='drop-shadow(2px 2px 2px #353535FF)'
+									alt='Two mans looking at a robot'
+								></Image>
 							</Box>
 						</>
 					) : null}
@@ -74,6 +80,8 @@ const Contact = ({ display }) => {
 								size='lg'
 								type='submit'
 								boxShadow='xl'
+								role='button'
+								aria-label='Send Question'
 								_hover={{ borderColor: 'brand.500', color: 'brand.500' }}
 							>
 								Send Question

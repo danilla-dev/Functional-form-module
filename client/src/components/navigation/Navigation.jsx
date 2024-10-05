@@ -47,7 +47,7 @@ const Navigation = ({ isDesktop }) => {
 				zIndex={20}
 			>
 				{!isDesktop ? (
-					<Button colorScheme='transparent' onClick={onOpen}>
+					<Button colorScheme='transparent' onClick={onOpen} aria-label='Open aside nav menu' role='button'>
 						<GiHamburgerMenu fontSize={38} color='#3cbbc7' />
 					</Button>
 				) : (

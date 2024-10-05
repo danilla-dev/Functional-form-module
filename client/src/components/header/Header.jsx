@@ -44,12 +44,12 @@ const Header = () => {
 		>
 			<Navigation isDesktop={isDesktop} />
 			<Box w='100%' h='100%' pos='absolute' top={0} left={0}>
-				<Image src={isDesktop ? heroImageLG : heroImageSM} width='100%' height='100%' />
+				<Image src={isDesktop ? heroImageLG : heroImageSM} width='100%' height='100%' objectFit='cover' alt='Blue hero image with cyber web in corners' />
 			</Box>
 			<Stack
 				direction={isDesktop ? 'row' : 'column'}
 				align='center'
-				justify={isDesktop ? 'space-between' : 'center'}
+				justify={isDesktop ? 'space-between' : 'space-evenly'}
 				wrap='wrap'
 				spacing='1em'
 				minH='100%'
