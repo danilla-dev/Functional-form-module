@@ -7,17 +7,24 @@ import FAQ from './MainSections/FAQ'
 import Contact from './MainSections/Contact'
 
 const Main = () => {
-	const displaySize = useBreakpointValue({ base: 'base', sm: 'mobile', md: 'tablet', lg: 'desktop' })
+	const displaySize = useBreakpointValue({
+		base: 'base',
+		sm: 'mobile',
+		md: 'tablet',
+		lg: 'desktop',
+	})
 	const isBase = displaySize === 'base'
 	const isMobile = displaySize === 'desktop'
 	const isTablet = displaySize === 'tablet'
 	const isDesktop = displaySize === 'desktop'
+	const isWideDesktop = displaySize === 'wide-desktop'
 
 	const display = {
 		isMobile,
 		isDesktop,
 		isTablet,
 		isBase,
+		isWideDesktop,
 	}
 
 	return (

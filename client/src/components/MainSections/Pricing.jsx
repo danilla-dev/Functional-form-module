@@ -30,7 +30,7 @@ const PricingCard = ({ option, display, key }) => {
 	const { isMobile, isDesktop, isTablet } = display
 
 	return (
-		<ListItem flex={1} key={key} w={isDesktop ? 300 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 350 : 700}>
+		<ListItem flex={1} key={key} w={isDesktop ? 350 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 500 : 700}>
 			<Card
 				bgColor='brand.300'
 				border={option.best && '5px solid'}
@@ -38,7 +38,7 @@ const PricingCard = ({ option, display, key }) => {
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
-				h={isDesktop && 850}
+				h={isDesktop && 800}
 				bgGradient='radial( brand.300 20%, brand.350)'
 				transform={option.best & isDesktop && 'scale(1.05)'}
 			>
@@ -160,8 +160,7 @@ const Pricing = ({ display }) => {
 		{
 			name: 'Premium',
 			price: 39.99,
-			description:
-				'The ultimate plan for users who need the full potential of AI, with no limitations on interaction and full integration options.',
+			description: 'The ultimate AI plan with unlimited interaction and full integration options.',
 			features: [
 				'Everything in Pro Plan',
 				'Unlimited interactions',
