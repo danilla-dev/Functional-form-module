@@ -26,14 +26,11 @@ import { FaCheck, FaTimes } from 'react-icons/fa'
 
 import { Fade, Slide, Hinge, Bounce, Roll, Zoom, Flip, AttentionSeeker } from 'react-awesome-reveal'
 
-import imagePricing from '../../assets/pricing-bg-lg.png'
-import imagePricingSM from '../../assets/pricing-bg-sm.png'
-
-const PricingCard = ({ option, display, index }) => {
+const PricingCard = ({ option, display, key }) => {
 	const { isMobile, isDesktop, isTablet } = display
 
 	return (
-		<ListItem flex={1} key={index} w={isDesktop ? 300 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 350 : 700}>
+		<ListItem flex={1} key={key} w={isDesktop ? 300 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 350 : 700}>
 			<Card
 				bgColor='brand.300'
 				border={option.best && '5px solid'}
@@ -41,7 +38,9 @@ const PricingCard = ({ option, display, index }) => {
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
-				h={isDesktop && 800}
+				h={isDesktop && 850}
+				bgGradient='radial( brand.300 20%, brand.350)'
+				transform={option.best & isDesktop && 'scale(1.05)'}
 			>
 				<CardHeader>
 					<Stack justify='center'>
@@ -93,23 +92,27 @@ const PricingCard = ({ option, display, index }) => {
 					</List>
 				</CardBody>
 				<CardFooter justify='center'>
-					<Button
+					<Box
+						as='button'
 						bg='transparent'
 						border='2px solid'
-						borderColor='brand.500'
+						borderColor='brand.100'
 						fontSize='md'
 						w='180px'
 						h='40px'
+						color='brand.900'
+						transition='background-color 0.3s, color 0.3s, border-color 0.3s'
+						bgColor='brand.500'
 						_hover={{
 							borderColor: 'brand.100',
-							bgColor: 'brand.500',
-							color: 'brand.900',
+							bgColor: 'brand.550',
+							color: 'brand.100',
 						}}
 					>
 						<Text color='brand.50' fontSize='md' textTransform='uppercase'>
 							Get it
 						</Text>
-					</Button>
+					</Box>
 				</CardFooter>
 			</Card>
 		</ListItem>
@@ -176,19 +179,9 @@ const Pricing = ({ display }) => {
 	]
 
 	return (
-		<Container m={0} p={0} pb='5em' centerContent minW='100%' position='relative'>
-			<Image
-				src={!isTablet ? imagePricing : imagePricingSM}
-				bgSize='100%'
-				w='100%'
-				h='100%'
-				pos='absolute'
-				top={0}
-				left={0}
-				zIndex={5}
-			></Image>
-			<Stack maxW={1400} w='100%' align='center' pt='15em' zIndex={10} position='relative'>
-				<Heading as='h2' mb='0.5em' color='brand.400' textAlign='center' borderBottom='1px solid' w='80%' pb='.25em'>
+		<Container m={0} p={0} pb='7em' centerContent minW='100%' position='relative'>
+			<Stack maxW={1400} w='100%' align='center' pt='5em' zIndex={10} position='relative'>
+				<Heading as='h2' mb='1em' color='brand.400' textAlign='center' borderBottom='1px solid' w='80%' pb='.25em'>
 					Pricing
 				</Heading>
 				<List w='100%'>
@@ -200,6 +193,7 @@ const Pricing = ({ display }) => {
 						p='0 1em'
 						gap={5}
 						flex={1}
+						as='li'
 					>
 						{pricingOptions.map((option, index) => {
 							return <PricingCard option={option} display={display} key={index} />

@@ -15,10 +15,12 @@ const theme = extendTheme({
 			100: '#F6F3FFFF', // section white background
 			150: '#f7f5ff4d', // section white background alpha 30
 			200: '#040120FF', // drawer background
+			250: '#0C0350FF', // drawer background gradient
 			300: '#0C013AE0', // nav background
-			350: '#0C013AF5', // nav background
+			350: '#0C013AF5', // nav background gradient
 			400: '#2A9D8F', // light green for headers and buttons
 			500: '#E76F51', // coral for headers and buttons
+			550: '#E6512CFF', // coral for headers and buttons gradient
 			600: '#F9C74F', // sunny yellow for highlights
 			700: '#F94144', // intense red for highlights
 			800: '#264653', // dark blue-green for button backgrounds (hover)

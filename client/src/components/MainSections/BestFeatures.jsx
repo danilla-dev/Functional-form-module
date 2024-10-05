@@ -19,6 +19,8 @@ import {
 } from '@chakra-ui/react'
 import { FaUserCog, FaComments, FaPlug } from 'react-icons/fa'
 
+import { Fade } from 'react-awesome-reveal'
+
 import bestFeaturesImg from '../../assets/best-features-img.png'
 
 const BestFeatures = ({ display }) => {
@@ -43,7 +45,15 @@ const BestFeatures = ({ display }) => {
 	]
 
 	return (
-		<Container m={0} centerContent p='3em 2em' minW='100%' pt='2em' bgGradient='radial( brand.300 20%, brand.350)'>
+		<Container
+			m={0}
+			centerContent
+			p='3em 2em'
+			pb='11em'
+			minW='100%'
+			pt='2em'
+			bgGradient='radial( brand.300 20%, brand.350)'
+		>
 			<Stack maxW={1400} w='100%' align='center'>
 				<Heading as='h2' mb='0.5em' color='brand.500' textAlign='center' borderBottom='1px solid' w='80%' pb='.25em'>
 					Best features
@@ -66,21 +76,30 @@ const BestFeatures = ({ display }) => {
 									const Icon = feature.icon
 									return (
 										<ListItem key={index}>
-											<Card bgColor='brand.300' border='1px solid' borderColor='brand.150' p='.5em' borderRadius={10}>
-												<CardHeader>
-													<HStack justify={!isDesktop && 'center'}>
-														<ListIcon as={Icon} color='brand.500' fontSize={24} />
-														<Heading as='h3' size='md' color='brand.100'>
-															{feature.header}
-														</Heading>
-													</HStack>
-												</CardHeader>
-												<CardBody>
-													<Text color='brand.50' textAlign={!isDesktop && 'center'}>
-														{feature.text}
-													</Text>
-												</CardBody>
-											</Card>
+											<Fade key={index} triggerOnce duration={1000} delay={index * 200}>
+												<Card
+													bgColor='brand.300'
+													border='1px solid'
+													borderColor='brand.150'
+													p='.5em'
+													borderRadius={10}
+													zIndex={10}
+												>
+													<CardHeader>
+														<HStack justify={!isDesktop && 'center'}>
+															<ListIcon as={Icon} color='brand.500' fontSize={24} />
+															<Heading as='h3' size='md' color='brand.100'>
+																{feature.header}
+															</Heading>
+														</HStack>
+													</CardHeader>
+													<CardBody>
+														<Text color='brand.50' textAlign={!isDesktop && 'center'}>
+															{feature.text}
+														</Text>
+													</CardBody>
+												</Card>
+											</Fade>
 										</ListItem>
 									)
 								})}
