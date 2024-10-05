@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Image } from '@chakra-ui/react'
-import robotAI from '../../assets/AIRobot.svg'
+import robotAI from '../../assets/AIRobot.webp'
 
 const HeaderImage = ({ isDesktop }) => {
 	return (

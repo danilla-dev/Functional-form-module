@@ -13,9 +13,8 @@ const HeaderButton = ({ distance }) => {
 				h='40px'
 				fontSize='sm'
 				_hover={{
-					borderColor: 'brand.100',
-					bgColor: 'brand.800',
-					color: 'brand.900',
+					borderColor: 'brand.500',
+					color: 'brand.500',
 				}}
 				onClick={() => animateScroll.scrollTo(distance + 2)}
 			>
