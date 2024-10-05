@@ -13,12 +13,7 @@ const HeaderText = ({ isDesktop, distance }) => {
 				assistant!
 			</Heading>
 			<Text textAlign={!isDesktop && 'center'}>
-				Unlock the future of productivity with your own personal AI assistant, designed to seamlessly integrate into
-				your daily life. Whether you need help managing your schedule, organizing tasks, or answering complex questions,
-				our AI offers advanced capabilities to support you every step of the way. From drafting emails and setting
-				reminders to providing real-time insights and handling repetitive tasks, this assistant is like having a
-				personal manager at your fingertips. Subscribe now and let our AI take care of the hard work, so you can focus
-				on what truly matters.
+				Unlock productivity with your personal AI assistant, designed to integrate into your daily life.
 			</Text>
 			<HeaderButton distance={distance} />
 		</VStack>
