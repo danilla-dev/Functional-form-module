@@ -20,21 +20,25 @@ const SignUp = ({ control, errors, authError }) => {
 			label: 'Email address',
 			type: 'email',
 			name: 'email',
+			defaultValue: '',
 		},
 		{
 			label: 'Password',
 			type: 'password',
 			name: 'password',
+			defaultValue: '123456789Ab.',
 		},
 		{
 			label: 'Repeat password',
 			type: 'password',
 			name: 'confirmPassword',
+			defaultValue: '123456789Ab.',
 		},
 		{
 			label: 'Phone number',
 			type: 'number',
 			name: 'phoneNumber',
+			defaultValue: 56486,
 		},
 	]
 	return (
@@ -46,7 +50,7 @@ const SignUp = ({ control, errors, authError }) => {
 						<Controller
 							name={input.name}
 							control={control}
-							defaultValue=''
+							defaultValue={input.defaultValue}
 							render={({ field }) => <Input type={input.type} borderColor='accent.300' {...field} />}
 						/>
 						{input.name === 'password' && (
