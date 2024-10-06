@@ -10,6 +10,7 @@ const NavigationLinks = ({ isDesktop, onClose }) => {
 		{ name: 'FAQ', link: 'FAQ' },
 		{ name: 'Contact', link: 'Contact' },
 	]
+
 	return (
 		<Stack direction={isDesktop ? 'row' : 'column'} spacing='3em' flex={1}>
 			{navigationLinks.map((link, index) => (
@@ -21,7 +22,7 @@ const NavigationLinks = ({ isDesktop, onClose }) => {
 					smooth
 					activeClass='active'
 					activeStyle={{ color: '#3cbbc7', textDecoration: 'underline' }}
-					onClick={!isDesktop && onClose}
+					onClick={onClose}
 					offset={-75}
 				>
 					<Text fontSize='xl'>{link.name}</Text>

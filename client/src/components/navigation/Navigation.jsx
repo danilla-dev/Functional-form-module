@@ -8,6 +8,7 @@ import { GiHamburgerMenu } from 'react-icons/gi'
 import NavigationLinks from '../common/NavigationLinks'
 import MenuDrawer from './MenuDrawer'
 import Logo from '../common/Logo'
+import ActionButton from '../common/ActionButton'
 
 const Navigation = ({ isDesktop }) => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -49,28 +50,25 @@ const Navigation = ({ isDesktop }) => {
 				zIndex={20}
 			>
 				{!isDesktop ? (
-					<Button colorScheme='transparent' onClick={onOpen} aria-label='Open aside nav menu' role='button'>
-						<GiHamburgerMenu fontSize={38} color='#3cbbc7' />
-					</Button>
+					<HStack justify='space-between' w='100%'>
+						<Logo />
+						<Button colorScheme='transparent' onClick={onOpen} aria-label='Open aside nav menu' role='button'>
+							<GiHamburgerMenu fontSize={38} color='#3cbbc7' />
+						</Button>
+					</HStack>
 				) : (
 					<HStack spacing='7em' color='brand.50' w='100%' justify='space-between'>
 						<Logo />
 						<NavigationLinks isDesktop={isDesktop} />
-						<Button
-							borderColor='brand.50'
-							color='.50'
-							bgColor='brand.500'
-							role='button'
-							aria-label='Sign up'
-							size='lg'
-							_hover={{
-								borderColor: 'brand.100',
-								bgColor: 'brand.550',
-								color: 'brand.100',
-							}}
-						>
-							<Link to='/subscription'>Get started</Link>
-						</Button>
+						<ActionButton
+							text='Get started'
+							icon={null}
+							action={null}
+							ariaLabel='Sign up'
+							priority='high'
+							type='button'
+							content={<Link to='/subscription'>Get started</Link>}
+						/>
 					</HStack>
 				)}
 			</Stack>

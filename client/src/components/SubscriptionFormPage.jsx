@@ -32,30 +32,29 @@ import { motion } from 'framer-motion'
 import signUpImage from '../assets/signup-img.webp'
 
 import Details from './formSteps/Details'
+import ActionButton from './common/ActionButton'
 
 const MotionBox = motion(Box)
 
 const steps = [
-	{ title: 'First', description: 'Sign up' },
-	{ title: 'Second', description: 'Details' },
-	{ title: 'Third', description: 'Payment' },
+	{ title: 'Sign up', description: null },
+	{ title: 'Details', description: null },
+	{ title: 'Payment', description: null },
 ]
 
 const StepperComponent = ({ index }) => {
 	return (
-		<Box w='95%'>
+		<Box w='95%' mb='1em'>
 			<Stepper index={index} size='md'>
 				{steps.map((step, index) => (
 					<Step key={index}>
 						<StepIndicator>
 							<StepStatus complete={<StepIcon />} incomplete={<StepNumber />} active={<StepNumber />} />
 						</StepIndicator>
-
 						<Box flexShrink='0'>
 							<StepTitle>{step.title}</StepTitle>
 							<StepDescription>{step.description}</StepDescription>
 						</Box>
-
 						<StepSeparator />
 					</Step>
 				))}
@@ -142,39 +141,30 @@ const SubscriptionFormPage = () => {
 						>
 							{activeStep === 1 ? <SignUp /> : <Details />}
 						</MotionBox>
+
 						<ButtonGroup justifyContent='space-around' w='100%' mt='1.5em'>
-							<Button
+							<ActionButton
+								text='Previous'
+								icon={<MdNavigateBefore />}
+								action={prevStep}
+								ariaLabel='Send Question'
+								priority='low'
+								type='button'
+								content={null}
 								isDisabled={activeStep === 1}
-								leftIcon={<MdNavigateBefore />}
-								color='brand.400'
-								bgColor='brand.300'
-								borderColor='accent.50'
-								size='lg'
-								type='submit'
-								boxShadow='xl'
-								role='button'
-								aria-label='Send Question'
-								onClick={prevStep}
-								_hover={{ borderColor: 'brand.500', color: 'brand.500' }}
-							>
-								Previous
-							</Button>
-							<Button
+								iconPosition='left'
+							/>
+							<ActionButton
+								text='Next'
+								icon={<MdNavigateNext />}
+								action={nextStep}
+								ariaLabel='Send Question'
+								priority='low'
+								type='button'
+								content={null}
 								isDisabled={activeStep === 3}
-								rightIcon={<MdNavigateNext />}
-								color='brand.400'
-								bgColor='brand.300'
-								borderColor='accent.50'
-								size='lg'
-								type='submit'
-								boxShadow='xl'
-								role='button'
-								aria-label='Send Question'
-								onClick={nextStep}
-								_hover={{ borderColor: 'brand.500', color: 'brand.500' }}
-							>
-								Next
-							</Button>
+								iconPosition='right'
+							/>
 						</ButtonGroup>
 					</Stack>
 				</Stack>

@@ -24,7 +24,55 @@ import {
 
 import { FaCheck, FaTimes } from 'react-icons/fa'
 
-import { Fade, Slide, Hinge, Bounce, Roll, Zoom, Flip, AttentionSeeker } from 'react-awesome-reveal'
+import ActionButton from '../common/ActionButton'
+
+const Features = ({ option }) => {
+	return (
+		<>
+			<Text color='accent.200' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
+				Features:
+			</Text>
+			<List spacing='1em'>
+				{option.features.map((feature, index) => {
+					return (
+						<ListItem key={index}>
+							<HStack align='center' spacing='0.5em'>
+								<ListIcon as={FaCheck} color='accent.200' fontSize={14} />
+								<Text color='brand.50' fontSize='sm'>
+									{feature}
+								</Text>
+							</HStack>
+						</ListItem>
+					)
+				})}
+			</List>
+		</>
+	)
+}
+
+const Limits = ({ option }) => {
+	return (
+		<>
+			<Text color='accent.200' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
+				Limits:
+			</Text>
+			<List spacing='1em'>
+				{option.limits.map((limit, index) => {
+					return (
+						<ListItem key={index}>
+							<HStack align='center' spacing='0.5em'>
+								<ListIcon as={FaTimes} color='accent.200' fontSize={14} />
+								<Text color='brand.50' fontSize='md'>
+									{limit}
+								</Text>
+							</HStack>
+						</ListItem>
+					)
+				})}
+			</List>
+		</>
+	)
+}
 
 const PricingCard = ({ option, display, key }) => {
 	const { isMobile, isDesktop, isTablet } = display
@@ -34,7 +82,7 @@ const PricingCard = ({ option, display, key }) => {
 			<Card
 				bgColor='brand.300'
 				border={option.best && '5px solid'}
-				borderColor={option.best && 'brand.500'}
+				borderColor={option.best && 'accent.200'}
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
@@ -47,7 +95,7 @@ const PricingCard = ({ option, display, key }) => {
 						<Heading as='h3' size='lg' color='brand.100' textAlign='center' m={0}>
 							{option.name}
 						</Heading>
-						<Text color='brand.900' fontSize='md' textAlign='center'>
+						<Text color='accent.200' fontSize='md' textAlign='center'>
 							${option.price}/month
 						</Text>
 					</Stack>
@@ -56,65 +104,18 @@ const PricingCard = ({ option, display, key }) => {
 					<Text color='brand.50' fontSize='md' mb='1em'>
 						{option.description}
 					</Text>
-					<Text color='brand.900' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
-						Features:
-					</Text>
-					<List spacing='1em'>
-						{option.features.map((feature, index) => {
-							return (
-								<ListItem key={index}>
-									<HStack align='center' spacing='0.5em'>
-										<ListIcon as={FaCheck} color='brand.500' fontSize={14} />
-										<Text color='brand.50' fontSize='sm'>
-											{feature}
-										</Text>
-									</HStack>
-								</ListItem>
-							)
-						})}
-					</List>
-					<Text color='brand.900' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
-						Limits:
-					</Text>
-					<List spacing='1em'>
-						{option.limits.map((limit, index) => {
-							return (
-								<ListItem key={index}>
-									<HStack align='center' spacing='0.5em'>
-										<ListIcon as={FaTimes} color='brand.500' fontSize={14} />
-										<Text color='brand.50' fontSize='md'>
-											{limit}
-										</Text>
-									</HStack>
-								</ListItem>
-							)
-						})}
-					</List>
+					<Features option={option} />
+					<Limits option={option} />
 				</CardBody>
 				<CardFooter justify='center'>
-					<Box
-						as='button'
-						bg='transparent'
-						border='2px solid'
-						borderColor='brand.100'
-						fontSize='md'
-						w='180px'
-						h='40px'
-						color='brand.900'
-						transition='background-color 0.3s, color 0.3s, border-color 0.3s'
-						bgColor='brand.500'
-						role='button'
-						aria-label='Buy subscription'
-						_hover={{
-							borderColor: 'brand.100',
-							bgColor: 'brand.550',
-							color: 'brand.100',
-						}}
-					>
-						<Text color='brand.50' fontSize='md' textTransform='uppercase'>
-							Get it
-						</Text>
-					</Box>
+					<ActionButton
+						text='Get Started'
+						icon={null}
+						action={() => console.log('GET IT')}
+						ariaLabel='Get subscription'
+						priority='high'
+						type='button'
+					/>
 				</CardFooter>
 			</Card>
 		</ListItem>
@@ -182,7 +183,7 @@ const Pricing = ({ display }) => {
 	return (
 		<Container m={0} p={0} pb='7em' centerContent minW='100%' position='relative'>
 			<Stack maxW={1400} w='100%' align='center' pt='2em' zIndex={10} position='relative'>
-				<Heading as='h2' mb='1em' color='brand.400' textAlign='center' borderBottom='1px solid' w='80%' pb='.25em'>
+				<Heading as='h2' mb='1em' color='accent.200' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
 					Pricing
 				</Heading>
 				<List w='100%'>

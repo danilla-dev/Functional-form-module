@@ -31,7 +31,7 @@ const theme = extendTheme({
 			50: '#3cbbc7', // main accent color
 			100: '#00b894', // additional accent color
 			200: '#00cec9', // additional accent color
-			300: '#0984e3', // blue accent
+			300: '#0984e3', // blue accent -- used for borders in inputs and form with brand.300 and gradient radial( brand.300 20%, brand.350)' in background
 			400: '#d63031', // red accent
 		},
 	},

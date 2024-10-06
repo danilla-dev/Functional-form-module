@@ -55,7 +55,7 @@ const FAQ = ({ display }) => {
 	return (
 		<Container m={0} p='3em 2em' pb='5em' centerContent minW='100%' position='relative'>
 			<Stack w='100%' maxW={1100} color='brand.100' align='center'>
-				<Heading as='h2' borderBottom='1px solid' w='100%' textAlign='center' mb='0.5em' pb='.25em'>
+				<Heading as='h2' borderBottom='3px solid' w='100%' textAlign='center' mb='0.5em' pb='.25em' color='accent.300'>
 					FAQ
 				</Heading>
 				<Accordion
@@ -64,8 +64,8 @@ const FAQ = ({ display }) => {
 					bgGradient='radial( brand.300 20%, brand.350)'
 					borderRadius={10}
 					w='100%'
-					bgColor='brand.300'
 					overflow='hidden'
+					borderColor='accent.300'
 				>
 					{askQuestion.map((question, index) => {
 						return (

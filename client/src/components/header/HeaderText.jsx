@@ -1,13 +1,18 @@
 import React from 'react'
 import { Box, Heading, Text, VStack } from '@chakra-ui/react'
-import HeaderButton from './HeaderButton'
+import ActionButton from '../common/ActionButton'
+import { animateScroll } from 'react-scroll'
 
 const HeaderText = ({ isDesktop, distance }) => {
+	const scroll = () => {
+		animateScroll.scrollTo(distance + 2)
+	}
+
 	return (
 		<VStack color='brand.50' maxW={isDesktop ? '55%' : '100%'} align={isDesktop ? 'start' : 'center'} spacing='1em'>
 			<Heading as='h1' mb='0.5em' textAlign={!isDesktop && 'center'} minH={50}>
 				Your own modern{' '}
-				<Text as='strong' bgGradient='linear(to-r, accent.50, accent.300)' bgClip='text'>
+				<Text as='strong' bgGradient='radial(accent.100, accent.50)' bgClip='text'>
 					AI
 				</Text>{' '}
 				assistant!
@@ -15,7 +20,14 @@ const HeaderText = ({ isDesktop, distance }) => {
 			<Text textAlign={!isDesktop && 'center'}>
 				Unlock productivity with your personal AI assistant, designed to integrate into your daily life.
 			</Text>
-			<HeaderButton distance={distance} />
+			<ActionButton
+				text='Explore the future'
+				icon={null}
+				action={scroll}
+				ariaLabel='Scroll to about section'
+				priority='low'
+				type='scroll'
+			/>
 		</VStack>
 	)
 }
