@@ -16,7 +16,7 @@ export const sendRegistrationEmail = async (userEmail, token) => {
 		subject: 'Rejestracja zakończona sukcesem',
 		text: `Thank you for registering!
       We appreciate your interest in our service. If you haven't completed your registration yet, you can do so by clicking the link below:
-     http://localhost:5173/subscription?token=${token}
+     https://functional-form-module-1.onrender.com/subscription?token=${token}
       Thank you for choosing us!`,
 	}
 
