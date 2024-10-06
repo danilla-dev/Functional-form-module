@@ -20,6 +20,10 @@ const userSchema = new Schema({
 		required: false,
 		default: false,
 	},
+	activateToken: {
+		type: String,
+		required: false,
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now,

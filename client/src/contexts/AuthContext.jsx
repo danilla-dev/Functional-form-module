@@ -5,6 +5,8 @@ export const AuthContext = createContext()
 export const AuthProvider = ({ children }) => {
 	const [currentUser, setCurrentUser] = useState(null)
 
+	console.log(currentUser && currentUser)
+	
 	const login = userData => {
 		setCurrentUser(userData)
 	}

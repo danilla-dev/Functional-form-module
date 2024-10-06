@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {
-	Flex,
-	Center,
+	Text,
 	Box,
-	Container,
-	VStack,
-	FormControl,
-	Input,
-	FormLabel,
 	Step,
 	StepDescription,
 	StepIcon,
@@ -18,12 +12,9 @@ import {
 	StepTitle,
 	Stepper,
 	useSteps,
-	Button,
 	ButtonGroup,
 	Image,
-	HStack,
 	Stack,
-	useBreakpointValue,
 	useToast,
 } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
@@ -101,7 +92,6 @@ const SubscriptionForm = () => {
 		}
 	}, currentUser)
 
-	
 	const handleRegisterUser = async data => {
 		const result = await handleRegister(data)
 		if (result === 'success') {
@@ -149,6 +139,11 @@ const SubscriptionForm = () => {
 					</Box>
 				) : null}
 				<Stack w={isDesktop || isTablet ? '50%' : '100%'} align='center' justify='space-evenly'>
+					{currentUser.email && (
+						<Text fontSize='md' p='0.5em 0'>
+							Welcome back {currentUser.email}
+						</Text>
+					)}
 					<StepperComponent index={activeStep} />
 					<MotionBox
 						w='100%'
