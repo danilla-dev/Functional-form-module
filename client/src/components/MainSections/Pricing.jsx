@@ -81,8 +81,8 @@ const PricingCard = ({ option, display, key }) => {
 		<ListItem flex={1} key={key} w={isDesktop ? 350 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 500 : 700}>
 			<Card
 				bgColor='brand.300'
-				border={option.best && '5px solid'}
-				borderColor={option.best && 'accent.300'}
+				border={option.best ? '5px solid' : '2px solid'}
+				borderColor={'accent.300'}
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
