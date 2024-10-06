@@ -1,6 +1,6 @@
 export const getUserSubscription = async (req, res) => {
 	// getSub
-	console.log('getSub')
+	res.send('getSub')
 }
 export const registerUserSubscription = async (req, res) => {
 	// postSub

@@ -8,23 +8,20 @@ import HeaderImage from './HeaderImage'
 import heroImageSM from '../../assets/hero-img-sm.webp'
 import heroImageLG from '../../assets/hero-img-lg.webp'
 
+import { useAuth } from '../../hooks/useAuth'
+import { useUI } from '../../hooks/useUI'
+
+import { calculateDistance } from '../../utils/calculateScroll'
+
 const Header = () => {
-	const displaySize = useBreakpointValue({ base: 'mobile', md: 'tablet', lg: 'desktop' })
-	const isDesktop = displaySize === 'desktop'
+	const { isDesktop } = useUI()
+
 	const componentRef = useRef(null)
 
 	const [distanceFromTop, setDistanceFromTop] = useState(0)
 
 	useEffect(() => {
-		const calculateDistance = () => {
-			if (componentRef.current) {
-				const rect = componentRef.current.getBoundingClientRect()
-				const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-				const distance = rect.bottom + scrollTop
-				setDistanceFromTop(distance)
-			}
-		}
-		calculateDistance()
+		calculateDistance(componentRef, setDistanceFromTop)
 		window.addEventListener('resize', calculateDistance)
 		return () => {
 			window.removeEventListener('resize', calculateDistance)
@@ -43,7 +40,7 @@ const Header = () => {
 			minH='100vh'
 			as='header'
 		>
-			<Navigation isDesktop={isDesktop} />
+			<Navigation />
 			<Box w='100%' h='100%' pos='absolute' top={0} left={0}>
 				<Image
 					src={isDesktop ? heroImageLG : heroImageSM}
@@ -64,8 +61,8 @@ const Header = () => {
 				zIndex={10}
 				p='65px 2em'
 			>
-				<HeaderText isDesktop={isDesktop} distance={distanceFromTop} />
-				<HeaderImage isDesktop={isDesktop} />
+				<HeaderText distance={distanceFromTop} />
+				<HeaderImage />
 			</Stack>
 		</Flex>
 	)

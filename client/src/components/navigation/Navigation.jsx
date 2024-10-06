@@ -10,7 +10,11 @@ import MenuDrawer from './MenuDrawer'
 import Logo from '../common/Logo'
 import ActionButton from '../common/ActionButton'
 
-const Navigation = ({ isDesktop }) => {
+import { useUI } from '../../hooks/useUI'
+
+const Navigation = () => {
+	const { isDesktop } = useUI()
+
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [scrollPosition, setScrollPosition] = useState(0)
 
@@ -59,7 +63,7 @@ const Navigation = ({ isDesktop }) => {
 				) : (
 					<HStack spacing='7em' color='brand.50' w='100%' justify='space-between'>
 						<Logo />
-						<NavigationLinks isDesktop={isDesktop} />
+						<NavigationLinks />
 						<ActionButton
 							text='Get started'
 							icon={null}
@@ -72,7 +76,7 @@ const Navigation = ({ isDesktop }) => {
 					</HStack>
 				)}
 			</Stack>
-			<MenuDrawer isOpen={isOpen} onClose={onClose} isDesktop={isDesktop} />
+			<MenuDrawer isOpen={isOpen} onClose={onClose} />
 		</Box>
 	)
 }

@@ -21,8 +21,10 @@ import { IoIosSend } from 'react-icons/io'
 import contactImg from '../../assets/contact-img.webp'
 import ActionButton from '../common/ActionButton'
 
-const Contact = ({ display }) => {
-	const { isMobile, isDesktop, isTablet } = display
+import { useUI } from '../../hooks/useUI'
+
+const Contact = () => {
+	const { isMobile, isDesktop, isTablet } = useUI()
 
 	const subjectsOptions = [
 		{ value: 'Product Information', label: 'Product Information' },

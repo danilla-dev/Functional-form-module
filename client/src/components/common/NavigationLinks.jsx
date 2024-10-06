@@ -2,7 +2,11 @@ import React from 'react'
 import { Stack, Text } from '@chakra-ui/react'
 import { Link } from 'react-scroll'
 
-const NavigationLinks = ({ isDesktop, onClose }) => {
+import { useUI } from '../../hooks/useUI'
+
+const NavigationLinks = ({ onClose }) => {
+	const { isDesktop } = useUI()
+
 	const navigationLinks = [
 		{ name: 'Home', link: 'Home' },
 		{ name: 'About', link: 'About' },

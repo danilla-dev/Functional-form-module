@@ -26,6 +26,8 @@ import { FaCheck, FaTimes } from 'react-icons/fa'
 
 import ActionButton from '../common/ActionButton'
 
+import { useUI } from '../../hooks/useUI'
+
 const Features = ({ option }) => {
 	return (
 		<>
@@ -74,8 +76,8 @@ const Limits = ({ option }) => {
 	)
 }
 
-const PricingCard = ({ option, display, key }) => {
-	const { isMobile, isDesktop, isTablet } = display
+const PricingCard = ({ option, key }) => {
+	const { isMobile, isDesktop, isTablet } = useUI()
 
 	return (
 		<ListItem flex={1} key={key} w={isDesktop ? 350 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 500 : 700}>
@@ -122,8 +124,8 @@ const PricingCard = ({ option, display, key }) => {
 	)
 }
 
-const Pricing = ({ display }) => {
-	const { isMobile, isDesktop, isTablet } = display
+const Pricing = () => {
+	const { isMobile, isDesktop, isTablet } = useUI()
 
 	const pricingOptions = [
 		{
@@ -198,7 +200,7 @@ const Pricing = ({ display }) => {
 						as='li'
 					>
 						{pricingOptions.map((option, index) => {
-							return <PricingCard option={option} display={display} key={index} />
+							return <PricingCard option={option} key={index} />
 						})}
 					</Stack>
 				</List>

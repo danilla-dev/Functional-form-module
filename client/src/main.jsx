@@ -5,8 +5,9 @@ import { border, ChakraProvider, extendTheme, Input } from '@chakra-ui/react'
 
 import App from './App.jsx'
 import './index.css'
-import { color } from 'framer-motion'
-import { pad } from 'lodash'
+
+import { UIProvider } from './contexts/UIContext'
+import { AuthProvider } from './contexts/AuthContext'
 
 const theme = extendTheme({
 	// Ustawienia typografii
@@ -105,6 +106,7 @@ const theme = extendTheme({
 			textArea: {
 				padding: '1em',
 			},
+
 			'.option-dark': {
 				background: 'brand.250 !important',
 			},
@@ -119,7 +121,11 @@ const theme = extendTheme({
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
 		<ChakraProvider theme={theme}>
-			<App />
+			<UIProvider>
+				<AuthProvider>
+					<App />
+				</AuthProvider>
+			</UIProvider>
 		</ChakraProvider>
 	</StrictMode>
 )

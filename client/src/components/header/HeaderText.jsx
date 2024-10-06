@@ -3,7 +3,11 @@ import { Box, Heading, Text, VStack } from '@chakra-ui/react'
 import ActionButton from '../common/ActionButton'
 import { animateScroll } from 'react-scroll'
 
-const HeaderText = ({ isDesktop, distance }) => {
+import { useUI } from '../../hooks/useUI'
+
+const HeaderText = ({ distance }) => {
+	const { isDesktop } = useUI()
+
 	const scroll = () => {
 		animateScroll.scrollTo(distance + 2)
 	}

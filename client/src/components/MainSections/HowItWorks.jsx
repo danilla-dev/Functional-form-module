@@ -5,13 +5,15 @@ import { Box, Image, Stack, Text, VStack, Heading, Container } from '@chakra-ui/
 
 import { Fade, Slide, Zoom } from 'react-awesome-reveal'
 
-const HowItWorks = ({ display }) => {
-	const { isBase, isMobile, isDesktop, isTablet } = display
+import { useUI } from '../../hooks/useUI'
 
-	const howItWorksTexts = [
-		'Our AI agent utilizes cutting-edge machine learning algorithms to adapt to your preferences. The more you interact with it, the better it understands your needs and can provide even more personalized recommendations.',
-		'As you engage with the agent, it continuously learns from your choices, refining its understanding of what you like and dislike. This dynamic learning process allows it to anticipate your needs and deliver tailored suggestions that enhance your experience.',
-	]
+const howItWorksTexts = [
+	'Our AI agent utilizes cutting-edge machine learning algorithms to adapt to your preferences. The more you interact with it, the better it understands your needs and can provide even more personalized recommendations.',
+	'As you engage with the agent, it continuously learns from your choices, refining its understanding of what you like and dislike. This dynamic learning process allows it to anticipate your needs and deliver tailored suggestions that enhance your experience.',
+]
+const HowItWorks = () => {
+	const { isBase } = useUI()
+
 	return (
 		<Container m={0} centerContent p='0 2em' minW='100%' pb='3em'>
 			<Stack maxW={1400} w='100%' align='center'>

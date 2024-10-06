@@ -11,6 +11,9 @@ import {
 	Container,
 	Text,
 } from '@chakra-ui/react'
+
+import { useUI } from '../../hooks/useUI'
+
 const askQuestion = [
 	{
 		question: 'What is the AI assistant that I can subscribe to?',
@@ -49,8 +52,8 @@ const askQuestion = [
 			'Yes, our AI assistant is designed to seamlessly integrate with your favorite applications, allowing you to access all your tools and information in one place. This greatly streamlines your workflow and saves you time.',
 	},
 ]
-const FAQ = ({ display }) => {
-	const { isBase, isMobile, isDesktop, isTablet } = display
+const FAQ = () => {
+	const { isBase, isMobile, isDesktop, isTablet } = useUI()
 
 	return (
 		<Container m={0} p='3em 2em' pb='5em' centerContent minW='100%' position='relative'>

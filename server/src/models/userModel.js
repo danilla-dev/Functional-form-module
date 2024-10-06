@@ -5,7 +5,7 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
 	name: {
 		type: String,
-		required: true,
+		required: false,
 	},
 	email: {
 		type: String,
@@ -17,14 +17,13 @@ const userSchema = new Schema({
 	},
 	activeSub: {
 		type: Boolean,
-		required: true,
+		required: false,
 		default: false,
 	},
 	createdAt: {
 		type: Date,
 		default: Date.now,
 	},
-	timestamps: true,
 })
 
-export default mongoose.model('User', userSchema)
+export const User = mongoose.model('User', userSchema)

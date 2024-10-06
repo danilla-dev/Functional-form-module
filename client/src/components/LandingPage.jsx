@@ -6,32 +6,16 @@ import Pricing from './MainSections/Pricing'
 import FAQ from './MainSections/FAQ'
 import Contact from './MainSections/Contact'
 
-const LandingPage = () => {
-	const displaySize = useBreakpointValue({
-		base: 'base',
-		sm: 'mobile',
-		md: 'tablet',
-		lg: 'desktop',
-	})
-	const isBase = displaySize === 'base'
-	const isMobile = displaySize === 'desktop'
-	const isTablet = displaySize === 'tablet'
-	const isDesktop = displaySize === 'desktop'
-	const isWideDesktop = displaySize === 'wide-desktop'
+import { useUI } from '../hooks/useUI'
 
-	const display = {
-		isMobile,
-		isDesktop,
-		isTablet,
-		isBase,
-		isWideDesktop,
-	}
+const LandingPage = () => {
+	const { isBase, isMobile, isTablet, isDesktop, isWideDesktop } = useUI()
 
 	return (
 		<>
 			<Flex as='section' id='About' direction='column' align='center' bgColor='brand.100'>
-				<HowItWorks display={display} />
-				<BestFeatures display={display} />
+				<HowItWorks />
+				<BestFeatures />
 			</Flex>
 			<Flex
 				as='section'
@@ -53,13 +37,13 @@ const LandingPage = () => {
 					zIndex: 5,
 				}}
 			>
-				<Pricing display={display} />
+				<Pricing />
 			</Flex>
 			<Flex as='section' id='FAQ' direction='column' align='center' bgGradient='radial( brand.300 20%, brand.350)'>
-				<FAQ display={display} />
+				<FAQ />
 			</Flex>
 			<Flex as='section' id='Contact' direction='column' align='center' bgColor='brand.50'>
-				<Contact display={display} />
+				<Contact />
 			</Flex>
 		</>
 	)

@@ -8,31 +8,28 @@ const subSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	description: {
-		type: String,
-		required: true,
-	},
 	price: {
 		type: Number,
-		required: true,
+		required: false,
 	},
 	details: {
 		type: Map,
-		of: String,
+		of: Array,
 		required: true,
 	},
 	paymentStatus: {
 		type: String,
 		default: 'pending',
 		enum: ['pending', 'paid', 'failed'],
+		required: true,
 	},
 	subscriptionDuration: {
 		type: Number,
-		required: true,
+		required: false,
 	},
 	subscriptionDurationType: {
 		type: String,
-		required: true,
+		required: false,
 		enum: ['days', 'weeks', 'months', 'years'],
 	},
 	subscriptionEndDate: {

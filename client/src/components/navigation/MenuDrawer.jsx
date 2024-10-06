@@ -17,8 +17,14 @@ import { Link } from 'react-router-dom'
 import NavigationLinks from '../common/NavigationLinks'
 import Logo from '../common/Logo'
 
-const MenuDrawer = ({ isOpen, onClose, isDesktop }) => {
+import { useUI } from '../../hooks/useUI'
+
+const MenuDrawer = ({ isOpen, onClose }) => {
+	const { isDesktop } = useUI()
+
 	isDesktop && onClose()
+
+
 	return (
 		<Drawer placement='right' onClose={onClose} isOpen={isOpen} size='full'>
 			<DrawerOverlay />
@@ -37,7 +43,7 @@ const MenuDrawer = ({ isOpen, onClose, isDesktop }) => {
 				</DrawerHeader>
 				<DrawerBody mt='2em' color='brand.50'>
 					<VStack fontSize='xl' align='stretch' textAlign='center' spacing='2em'>
-						<NavigationLinks isDesktop={isDesktop} onClose={!isDesktop && onClose} />
+						<NavigationLinks onClose={!isDesktop && onClose} />
 						<Box w='100%' alignContent='center'>
 							<Button
 								borderColor='brand.50'
