@@ -6,6 +6,7 @@ export const createUser = async data => {
 		return response.data
 	} catch (error) {
 		console.error('Error creating user:', error.response?.data?.message || 'Failed to create user')
+		console.log(error)
 		throw new Error(error.response?.data?.message || 'Failed to create user')
 	}
 }
