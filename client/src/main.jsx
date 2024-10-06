@@ -100,6 +100,7 @@ const theme = extendTheme({
 			},
 			label: {
 				fontSize: ['sm', 'md'],
+				paddingTop: '0.5em',
 			},
 			textArea: {
 				padding: '1em',

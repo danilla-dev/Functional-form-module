@@ -36,7 +36,7 @@ const Contact = ({ display }) => {
 	return (
 		<Container m={0} centerContent p='2em 1em' minW='100%' pb='3em'>
 			<Stack maxW={1100} w='100%' align='center'>
-				<Heading as='h2' mb='0.5em' color='accent.200' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
+				<Heading as='h2' mb='0.5em' color='accent.300' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
 					Contact
 				</Heading>
 				<Stack direction='row' w='100%' justify='center' spacing='4em'>
@@ -61,14 +61,12 @@ const Contact = ({ display }) => {
 					>
 						<VStack spacing='2em'>
 							<FormControl isRequired>
-								<FormLabel fontSize={['sm', 'md']}>
-									Email address:
-								</FormLabel>
-								<Input type='email' />
+								<FormLabel fontSize={['sm', 'md']}>Email address:</FormLabel>
+								<Input type='email' borderColor='accent.300' />
 							</FormControl>
 							<FormControl isRequired>
 								<FormLabel fontSize={['sm', 'md']}>What's your inquiry about?</FormLabel>
-								<Select placeholder='Select subject'>
+								<Select placeholder='Select subject' borderColor='accent.300'>
 									{subjectsOptions.map((option, index) => (
 										<option key={index} value={option.value}>
 											{option.label}
@@ -78,7 +76,7 @@ const Contact = ({ display }) => {
 							</FormControl>
 							<FormControl isRequired>
 								<FormLabel fontSize={['sm', 'md']}>How can we help?</FormLabel>
-								<Textarea resize='vertical' maxH={250} />
+								<Textarea resize='vertical' maxH={250} borderColor='accent.300' />
 							</FormControl>
 							<Divider />
 							<ActionButton

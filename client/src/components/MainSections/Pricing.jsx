@@ -29,7 +29,7 @@ import ActionButton from '../common/ActionButton'
 const Features = ({ option }) => {
 	return (
 		<>
-			<Text color='accent.200' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
+			<Text color='accent.300' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
 				Features:
 			</Text>
 			<List spacing='1em'>
@@ -37,7 +37,7 @@ const Features = ({ option }) => {
 					return (
 						<ListItem key={index}>
 							<HStack align='center' spacing='0.5em'>
-								<ListIcon as={FaCheck} color='accent.200' fontSize={14} />
+								<ListIcon as={FaCheck} color='accent.300' fontSize={14} />
 								<Text color='brand.50' fontSize='sm'>
 									{feature}
 								</Text>
@@ -53,7 +53,7 @@ const Features = ({ option }) => {
 const Limits = ({ option }) => {
 	return (
 		<>
-			<Text color='accent.200' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
+			<Text color='accent.300' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
 				Limits:
 			</Text>
 			<List spacing='1em'>
@@ -61,7 +61,7 @@ const Limits = ({ option }) => {
 					return (
 						<ListItem key={index}>
 							<HStack align='center' spacing='0.5em'>
-								<ListIcon as={FaTimes} color='accent.200' fontSize={14} />
+								<ListIcon as={FaTimes} color='accent.300' fontSize={14} />
 								<Text color='brand.50' fontSize='md'>
 									{limit}
 								</Text>
@@ -82,7 +82,7 @@ const PricingCard = ({ option, display, key }) => {
 			<Card
 				bgColor='brand.300'
 				border={option.best && '5px solid'}
-				borderColor={option.best && 'accent.200'}
+				borderColor={option.best && 'accent.300'}
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
@@ -95,7 +95,7 @@ const PricingCard = ({ option, display, key }) => {
 						<Heading as='h3' size='lg' color='brand.100' textAlign='center' m={0}>
 							{option.name}
 						</Heading>
-						<Text color='accent.200' fontSize='md' textAlign='center'>
+						<Text color='accent.300' fontSize='md' textAlign='center'>
 							${option.price}/month
 						</Text>
 					</Stack>
@@ -183,7 +183,7 @@ const Pricing = ({ display }) => {
 	return (
 		<Container m={0} p={0} pb='7em' centerContent minW='100%' position='relative'>
 			<Stack maxW={1400} w='100%' align='center' pt='2em' zIndex={10} position='relative'>
-				<Heading as='h2' mb='1em' color='accent.200' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
+				<Heading as='h2' mb='1em' color='accent.300' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
 					Pricing
 				</Heading>
 				<List w='100%'>

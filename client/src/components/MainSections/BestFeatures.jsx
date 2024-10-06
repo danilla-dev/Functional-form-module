@@ -55,7 +55,7 @@ const BestFeatures = ({ display }) => {
 			bgGradient='radial( brand.300 20%, brand.350)'
 		>
 			<Stack maxW={1400} w='100%' align='center'>
-				<Heading as='h2' mb='0.5em' color='accent.300' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
+				<Heading as='h2' mb='0.5em' color='accent.200' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
 					Best features
 				</Heading>
 				<HStack justify='space-between' align='center' pos='relative'>
@@ -86,14 +86,14 @@ const BestFeatures = ({ display }) => {
 												<Card
 													bgColor='brand.300'
 													border='1px solid'
-													borderColor='accent.300'
+													borderColor='accent.200'
 													p='.5em'
 													borderRadius={10}
 													zIndex={10}
 												>
 													<CardHeader>
 														<HStack justify={!isDesktop && 'center'}>
-															<ListIcon as={Icon} color='accent.300' fontSize={24} />
+															<ListIcon as={Icon} color='accent.200' fontSize={24} />
 															<Heading as='h3' size='md' color='brand.100'>
 																{feature.header}
 															</Heading>

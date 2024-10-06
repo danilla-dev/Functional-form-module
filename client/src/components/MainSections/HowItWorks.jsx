@@ -15,7 +15,7 @@ const HowItWorks = ({ display }) => {
 	return (
 		<Container m={0} centerContent p='0 2em' minW='100%' pb='3em'>
 			<Stack maxW={1400} w='100%' align='center'>
-				<Heading as='h2' mb='0.5em' color='accent.200' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
+				<Heading as='h2' mb='0.5em' color='accent.300' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
 					How it works?
 				</Heading>
 				<VStack spacing='4em'>
