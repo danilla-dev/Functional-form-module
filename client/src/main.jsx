@@ -8,7 +8,7 @@ import './index.css'
 
 import { UIProvider } from './contexts/UIContext'
 import { AuthProvider } from './contexts/AuthContext'
-import { QueryClient, QueryClientProvider } from 'react-query'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 const theme = extendTheme({
