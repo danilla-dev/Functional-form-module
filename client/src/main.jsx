@@ -9,6 +9,7 @@ import './index.css'
 import { UIProvider } from './contexts/UIContext'
 import { AuthProvider } from './contexts/AuthContext'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 const theme = extendTheme({
 	// Ustawienia typografii
@@ -119,11 +120,13 @@ createRoot(document.getElementById('root')).render(
 	<StrictMode>
 		<ChakraProvider theme={theme}>
 			<QueryClientProvider client={queryClient}>
-				<AuthProvider>
-					<UIProvider>
-						<App />
-					</UIProvider>
-				</AuthProvider>
+				<Router>
+					<AuthProvider>
+						<UIProvider>
+							<App />
+						</UIProvider>
+					</AuthProvider>
+				</Router>
 			</QueryClientProvider>
 		</ChakraProvider>
 	</StrictMode>

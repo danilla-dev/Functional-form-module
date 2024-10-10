@@ -17,12 +17,21 @@ const userSchema = new Schema({
 	},
 	activeSub: {
 		type: Boolean,
-		required: false,
+		required: true,
 		default: false,
 	},
 	activateToken: {
 		type: String,
 		required: false,
+	},
+	verificationCode: {
+		type: Number,
+		required: true,
+	},
+	isVerified: {
+		type: Boolean,
+		default: false,
+		required: true,
 	},
 	createdAt: {
 		type: Date,

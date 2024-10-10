@@ -8,9 +8,15 @@ import { sendRegistrationEmail } from '../Utils/sendSignUpMail.js'
 
 dotenv.config()
 
+const generateVerificationCode = () => {
+	return Math.floor(100000 + Math.random() * 900000)
+}
+
 export const createUser = async (req, res) => {
 	const { email, password } = req.body
 	const verifyToken = crypto.randomBytes(32).toString('hex')
+	const verifyCode = generateVerificationCode()
+	console.log(typeof verifyCode)
 
 	try {
 		const existingUser = await User.findOne({ email })
@@ -23,17 +29,20 @@ export const createUser = async (req, res) => {
 			email,
 			password: hashedPassword,
 			activateToken: verifyToken,
+			isVerified: false,
+			activeSub: false,
+			verificationCode: verifyCode,
 		})
 		newUser.save()
 
 		const token = jwt.sign({ email: newUser.email, id: newUser._id }, process.env.SECRET, { expiresIn: '5h' })
 
-		await sendRegistrationEmail(newUser.email, verifyToken)
+		await sendRegistrationEmail(newUser.email, verifyToken, verifyCode)
 
 		res
 			.status(201) // Najpierw ustaw status
 			.cookie('token', token, { httpOnly: true, sameSite: 'Strict', secure: process.env.NODE_ENV !== 'development' })
-			.json({ email: newUser.email, id: newUser._id })
+			.json({ email: newUser.email, id: newUser._id, isVerified: newUser.isVerified })
 	} catch (error) {
 		console.error('Error creating user:', error)
 		console.log(error)
@@ -45,8 +54,11 @@ export const loginUser = async (req, res) => {
 	const { email, password } = req.body
 	try {
 		const user = await User.findOne({ email })
+
 		if (!user) return res.status(404).json({ message: 'User not found' })
+
 		const isPasswordCorrect = await bcrypt.compare(password, user.password)
+
 		if (!isPasswordCorrect) return res.status(400).json({ message: 'Invalid credentials' })
 
 		const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET, { expiresIn: '5h' })
@@ -54,7 +66,7 @@ export const loginUser = async (req, res) => {
 		res
 			.cookie('token', token, { httpOnly: true, sameSite: 'Strict', secure: process.env.NODE_ENV !== 'development' })
 			.status(200)
-			.json({ email: user.email, id: user._id })
+			.json({ email: user.email, id: user._id, isVerified: user.isVerified })
 	} catch (error) {
 		console.error('Error logging in:', error)
 		return res.status(500).json({ message: 'Internal server error' })
@@ -63,34 +75,57 @@ export const loginUser = async (req, res) => {
 
 export const fetchUserDetails = async (req, res) => {
 	const token = req.cookies.token
+	const verifyToken = req.query.token
 
-	if (!token) return res.status(401).json({ message: 'Unauthorized' })
+	if (!token && !verifyToken) return res.status(401).json({ message: 'Unauthorized' })
 
 	try {
+		if (verifyToken !== 'null') {
+			const user = await User.findOne({ activateToken: verifyToken })
+
+			if (!user) return res.status(404).json({ message: 'User not found' })
+
+			const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET, { expiresIn: '5h' })
+
+			return res
+				.cookie('token', token, { httpOnly: true, sameSite: 'Strict', secure: process.env.NODE_ENV !== 'development' })
+				.status(200)
+				.json({ user: { email: user.email, id: user._id, isVerified: user.isVerified } })
+		}
+
 		const decoded = jwt.verify(token, process.env.SECRET)
 
-		res.status(200).json({ user: decoded })
+		const user = await User.findOne({ email: decoded.email })
+		if (!user) return res.status(404).json({ message: 'User not found' })
+		console.log(decoded)
+
+		res.status(200).json({ user: { ...decoded, isVerified: user.isVerified } })
 	} catch (error) {
+		if (error.name === 'TokenExpiredError') {
+			return res.status(401).json({ message: 'Token has expired' })
+		}
 		console.error('Error fetching user:', error)
 		res.status(500).json({ message: 'Internal server error' })
 	}
 }
 
-export const continueRegistration = async (req, res) => {
-	const verifyToken = req.query.token
+export const verifyUser = async (req, res) => {
+	const { email, verificationCode } = req.body
 
 	try {
-		const user = await User.findOne({ activateToken: verifyToken })
+		const user = await User.findOne({ email })
+		if (!user) return res.status(404).json({ message: 'User not found' })
 
-		if (!user) {
-			return res.status(404).json({ message: 'User not found' })
-		}
+		if (user.verificationCode !== parseInt(verificationCode))
+			return res.status(400).json({ message: 'Invalid verification code' })
 
-		const token = jwt.sign({ email: user.email, id: user._id }, process.env.SECRET, { expiresIn: '5h' })
+		user.isVerified = true
 
-		res.status(200).json({ user, token })
+		await user.save()
+
+		res.status(200).json({ message: 'User verified' })
 	} catch (error) {
-		console.error('Error continuing registration:', error)
-		return res.status(500).json({ message: 'Internal server error' })
+		console.error('Error verifying user:', error)
+		res.status(500).json({ message: 'Internal server error' })
 	}
 }

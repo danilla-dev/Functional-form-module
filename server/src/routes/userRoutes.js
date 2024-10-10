@@ -1,6 +1,6 @@
 import express from 'express'
 import auth from '../middleware/auth.js'
-import { createUser, loginUser, fetchUserDetails, continueRegistration } from '../controllers/userController.js'
+import { createUser, loginUser, fetchUserDetails, verifyUser } from '../controllers/userController.js'
 
 const router = express.Router()
 
@@ -10,6 +10,8 @@ router.get('/status', auth, fetchUserDetails)
 
 router.post('/register', createUser)
 
-router.get('/complete-registration', continueRegistration)
+router.post('/verify', verifyUser)
+
+
 
 export default router

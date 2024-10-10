@@ -28,3 +28,10 @@ export const detailsSchema = yup.object().shape({
 	communicationPreferences: yup.string().required('Communication preferences are required'),
 	communicationStyle: yup.string().required('Communication style is required'),
 })
+export const validationSchema = yup.object().shape({
+	verificationCode: yup
+		.string()
+		.matches(/^[0-9]+$/, 'Code must contain only digits')
+		.length(6, 'Code must be 6 digits long')
+		.required('Code is required'),
+})

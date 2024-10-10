@@ -36,12 +36,3 @@ export const fetchUser = async () => {
 		return { error: error.response?.data?.message || 'Failed to fetch user data' }
 	}
 }
-export const continueRegistration = async token => {
-	try {
-		const response = await api.get(`${API_URL}/api/user/complete-registration?token=${token}`)
-		return response.data
-	} catch (error) {
-		console.error('Error continuing registration:', error.response?.data?.message || 'Failed to continue registration')
-		return { error: error.response?.data?.message || 'Failed to continue registration' }
-	}
-}

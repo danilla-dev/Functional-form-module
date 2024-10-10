@@ -18,22 +18,20 @@ function App() {
 	}
 
 	return (
-		<Router>
-			<Grid templateRows='repeat(100vh, 1fr, 200px)' minH='100vh'>
+		<Grid templateRows='repeat(100vh, 1fr, 200px)' minH='100vh'>
+			<Routes>
+				<Route path='/' element={<Header />} />
+			</Routes>
+			<GridItem as='main' minW='100%' minH='100vh'>
 				<Routes>
-					<Route path='/' element={<Header />} />
+					<Route path='/' element={<LandingPage />} />
+					<Route path='/subscription' element={<SubscriptionFormPage />} />
 				</Routes>
-				<GridItem as='main' minW='100%' minH='100vh'>
-					<Routes>
-						<Route path='/' element={<LandingPage />} />
-						<Route path='/subscription' element={<SubscriptionFormPage />} />
-					</Routes>
-				</GridItem>
-				<GridItem as='footer' w='100%' h='100px'>
-					<Footer />
-				</GridItem>
-			</Grid>
-		</Router>
+			</GridItem>
+			<GridItem as='footer' w='100%' h='100px'>
+				<Footer />
+			</GridItem>
+		</Grid>
 	)
 }
 

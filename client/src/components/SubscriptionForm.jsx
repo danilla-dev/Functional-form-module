@@ -27,8 +27,9 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import signUpImage from '../assets/signup-img.webp'
 import Details from './formSteps/Details'
+import VerifyCode from './formSteps/VerifyCode'
 import ActionButton from './common/ActionButton'
-import { detailsSchema, signUpSchema } from '../utils/YupSchemas'
+import { detailsSchema, signUpSchema, validationSchema } from '../utils/YupSchemas'
 
 import useRegister from '../hooks/useRegister'
 import { useAuth } from '../hooks/useAuth'
@@ -42,6 +43,7 @@ const animationVariants = {
 
 const steps = [
 	{ title: 'Sign up', description: null },
+	{ title: 'Verify code', description: null },
 	{ title: 'Details', description: null },
 	{ title: 'Payment', description: null },
 ]
@@ -75,27 +77,38 @@ const SubscriptionForm = () => {
 		initialStep: 0,
 		count: steps.length,
 	})
-	const { currentUser, login, registerUser, logout, isLoading } = useAuth()
+	const { currentUser, login, registerUser, logout, isLoading, verifyCode } = useAuth()
 	const {
 		control,
 		handleSubmit,
 		setValue,
 		formState: { errors },
 	} = useForm({
-		resolver: yupResolver(activeStep === 0 ? signUpSchema : detailsSchema),
+		resolver: yupResolver(activeStep === 0 ? signUpSchema : activeStep === 1 ? validationSchema : detailsSchema),
 	})
 
 	useEffect(() => {
+		console.log(currentUser)
 		if (currentUser && currentUser.email) {
-			setActiveStep(1)
+			if (currentUser.isVerified) {
+				setActiveStep(2)
+			} else {
+				setActiveStep(1)
+			}
 		}
 	}, [currentUser])
 
 	const handleRegister = async data => {
-		console.log(data)
 		const result = await registerUser.mutate(data)
-		if (result === 'success') {
+		if (result.email) {
 			setActiveStep(1)
+		}
+	}
+	const handleVerifyCode = async data => {
+		const { verificationCode } = data
+		const result = await verifyCode.mutate({ verificationCode, email: currentUser.email })
+		if (result.isVerified) {
+			setActiveStep(2)
 		}
 	}
 
@@ -103,7 +116,7 @@ const SubscriptionForm = () => {
 		if (activeStep === 0) {
 			handleRegister(data)
 		} else if (activeStep === 1) {
-			console.log(activeStep)
+			handleVerifyCode(data)
 		} else {
 			toast({
 				title: 'Sukces!',
@@ -138,10 +151,10 @@ const SubscriptionForm = () => {
 						<Image h='100%' w='auto' src={signUpImage} />
 					</Box>
 				) : null}
-				<Stack w={isDesktop || isTablet ? '50%' : '100%'} align='center' justify='space-evenly'>
+				<Stack w={isDesktop || isTablet ? '50%' : '100%'} align='center' justify='space-between'>
 					{currentUser && (
 						<Text fontSize='md' p='0.5em 0'>
-							Welcome back {currentUser.email}
+							{currentUser.email}
 						</Text>
 					)}
 					<StepperComponent index={activeStep} />
@@ -154,15 +167,13 @@ const SubscriptionForm = () => {
 						exit='exit'
 						transition={{ duration: 0.3 }}
 					>
-						{activeStep === 0 ? (
-							<SignUp control={control} errors={errors} authError={authError} />
-						) : (
-							<Details control={control} errors={errors} authError={authError} />
-						)}
+						{activeStep === 0 && <SignUp control={control} errors={errors} authError={authError} />}
+						{activeStep === 1 && <VerifyCode control={control} errors={errors} />}
+						{activeStep === 2 && <Details control={control} errors={errors} />}
 					</MotionBox>
 
 					<ButtonGroup justifyContent='space-around' w='100%' mt='1.5em'>
-						<ActionButton
+						{/* <ActionButton
 							text='Previous'
 							icon={<MdNavigateBefore />}
 							action={prevStep}
@@ -172,7 +183,7 @@ const SubscriptionForm = () => {
 							content={null}
 							isDisabled={activeStep === 0}
 							iconPosition='left'
-						/>
+						/> */}
 						<ActionButton
 							text={activeStep === 2 ? 'Submit' : 'Next'}
 							icon={activeStep === 2 ? <IoIosSend /> : <MdNavigateNext />}
