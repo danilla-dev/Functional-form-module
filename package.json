@@ -4,11 +4,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js", 
+    "start": "node server/server.js",
     "heroku-postbuild": "npm install --prefix client && npm run build --prefix client",
     "build": "npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "lodash": "^4.17.21",
+    "react-query": "^3.39.3"
+  }
 }

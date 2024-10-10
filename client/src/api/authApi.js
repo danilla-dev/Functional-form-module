@@ -29,7 +29,7 @@ export const loginUser = async data => {
 
 export const fetchUser = async () => {
 	try {
-		const response = await api.get(`${API_URL}/api/user/details`)
+		const response = await api.get(`${API_URL}/api/user/status`)
 		return response.data
 	} catch (error) {
 		console.error('Error fetching user:', error.response?.data?.message || 'Failed to fetch user data')

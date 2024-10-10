@@ -8,6 +8,7 @@ import './index.css'
 
 import { UIProvider } from './contexts/UIContext'
 import { AuthProvider } from './contexts/AuthContext'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 const theme = extendTheme({
 	// Ustawienia typografii
@@ -90,12 +91,7 @@ const theme = extendTheme({
 				color: 'accent.50',
 				lineHeight: '1.6',
 			},
-			label: {
-				fontSize: ['sm', 'md'],
-			},
-			input: {
-				padding: '1em',
-			},
+
 			input: {
 				padding: '1em',
 			},
@@ -117,15 +113,18 @@ const theme = extendTheme({
 		}),
 	},
 })
+const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
 		<ChakraProvider theme={theme}>
-			<UIProvider>
+			<QueryClientProvider client={queryClient}>
 				<AuthProvider>
-					<App />
+					<UIProvider>
+						<App />
+					</UIProvider>
 				</AuthProvider>
-			</UIProvider>
+			</QueryClientProvider>
 		</ChakraProvider>
 	</StrictMode>
 )

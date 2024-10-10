@@ -4,12 +4,12 @@ import { createUser, loginUser, fetchUserDetails, continueRegistration } from '.
 
 const router = express.Router()
 
-router.post('/login', loginUser)
+router.post('/login', auth, loginUser)
 
-router.get('/details', auth, fetchUserDetails)
+router.get('/status', auth, fetchUserDetails)
+
+router.post('/register', createUser)
 
 router.get('/complete-registration', continueRegistration)
-
-router.post('/create', createUser)
 
 export default router

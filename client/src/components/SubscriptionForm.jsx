@@ -69,14 +69,13 @@ const StepperComponent = ({ index }) => {
 
 const SubscriptionForm = () => {
 	const { isDesktop, isTablet } = useUI()
-	const { handleRegister, error: authError, loading } = useRegister()
+	const { error: authError } = useRegister()
 	const toast = useToast()
 	const { activeStep, setActiveStep } = useSteps({
 		initialStep: 0,
 		count: steps.length,
 	})
-	const { currentUser } = useAuth()
-
+	const { currentUser, login, registerUser, logout, isLoading } = useAuth()
 	const {
 		control,
 		handleSubmit,
@@ -90,10 +89,11 @@ const SubscriptionForm = () => {
 		if (currentUser && currentUser.email) {
 			setActiveStep(1)
 		}
-	}, currentUser)
+	}, [currentUser])
 
-	const handleRegisterUser = async data => {
-		const result = await handleRegister(data)
+	const handleRegister = async data => {
+		console.log(data)
+		const result = await registerUser.mutate(data)
 		if (result === 'success') {
 			setActiveStep(1)
 		}
@@ -101,7 +101,7 @@ const SubscriptionForm = () => {
 
 	const nextStep = async data => {
 		if (activeStep === 0) {
-			handleRegisterUser(data)
+			handleRegister(data)
 		} else if (activeStep === 1) {
 			console.log(activeStep)
 		} else {
@@ -139,7 +139,7 @@ const SubscriptionForm = () => {
 					</Box>
 				) : null}
 				<Stack w={isDesktop || isTablet ? '50%' : '100%'} align='center' justify='space-evenly'>
-					{currentUser.email && (
+					{currentUser && (
 						<Text fontSize='md' p='0.5em 0'>
 							Welcome back {currentUser.email}
 						</Text>

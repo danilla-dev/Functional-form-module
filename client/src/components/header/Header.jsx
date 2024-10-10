@@ -39,16 +39,22 @@ const Header = () => {
 			ref={componentRef}
 			minH='100vh'
 			as='header'
+			backgroundImage={isDesktop ? heroImageLG : heroImageSM}
+			bgSize={'cover'}
+			bgPosition={'center'}
+			bgRepeat={'no-repeat'}
+			overflow='hidden'
+			
 		>
 			<Navigation />
-			<Box w='100%' h='100%' pos='absolute' top={0} left={0}>
+			{/* <Box w='100%' h='100%' pos='absolute' top={0} left={0}>
 				<Image
 					src={isDesktop ? heroImageLG : heroImageSM}
 					width='100%'
 					height='100%'
 					alt='Blue hero image with cyber web in corners'
 				/>
-			</Box>
+			</Box> */}
 			<Stack
 				direction={isDesktop ? 'row' : 'column'}
 				align='center'

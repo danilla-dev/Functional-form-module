@@ -14,6 +14,7 @@ const SubscriptionFormPage = () => {
 	useEffect(() => {
 		const queryParams = new URLSearchParams(location.search)
 		const token = queryParams.get('token')
+		
 		const verifyToken = async () => {
 			const data = await continueRegistration(token)
 			login(data.user)

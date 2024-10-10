@@ -5,13 +5,16 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import cors from 'cors'
-
+import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
 import subRoutes from './src/routes/subRoutes.js'
 import userRoutes from './src/routes/userRoutes.js'
 
 dotenv.config()
 
 const app = express()
+
+app.use(helmet())
 
 const corsOptions = {
 	origin: 'http://localhost:5173',
@@ -20,6 +23,7 @@ const corsOptions = {
 }
 
 app.use(cors(corsOptions))
+app.use(cookieParser())
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -34,7 +38,7 @@ app.use((req, res, next) => {
 
 app.use(express.static(path.join(__dirname, '../client/dist')))
 
-app.use('/api/user', userRoutes)
+app.use('/api/auth', userRoutes)
 app.use('/api/sub', subRoutes)
 
 if (process.env.NODE_ENV === 'production') {
