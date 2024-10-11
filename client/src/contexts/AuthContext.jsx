@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 			const queryParams = new URLSearchParams(location.search)
 			const token = queryParams.get('token')
 
-			const response = await axios.get(`${API_URL}/auth/status?token=${token}`, {
+			const response = await axios.get(`${API_URL}/api/auth/status?token=${token}`, {
 				withCredentials: true,
 			})
 			return response.data
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 	const loginUser = useMutation({
 		mutationFn: async credentials => {
 			console.log(credentials)
-			const response = await axios.post(`${API_URL}/auth/login`, credentials, {
+			const response = await axios.post(`${API_URL}/api/auth/login`, credentials, {
 				withCredentials: true,
 			})
 			return response.data
@@ -64,9 +64,10 @@ export const AuthProvider = ({ children }) => {
 	const registerUser = useMutation({
 		mutationFn: async credentials => {
 			console.log(credentials)
-			const response = await axios.post(`${API_URL}/auth/register`, credentials, {
+			const response = await axios.post(`${API_URL}/api/auth/register`, credentials, {
 				withCredentials: true,
 			})
+			console.log(response.data)
 			return response.data
 		},
 		onSuccess: data => {
@@ -79,7 +80,7 @@ export const AuthProvider = ({ children }) => {
 
 	const logoutUser = useMutation({
 		mutationFn: async () => {
-			await axios.post(`${API_URL}/auth/logout`, null, { withCredentials: true })
+			await axios.post(`${API_URL}/api/auth/logout`, null, { withCredentials: true })
 		},
 		onSuccess: () => {
 			setCurrentUser(null)
@@ -91,7 +92,7 @@ export const AuthProvider = ({ children }) => {
 
 	const verifyCode = useMutation({
 		mutationFn: async credentials => {
-			const response = await axios.post(`${API_URL}/auth/verify`, credentials, { withCredentials: true })
+			const response = await axios.post(`${API_URL}/api/auth/verify`, credentials, { withCredentials: true })
 			console.log(response)
 			return response
 		},

@@ -30,12 +30,6 @@ const __dirname = dirname(__filename)
 
 app.use(express.json())
 
-// Middleware to log requests
-app.use((req, res, next) => {
-	console.log(`Received request: ${req.method} ${req.originalUrl}`)
-	next()
-})
-
 app.use(express.static(path.join(__dirname, '../client/dist')))
 
 app.use('/api/auth', userRoutes)

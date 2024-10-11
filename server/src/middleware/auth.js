@@ -5,6 +5,8 @@ const auth = (req, res, next) => {
 	const token = req.cookies.token
 	const verifyToken = req.query.token
 
+	console.log('auth middleware is running')
+
 	if (!token && !verifyToken) {
 		return res.status(403).json({ message: 'No token, authorization denied' })
 	}

@@ -16,7 +16,7 @@ export const createUser = async (req, res) => {
 	const { email, password } = req.body
 	const verifyToken = crypto.randomBytes(32).toString('hex')
 	const verifyCode = generateVerificationCode()
-	console.log(typeof verifyCode)
+	console.log('createUser is running')
 
 	try {
 		const existingUser = await User.findOne({ email })

@@ -7,7 +7,7 @@ export const sendRegistrationEmail = async (userEmail, token, code) => {
 
 	const sentFrom = new Sender('MS_HWFG0d@trial-7dnvo4dprk645r86.mlsender.net', 'NODEMAILER')
 
-	const recipients = [new Recipient('dkaminski38@gmail.com', 'Client')]
+	const recipients = [new Recipient(userEmail, 'Client')]
 
 	// const verificationLink = `https://functional-form-module-1.onrender.com/subscription?token=${token}`
 	const verificationLink = `http://localhost:5173/subscription?token=${token}`

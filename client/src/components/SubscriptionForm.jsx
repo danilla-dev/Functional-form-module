@@ -100,6 +100,7 @@ const SubscriptionForm = () => {
 
 	const handleRegister = async data => {
 		const result = await registerUser.mutate(data)
+		console.log(result)
 		if (result.email) {
 			setActiveStep(1)
 		}
