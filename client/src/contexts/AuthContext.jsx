@@ -5,6 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 export const AuthContext = createContext()
 
+const mode = import.meta.env.VITE_MODE
+let API_URL = 'https://functional-form-module-1.onrender.com'
+if (mode === 'development') {
+	API_URL = 'http://localhost:4000'
+}
+
 export const AuthProvider = ({ children }) => {
 	const location = useLocation()
 	const navigate = useNavigate()
@@ -24,7 +30,7 @@ export const AuthProvider = ({ children }) => {
 			const queryParams = new URLSearchParams(location.search)
 			const token = queryParams.get('token')
 
-			const response = await axios.get(`/auth/status?token=${token}`, {
+			const response = await axios.get(`${API_URL}/auth/status?token=${token}`, {
 				withCredentials: true,
 			})
 			return response.data
@@ -42,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 	const loginUser = useMutation({
 		mutationFn: async credentials => {
 			console.log(credentials)
-			const response = await axios.post('/auth/login', credentials, {
+			const response = await axios.post(`${API_URL}/auth/login`, credentials, {
 				withCredentials: true,
 			})
 			return response.data
@@ -58,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 	const registerUser = useMutation({
 		mutationFn: async credentials => {
 			console.log(credentials)
-			const response = await axios.post('/auth/register', credentials, {
+			const response = await axios.post(`${API_URL}/auth/register`, credentials, {
 				withCredentials: true,
 			})
 			return response.data
@@ -73,7 +79,7 @@ export const AuthProvider = ({ children }) => {
 
 	const logoutUser = useMutation({
 		mutationFn: async () => {
-			await axios.post('/auth/logout', null, { withCredentials: true })
+			await axios.post(`${API_URL}/auth/logout`, null, { withCredentials: true })
 		},
 		onSuccess: () => {
 			setCurrentUser(null)
@@ -85,7 +91,7 @@ export const AuthProvider = ({ children }) => {
 
 	const verifyCode = useMutation({
 		mutationFn: async credentials => {
-			const response = await axios.post('/auth/verify', credentials, { withCredentials: true })
+			const response = await axios.post(`${API_URL}/auth/verify`, credentials, { withCredentials: true })
 			console.log(response)
 			return response
 		},

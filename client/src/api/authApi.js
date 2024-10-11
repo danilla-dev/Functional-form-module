@@ -1,10 +1,5 @@
 import api from '../utils/axiosConfig'
 
-const mode = import.meta.env.VITE_MODE
-let API_URL = 'https://functional-form-module-1.onrender.com'
-if (mode === 'development') {
-	API_URL = 'http://localhost:4000'
-}
 
 export const createUser = async data => {
 	try {
