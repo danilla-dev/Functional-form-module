@@ -5,7 +5,7 @@ export const sendRegistrationEmail = async (userEmail, token, code) => {
 		apiKey: process.env.MAILER_API,
 	})
 
-	const sentFrom = new Sender('MS_HWFG0d@trial-7dnvo4dprk645r86.mlsender.net', 'NODEMAILER')
+	const sentFrom = new Sender('MS_urdoso@trial-k68zxl2ywp94j905.mlsender.net', 'FIRST')
 
 	const recipients = [new Recipient(userEmail, 'Client')]
 
