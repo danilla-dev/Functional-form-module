@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useAuth } from '../hooks/useAuth'
 import { useLocation, useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 export const SubscriptionContext = createContext()
 
@@ -30,9 +31,11 @@ export const SubscriptionProvider = ({ children }) => {
 	})
 	console.log('subscriptionDetails-', subscriptionDetails)
 
+	const token = Cookies.get('token')
+
 	const {
 		data: subData,
-		isLoading,
+		isLoading: subIsLoading,
 		isError,
 		error,
 		refetch,
@@ -44,14 +47,14 @@ export const SubscriptionProvider = ({ children }) => {
 			})
 			return response.data
 		},
-		refetchOnWindowFocus: false,
+		refetchOnWindowFocus: true,
 	})
 
 	useEffect(() => {
 		if (subData) {
 			setSubscriptionDetails(subData.subscription)
 		}
-	}, [subData])
+	}, [subData, subscriptionDetails])
 
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {
@@ -85,7 +88,9 @@ export const SubscriptionProvider = ({ children }) => {
 		},
 	})
 	return (
-		<SubscriptionContext.Provider value={{ saveSubscriptionDetails, payForSubscription, subscriptionDetails }}>
+		<SubscriptionContext.Provider
+			value={{ saveSubscriptionDetails, payForSubscription, subscriptionDetails, setSubscriptionDetails, subIsLoading }}
+		>
 			{children}
 		</SubscriptionContext.Provider>
 	)

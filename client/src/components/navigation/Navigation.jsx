@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { throttle } from 'lodash'
 import { Container, Stack, Button, Text, HStack, useDisclosure, Box, ButtonGroup } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { GiHamburgerMenu } from 'react-icons/gi'
 
@@ -11,14 +12,55 @@ import Logo from '../common/Logo'
 import ActionButton from '../common/ActionButton'
 
 import { useUI } from '../../hooks/useUI'
+import { useAuth } from '../../hooks/useAuth'
+import { useSubscribe } from '../../hooks/useSubscribe'
 
 const Navigation = () => {
 	const { isDesktop } = useUI()
+	const { logoutUser } = useAuth()
+	const { setSubscriptionDetails } = useSubscribe()
 
 	const { isOpen, onOpen, onClose } = useDisclosure()
 	const [scrollPosition, setScrollPosition] = useState(0)
+	const [buttonType, setButtonType] = useState({ text: '', path: '' })
+	const location = useLocation()
+	const navigate = useNavigate()
+
+	const logout = async () => {
+		await logoutUser.mutateAsync()
+		setSubscriptionDetails({
+			name: '',
+			price: 0,
+			details: {
+				communicationStyle: '',
+				preferences: [],
+				communicationPreferences: '',
+			},
+			paymentStatus: '',
+			subscriptionDurationType: '',
+			subscriptionEndDate: '',
+			user: '',
+		})
+		navigate('/')
+	}
 
 	useEffect(() => {
+		console.log(location.pathname)
+		switch (location.pathname) {
+			case '/':
+			case '/login':
+				setButtonType({ text: 'Get started', path: '/subscription' })
+				break
+			case '/subscription':
+				setButtonType({ text: 'Login', path: '/login' })
+				break
+			case '/dashboard':
+				setButtonType({ text: 'Logout', action: logout })
+				break
+			default:
+				break
+		}
+
 		const calculateDistance = () => {
 			const scrollTop = window.pageYOffset || document.documentElement.scrollTop
 			setScrollPosition(scrollTop)
@@ -28,7 +70,7 @@ const Navigation = () => {
 		return () => {
 			window.removeEventListener('scroll', throttledCalculateDistance)
 		}
-	}, [scrollPosition])
+	}, [scrollPosition, location.pathname])
 
 	return (
 		<Box
@@ -65,13 +107,13 @@ const Navigation = () => {
 						<Logo />
 						<NavigationLinks />
 						<ActionButton
-							text='Get started'
+							text={buttonType.text}
 							icon={null}
-							action={null}
+							action={buttonType.action}
 							ariaLabel='Sign up'
 							priority='high'
 							type='button'
-							content={<Link to='/subscription'>Get started</Link>}
+							content={<Link to={buttonType.path || null}>{buttonType.text}</Link>}
 						/>
 					</HStack>
 				)}

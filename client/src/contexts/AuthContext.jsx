@@ -2,6 +2,9 @@ import React, { createContext, useState, useEffect } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { set } from 'lodash'
+import Cookies from 'js-cookie'
+import { useSubscribe } from '../hooks/useSubscribe'
 
 export const AuthContext = createContext()
 
@@ -18,17 +21,18 @@ export const AuthProvider = ({ children }) => {
 		email: '',
 		isVerified: false,
 		subscription: null,
+		activeSub: null,
 	})
+	const [isLoading, setIsLoading] = useState(true)
 
-	console.log(currentUser)
 	const {
 		data: authData,
-		isLoading,
+		isLoading: authIsLoading,
 		isError,
 		error,
 		refetch,
 	} = useQuery({
-		queryKey: ['authStatus', location.search], // użycie queryKey
+		queryKey: ['authStatus', location.search],
 		queryFn: async () => {
 			const queryParams = new URLSearchParams(location.search)
 			const token = queryParams.get('token')
@@ -44,6 +48,7 @@ export const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		if (authData) {
 			setCurrentUser(authData.user)
+			setIsLoading(false)
 		}
 	}, [authData])
 
@@ -81,10 +86,15 @@ export const AuthProvider = ({ children }) => {
 
 	const logoutUser = useMutation({
 		mutationFn: async () => {
-			await axios.post(`${API_URL}/api/auth/logout`, null, { withCredentials: true })
+			await axios.post(`${API_URL}/api/auth/logout`, {}, { withCredentials: true })
 		},
 		onSuccess: () => {
-			setCurrentUser(null)
+			setCurrentUser({
+				email: '',
+				isVerified: false,
+				subscription: null,
+				activeSub: null,
+			})
 		},
 		onError: error => {
 			console.error('Error logging out:', error)
@@ -97,7 +107,7 @@ export const AuthProvider = ({ children }) => {
 			return response
 		},
 		onSuccess: () => {
-			refetch() // Odświeżenie danych po udanej weryfikacji
+			refetch()
 		},
 		onError: error => {
 			console.error('Error verifying code:', error)
@@ -105,7 +115,9 @@ export const AuthProvider = ({ children }) => {
 	})
 
 	return (
-		<AuthContext.Provider value={{ currentUser, loginUser, logoutUser, registerUser, isLoading, verifyCode }}>
+		<AuthContext.Provider
+			value={{ currentUser, loginUser, logoutUser, registerUser, authIsLoading, verifyCode, isLoading }}
+		>
 			{children}
 		</AuthContext.Provider>
 	)

@@ -35,3 +35,8 @@ export const validationSchema = yup.object().shape({
 		.length(6, 'Code must be 6 digits long')
 		.required('Code is required'),
 })
+
+export const LoginFormSchema = yup.object().shape({
+	email: yup.string().email('Invalid email format').required('Email is required'),
+	password: yup.string().required('Password is required'),
+})

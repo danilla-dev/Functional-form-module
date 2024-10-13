@@ -92,7 +92,6 @@ const SubscriptionForm = () => {
 
 	useEffect(() => {
 		const { isVerified, subscription, email } = currentUser
-		console.log(currentUser)
 
 		if (email) {
 			switch (true) {
@@ -140,7 +139,7 @@ const SubscriptionForm = () => {
 				verificationCode: result.verificationCode,
 			}
 			try {
-				// await handleSendEmail(emailData)
+				await handleSendEmail(emailData)
 				setActiveStep(1)
 			} catch (err) {
 				console.log(err)

@@ -3,11 +3,13 @@ import { useAuth } from '../hooks/useAuth'
 import { useSubscribe } from '../hooks/useSubscribe'
 
 const PrivateRouts = ({ element }) => {
-	const { currentUser } = useAuth()
+	const { currentUser, isLoading } = useAuth()
 	const { subscriptionDetails } = useSubscribe()
 
-	if (!currentUser) {
-		return <Navigate to='/' />
+	if (!isLoading) {
+		if (!currentUser.email) {
+			return <Navigate to='/' />
+		}
 	}
 
 	return element

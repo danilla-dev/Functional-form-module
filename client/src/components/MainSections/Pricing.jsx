@@ -76,11 +76,11 @@ const Limits = ({ option }) => {
 	)
 }
 
-const PricingCard = ({ option, key }) => {
+const PricingCard = ({ option, index }) => {
 	const { isMobile, isDesktop, isTablet } = useUI()
 
 	return (
-		<ListItem flex={1} key={key} w={isDesktop ? 350 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 500 : 700}>
+		<ListItem flex={1} key={index} w={isDesktop ? 350 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 500 : 700}>
 			<Card
 				bgColor='brand.300'
 				border={option.best ? '5px solid' : '2px solid'}

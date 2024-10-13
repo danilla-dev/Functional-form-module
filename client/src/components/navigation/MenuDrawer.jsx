@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
 	Drawer,
 	DrawerBody,
@@ -11,8 +11,9 @@ import {
 	Button,
 	Box,
 } from '@chakra-ui/react'
-
+import ActionButton from '../common/ActionButton'
 import { Link } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import NavigationLinks from '../common/NavigationLinks'
 import Logo from '../common/Logo'
@@ -21,9 +22,21 @@ import { useUI } from '../../hooks/useUI'
 
 const MenuDrawer = ({ isOpen, onClose }) => {
 	const { isDesktop } = useUI()
+	const [buttonType, setButtonType] = useState({ text: '', path: '' })
 
+	const location = useLocation()
 	isDesktop && onClose()
 
+	useEffect(() => {
+		switch (location.pathname) {
+			case '/':
+				setButtonType({ text: 'Get started', path: '/subscription' })
+				break
+			case '/subscription':
+				setButtonType({ text: 'Login', path: '/login' })
+				break
+		}
+	}, [location.pathname])
 
 	return (
 		<Drawer placement='right' onClose={onClose} isOpen={isOpen} size='full'>
@@ -45,21 +58,19 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 					<VStack fontSize='xl' align='stretch' textAlign='center' spacing='2em'>
 						<NavigationLinks onClose={!isDesktop && onClose} />
 						<Box w='100%' alignContent='center'>
-							<Button
-								borderColor='brand.50'
-								color='.50'
-								bgColor='brand.500'
-								role='button'
-								aria-label='Sign up'
-								size='lg'
-								_hover={{
-									borderColor: 'brand.100',
-									bgColor: 'brand.550',
-									color: 'brand.100',
-								}}
-							>
-								<Link to='/subscription'>Get started</Link>
-							</Button>
+							<ActionButton
+								text={buttonType.text}
+								icon={null}
+								action={null}
+								ariaLabel='Sign up'
+								priority='high'
+								type='button'
+								content={
+									<Link onClick={onClose} to={buttonType.path}>
+										{buttonType.text}
+									</Link>
+								}
+							/>
 						</Box>
 					</VStack>
 				</DrawerBody>
