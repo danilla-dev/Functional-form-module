@@ -11,22 +11,22 @@ const auth = (req, res, next) => {
 		return res.status(403).json({ message: 'No token, authorization denied' })
 	}
 
-	if (token) {
-		try {
+	try {
+		if (token) {
 			const decoded = jwt.verify(token, process.env.SECRET)
-			req.userEmail = decoded.email
 			req.userId = decoded.id
-		} catch (error) {
-			console.error('Token verification error:', error)
-			return res.status(401).json({ message: 'Token is not valid' })
+			req.userEmail = decoded.email
 		}
-	}
 
-	if (verifyToken) {
-		req.verifyToken = verifyToken
-	}
+		if (verifyToken) {
+			req.verifyToken = verifyToken
+		}
 
-	next()
+		next()
+	} catch (error) {
+		console.error('Token verification error:', error)
+		res.status(401).json({ message: 'Token is not valid' })
+	}
 }
 
 export default auth

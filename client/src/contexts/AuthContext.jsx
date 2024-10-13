@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useMemo } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -16,7 +16,6 @@ if (mode === 'development') {
 
 export const AuthProvider = ({ children }) => {
 	const location = useLocation()
-	const navigate = useNavigate()
 	const [currentUser, setCurrentUser] = useState({
 		email: '',
 		isVerified: false,
@@ -24,7 +23,8 @@ export const AuthProvider = ({ children }) => {
 		activeSub: null,
 	})
 	const [isLoading, setIsLoading] = useState(true)
-
+	console.log('AuthProvider is running')
+	console.log(currentUser)
 	const {
 		data: authData,
 		isLoading: authIsLoading,
@@ -32,10 +32,10 @@ export const AuthProvider = ({ children }) => {
 		error,
 		refetch,
 	} = useQuery({
-		queryKey: ['authStatus', location.search],
+		queryKey: ['authStatus'],
 		queryFn: async () => {
-			const queryParams = new URLSearchParams(location.search)
-			const token = queryParams.get('token')
+			console.log('authStatus queryFn is running')
+			const token = new URLSearchParams(location.search).get('token')
 
 			const response = await axios.get(`${API_URL}/api/auth/status?token=${token}`, {
 				withCredentials: true,
@@ -43,12 +43,12 @@ export const AuthProvider = ({ children }) => {
 			return response.data
 		},
 		refetchOnWindowFocus: false,
+		enabled: !!currentUser.email && location.pathname !== '/dashboard',
 	})
 
 	useEffect(() => {
 		if (authData) {
 			setCurrentUser(authData.user)
-			setIsLoading(false)
 		}
 	}, [authData])
 
@@ -60,7 +60,9 @@ export const AuthProvider = ({ children }) => {
 			return response.data
 		},
 		onSuccess: data => {
+			console.log('loginUser mutationFn is running')
 			setCurrentUser(data)
+			refetch()
 		},
 		onError: error => {
 			console.error('Error logging in:', error)
@@ -116,7 +118,7 @@ export const AuthProvider = ({ children }) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ currentUser, loginUser, logoutUser, registerUser, authIsLoading, verifyCode, isLoading }}
+			value={{ currentUser, loginUser, logoutUser, registerUser, authIsLoading, verifyCode, isLoading, refetch }}
 		>
 			{children}
 		</AuthContext.Provider>

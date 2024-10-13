@@ -85,7 +85,13 @@ export const loginUser = async (req, res) => {
 		res
 			.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV !== 'development' })
 			.status(200)
-			.json({ email: user.email, id: user._id, isVerified: user.isVerified })
+			.json({
+				email: user.email,
+				id: user._id,
+				isVerified: user.isVerified,
+				subscription: user.subscription,
+				activeSub: user.activeSub,
+			})
 	} catch (error) {
 		console.error('Error logging in:', error)
 		return res.status(500).json({ message: 'Internal server error' })

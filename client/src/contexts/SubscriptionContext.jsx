@@ -14,8 +14,6 @@ if (mode === 'development') {
 }
 
 export const SubscriptionProvider = ({ children }) => {
-	const location = useLocation()
-
 	const [subscriptionDetails, setSubscriptionDetails] = useState({
 		name: '',
 		price: 0,
@@ -29,9 +27,7 @@ export const SubscriptionProvider = ({ children }) => {
 		subscriptionEndDate: '',
 		user: '',
 	})
-	console.log('subscriptionDetails-', subscriptionDetails)
-
-	const token = Cookies.get('token')
+	const location = useLocation()
 
 	const {
 		data: subData,
@@ -42,12 +38,14 @@ export const SubscriptionProvider = ({ children }) => {
 	} = useQuery({
 		queryKey: ['subData'],
 		queryFn: async () => {
+			console.log('subData queryFn is running')
 			const response = await axios.get(`${API_URL}/api/sub/details`, {
 				withCredentials: true,
 			})
 			return response.data
 		},
-		refetchOnWindowFocus: true,
+		refetchOnWindowFocus: false,
+		enabled: !!subscriptionDetails.name && location.pathname !== '/dashboard',
 	})
 
 	useEffect(() => {
@@ -89,7 +87,14 @@ export const SubscriptionProvider = ({ children }) => {
 	})
 	return (
 		<SubscriptionContext.Provider
-			value={{ saveSubscriptionDetails, payForSubscription, subscriptionDetails, setSubscriptionDetails, subIsLoading }}
+			value={{
+				saveSubscriptionDetails,
+				payForSubscription,
+				subscriptionDetails,
+				setSubscriptionDetails,
+				subIsLoading,
+				refetch,
+			}}
 		>
 			{children}
 		</SubscriptionContext.Provider>

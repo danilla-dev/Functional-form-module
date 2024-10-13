@@ -45,7 +45,6 @@ const Navigation = () => {
 	}
 
 	useEffect(() => {
-		console.log(location.pathname)
 		switch (location.pathname) {
 			case '/':
 			case '/login':
@@ -71,6 +70,22 @@ const Navigation = () => {
 			window.removeEventListener('scroll', throttledCalculateDistance)
 		}
 	}, [scrollPosition, location.pathname])
+	useEffect(() => {
+		switch (location.pathname) {
+			case '/':
+			case '/login':
+				setButtonType({ text: 'Get started', path: '/subscription' })
+				break
+			case '/subscription':
+				setButtonType({ text: 'Login', path: '/login' })
+				break
+			case '/dashboard':
+				setButtonType({ text: 'Logout', action: logout })
+				break
+			default:
+				break
+		}
+	}, [location.pathname])
 
 	return (
 		<Box

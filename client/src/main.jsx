@@ -117,6 +117,8 @@ const theme = extendTheme({
 })
 const queryClient = new QueryClient()
 
+const mode = import.meta.env.VITE_MODE
+
 createRoot(document.getElementById('root')).render(
 	<StrictMode>
 		<ChakraProvider theme={theme}>

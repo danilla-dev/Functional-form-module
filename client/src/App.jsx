@@ -19,7 +19,7 @@ function App() {
 	const { currentUser, loginUser, logoutUser, registerUser, authIsLoading, isLoading } = useAuth()
 	const { subIsLoading } = useSubscribe()
 
-	if (authIsLoading && subIsLoading) {
+	if (authIsLoading) {
 		return (
 			<Center h='100vh'>
 				<Spinner size='xl' />
