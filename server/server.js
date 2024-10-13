@@ -10,6 +10,7 @@ import helmet from 'helmet'
 import subRoutes from './src/routes/subRoutes.js'
 import userRoutes from './src/routes/userRoutes.js'
 import paymentRoutes from './src/routes/paymentRoutes.js'
+import { updateDatabase } from './src/controllers/paymentController.js'
 
 dotenv.config()
 
@@ -29,13 +30,15 @@ app.use(cookieParser())
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+app.use('/api/payment/webhook', express.raw({ type: 'application/json' }), updateDatabase)
+
 app.use(express.json())
 
 app.use(express.static(path.join(__dirname, '../client/dist')))
 
+app.use('/api/payment', paymentRoutes)
 app.use('/api/auth', userRoutes)
 app.use('/api/sub', subRoutes)
-app.use('/api/payment', paymentRoutes)
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, '../client/dist')))

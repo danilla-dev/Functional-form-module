@@ -25,9 +25,9 @@ export const postPayment = async (req, res) => {
 				},
 			],
 			mode: 'payment',
-			success_url: `${process.env.CLIENT_URL}/success`,
+			success_url: `${process.env.CLIENT_URL}/dashboard`,
 			cancel_url: `${process.env.CLIENT_URL}/cancel`,
-			metadata: { user_id: toString(user._id), sub_id: toString(sub._id) },
+			metadata: { user_id: user._id.toString(), sub_id: sub._id.toString() },
 		})
 		res.status(200).json({ url: session.url })
 	} catch (error) {
@@ -38,19 +38,19 @@ export const postPayment = async (req, res) => {
 export const updateDatabase = async (req, res) => {
 	console.log('Webhook received')
 	const sig = req.headers['stripe-signature']
-	const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
+	const endpointSecret = 'whsec_c056cf9a1c4190092b9687aa56a31d7c74207b835ef96a534a163036ce202445'
 
 	let event
 
 	try {
 		event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret)
 	} catch (err) {
+		console.log('Error:', err.message)
 		return res.status(400).send(`Webhook Error: ${err.message}`)
 	}
 
 	if (event.type === 'checkout.session.completed') {
 		const session = event.data.object
-
 		const userId = session.metadata.user_id
 		const subscriptionId = session.metadata.sub_id
 
@@ -60,9 +60,6 @@ export const updateDatabase = async (req, res) => {
 
 			await user.updateOne({ activeSub: true }, { new: true })
 			await sub.updateOne({ paymentStatus: 'paid' }, { new: true })
-
-			console.log('userId:', userId)
-			console.log('subscriptionId:', subscriptionId)
 
 			return res.status(200).send('Webhook received and processed')
 		} catch (error) {

@@ -6,6 +6,6 @@ const router = express.Router()
 
 router.get('/details', auth, getUserSubscription)
 
-router.post('/details', postUserSubscription)
+router.post('/details', auth, postUserSubscription)
 
 export default router

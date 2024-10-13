@@ -2,11 +2,25 @@ import { Subscription } from '../models/subModel.js'
 import { User } from '../models/userModel.js'
 import mongoose from 'mongoose'
 export const getUserSubscription = async (req, res) => {
-	// getSub
-	res.send('getSub')
+	const userID = req.userId
+	const userEmail = req.userEmail
+	try {
+		const user = await User.findOne({ email: userEmail })
+
+		const subscription = await Subscription.findOne({ user: user._id })
+		if (!subscription) {
+			return res.status(404).json({ message: 'Subscription not found' })
+		}
+		res.status(200).json({ subscription })
+	} catch (error) {
+		console.error('Error getting user subscription:', error)
+		console.log(error)
+	}
 }
 export const postUserSubscription = async (req, res) => {
 	const userID = req.userId
+	const userEmail = req.userEmail
+
 	const { communicationStyle, preferences, communicationPreferences } = req.body
 	const details = {
 		communicationStyle,
@@ -14,8 +28,9 @@ export const postUserSubscription = async (req, res) => {
 		communicationPreferences,
 	}
 	try {
-		const user = await User.findOne(userID)
+		const user = await User.findOne({ email: userEmail })
 
+		const subDate = new Date()
 		const newSub = await Subscription.findOneAndUpdate(
 			{ user: user._id },
 			{
@@ -26,7 +41,7 @@ export const postUserSubscription = async (req, res) => {
 					details: details,
 					paymentStatus: 'pending',
 					subscriptionDurationType: 'months',
-					subscriptionEndDate: new Date(),
+					subscriptionEndDate: subDate.setMonth(subDate.getMonth() + 1),
 				},
 			},
 			{ new: true }
@@ -40,7 +55,7 @@ export const postUserSubscription = async (req, res) => {
 			{ new: true }
 		)
 
-		res.status(201).json({ message: 'Subscription created' })
+		res.status(201).json({ message: 'Subscription created', subscription: newSub })
 	} catch (error) {
 		console.error('Error creating subscription:', error)
 		console.log(error)

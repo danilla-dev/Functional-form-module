@@ -6,7 +6,9 @@ import Footer from './components/Footer'
 import { Grid, GridItem, useBreakpointValue } from '@chakra-ui/react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import SubscriptionFormPage from './components/SubscriptionFormPage'
+import DashboardPage from './components/DashboardPage'
 import { useAuth } from './hooks/useAuth'
+import PrivateRouts from './components/PrivateRouts'
 
 import './App.css'
 
@@ -26,6 +28,7 @@ function App() {
 				<Routes>
 					<Route path='/' element={<LandingPage />} />
 					<Route path='/subscription' element={<SubscriptionFormPage />} />
+					<Route path='/dashboard' element={<PrivateRouts element={<DashboardPage />} />} />
 				</Routes>
 			</GridItem>
 			<GridItem as='footer' w='100%' h='100px'>

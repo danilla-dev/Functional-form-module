@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, Children } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useAuth } from '../hooks/useAuth'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export const SubscriptionContext = createContext()
 
@@ -12,8 +13,45 @@ if (mode === 'development') {
 }
 
 export const SubscriptionProvider = ({ children }) => {
-	const [subscriptionDetails, setSubscriptionDetails] = useState(null)
-	const [subscriptionPaymentDetails, setSubscriptionPaymentDetails] = useState(null)
+	const location = useLocation()
+
+	const [subscriptionDetails, setSubscriptionDetails] = useState({
+		name: '',
+		price: 0,
+		details: {
+			communicationStyle: '',
+			preferences: [],
+			communicationPreferences: '',
+		},
+		paymentStatus: '',
+		subscriptionDurationType: '',
+		subscriptionEndDate: '',
+		user: '',
+	})
+	console.log('subscriptionDetails-', subscriptionDetails)
+
+	const {
+		data: subData,
+		isLoading,
+		isError,
+		error,
+		refetch,
+	} = useQuery({
+		queryKey: ['subData'],
+		queryFn: async () => {
+			const response = await axios.get(`${API_URL}/api/sub/details`, {
+				withCredentials: true,
+			})
+			return response.data
+		},
+		refetchOnWindowFocus: false,
+	})
+
+	useEffect(() => {
+		if (subData) {
+			setSubscriptionDetails(subData.subscription)
+		}
+	}, [subData])
 
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {
@@ -23,7 +61,8 @@ export const SubscriptionProvider = ({ children }) => {
 			return response.data
 		},
 		onSuccess: data => {
-			setSubscriptionDetails(data)
+			console.log(data)
+			setSubscriptionDetails(data.subscription)
 		},
 		onError: error => {
 			console.error('Error setting subscription details:', error)
@@ -46,7 +85,7 @@ export const SubscriptionProvider = ({ children }) => {
 		},
 	})
 	return (
-		<SubscriptionContext.Provider value={{ saveSubscriptionDetails, payForSubscription }}>
+		<SubscriptionContext.Provider value={{ saveSubscriptionDetails, payForSubscription, subscriptionDetails }}>
 			{children}
 		</SubscriptionContext.Provider>
 	)
