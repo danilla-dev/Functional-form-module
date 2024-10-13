@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import subRoutes from './src/routes/subRoutes.js'
 import userRoutes from './src/routes/userRoutes.js'
+import paymentRoutes from './src/routes/paymentRoutes.js'
 
 dotenv.config()
 
@@ -34,6 +35,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')))
 
 app.use('/api/auth', userRoutes)
 app.use('/api/sub', subRoutes)
+app.use('/api/payment', paymentRoutes)
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, '../client/dist')))

@@ -13,6 +13,7 @@ if (mode === 'development') {
 
 export const SubscriptionProvider = ({ children }) => {
 	const [subscriptionDetails, setSubscriptionDetails] = useState(null)
+	const [subscriptionPaymentDetails, setSubscriptionPaymentDetails] = useState(null)
 
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {
@@ -29,5 +30,24 @@ export const SubscriptionProvider = ({ children }) => {
 		},
 	})
 
-	return <SubscriptionContext.Provider value={{ saveSubscriptionDetails }}>{children}</SubscriptionContext.Provider>
+	const payForSubscription = useMutation({
+		mutationFn: async credentials => {
+			const response = await axios.post(`${API_URL}/api/payment`, credentials, {
+				withCredentials: true,
+			})
+			return response.data
+		},
+		onSuccess: async paymentIntent => {
+			const { url } = paymentIntent
+			window.location.href = url
+		},
+		onError: error => {
+			console.error('Error paying for subscription:', error)
+		},
+	})
+	return (
+		<SubscriptionContext.Provider value={{ saveSubscriptionDetails, payForSubscription }}>
+			{children}
+		</SubscriptionContext.Provider>
+	)
 }

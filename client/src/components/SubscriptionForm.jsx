@@ -16,6 +16,7 @@ import {
 	Image,
 	Stack,
 	useToast,
+	HStack,
 } from '@chakra-ui/react'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
@@ -45,7 +46,7 @@ const animationVariants = {
 
 const steps = [
 	{ title: 'Sign up', description: null },
-	{ title: 'Verify code', description: null },
+	{ title: 'Verify', description: null },
 	{ title: 'Details', description: null },
 	{ title: 'Payment', description: null },
 ]
@@ -53,9 +54,9 @@ const steps = [
 const StepperComponent = ({ index }) => {
 	return (
 		<Box w='95%' mb='1em'>
-			<Stepper index={index} size='md'>
+			<Stepper index={index} size='md' flexWrap='wrap' justifyContent='center'>
 				{steps.map((step, index) => (
-					<Step key={index}>
+					<Step key={index} flex='1' p='0 .25em'>
 						<StepIndicator>
 							<StepStatus complete={<StepIcon />} incomplete={<StepNumber />} active={<StepNumber />} />
 						</StepIndicator>
@@ -80,7 +81,7 @@ const SubscriptionForm = () => {
 		count: steps.length,
 	})
 	const { currentUser, login, registerUser, logout, isLoading, verifyCode } = useAuth()
-	const { saveSubscriptionDetails } = useSubscribe()
+	const { saveSubscriptionDetails, payForSubscription } = useSubscribe()
 	const {
 		control,
 		handleSubmit,
@@ -93,15 +94,20 @@ const SubscriptionForm = () => {
 	useEffect(() => {
 		const { isVerified, subscription, email } = currentUser
 		console.log(currentUser)
+
 		if (email) {
-			if (!isVerified) {
-				setActiveStep(1)
-			}
-			if (isVerified && subscription === null) {
-				setActiveStep(2)
-			}
-			if (isVerified && subscription !== null) {
-				setActiveStep(3)
+			switch (true) {
+				case !isVerified:
+					setActiveStep(1)
+					break
+				case isVerified && subscription === null:
+					setActiveStep(2)
+					break
+				case isVerified && subscription !== null:
+					setActiveStep(3)
+					break
+				default:
+					break
 			}
 		} else {
 			setActiveStep(0)
@@ -156,9 +162,10 @@ const SubscriptionForm = () => {
 
 	const handleSaveDetails = async data => {
 		const result = await saveSubscriptionDetails.mutateAsync(data)
-		if (result.message === 'Subscription created') {
-			setActiveStep(3)
-		}
+	}
+
+	const handlePayment = async data => {
+		const result = await payForSubscription.mutateAsync(data)
 	}
 
 	const nextStep = async data => {
@@ -170,7 +177,9 @@ const SubscriptionForm = () => {
 				handleVerifyCode(data)
 				break
 			case 2:
-				handleSaveDetails(data)
+				await handleSaveDetails(data)
+				await handlePayment({ amount: 1000 })
+				setActiveStep(3)
 				break
 			default:
 				toast({
@@ -227,7 +236,7 @@ const SubscriptionForm = () => {
 
 					<ButtonGroup justifyContent='space-around' w='100%' mt='1.5em'>
 						<ActionButton
-							text={activeStep === 2 ? 'Submit' : 'Next'}
+							text={activeStep === 2 ? 'Pay' : 'Next'}
 							icon={activeStep === 2 ? <IoIosSend /> : <MdNavigateNext />}
 							action={handleSubmit(nextStep)}
 							ariaLabel='Send Question'
