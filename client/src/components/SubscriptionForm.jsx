@@ -34,6 +34,7 @@ import { detailsSchema, signUpSchema, validationSchema } from '../utils/YupSchem
 
 import useRegister from '../hooks/useRegister'
 import { useAuth } from '../hooks/useAuth'
+import { useSubscribe } from '../hooks/useSubscribe'
 
 const MotionBox = motion(Box)
 const animationVariants = {
@@ -79,6 +80,7 @@ const SubscriptionForm = () => {
 		count: steps.length,
 	})
 	const { currentUser, login, registerUser, logout, isLoading, verifyCode } = useAuth()
+	const { saveSubscriptionDetails } = useSubscribe()
 	const {
 		control,
 		handleSubmit,
@@ -89,15 +91,24 @@ const SubscriptionForm = () => {
 	})
 
 	useEffect(() => {
-		if (currentUser && currentUser.email) {
-			if (currentUser.isVerified) {
-				setActiveStep(2)
-			} else {
+		const { isVerified, subscription, email } = currentUser
+		console.log(currentUser)
+		if (email) {
+			if (!isVerified) {
 				setActiveStep(1)
 			}
+			if (isVerified && subscription === null) {
+				setActiveStep(2)
+			}
+			if (isVerified && subscription !== null) {
+				setActiveStep(3)
+			}
+		} else {
+			setActiveStep(0)
 		}
 	}, [currentUser])
 
+	// do przeniesienia do osobnego pliku
 	const handleSendEmail = async emailData => {
 		const emailParams = {
 			user_email: emailData.user_email,
@@ -127,7 +138,7 @@ const SubscriptionForm = () => {
 				verificationCode: result.verificationCode,
 			}
 			try {
-				await handleSendEmail(emailData)
+				// await handleSendEmail(emailData)
 				setActiveStep(1)
 			} catch (err) {
 				console.log(err)
@@ -143,23 +154,34 @@ const SubscriptionForm = () => {
 		}
 	}
 
-	const nextStep = async data => {
-		if (activeStep === 0) {
-			handleRegister(data)
-		} else if (activeStep === 1) {
-			handleVerifyCode(data)
-		} else {
-			toast({
-				title: 'Sukces!',
-				description: 'Formularz został pomyślnie przesłany.',
-				status: 'success',
-				duration: 5000,
-				isClosable: true,
-			})
+	const handleSaveDetails = async data => {
+		const result = await saveSubscriptionDetails.mutateAsync(data)
+		if (result.message === 'Subscription created') {
+			setActiveStep(3)
 		}
 	}
 
-	// const prevStep = () => setActiveStep(activeStep - 1)
+	const nextStep = async data => {
+		switch (activeStep) {
+			case 0:
+				handleRegister(data)
+				break
+			case 1:
+				handleVerifyCode(data)
+				break
+			case 2:
+				handleSaveDetails(data)
+				break
+			default:
+				toast({
+					title: 'Sukces!',
+					description: 'Formularz został pomyślnie przesłany.',
+					status: 'success',
+					duration: 5000,
+					isClosable: true,
+				})
+		}
+	}
 
 	return (
 		<Box
@@ -204,17 +226,6 @@ const SubscriptionForm = () => {
 					</MotionBox>
 
 					<ButtonGroup justifyContent='space-around' w='100%' mt='1.5em'>
-						{/* <ActionButton
-							text='Previous'
-							icon={<MdNavigateBefore />}
-							action={prevStep}
-							ariaLabel='Send Question'
-							priority='low'
-							type='button'
-							content={null}
-							isDisabled={activeStep === 0}
-							iconPosition='left'
-						/> */}
 						<ActionButton
 							text={activeStep === 2 ? 'Submit' : 'Next'}
 							icon={activeStep === 2 ? <IoIosSend /> : <MdNavigateNext />}

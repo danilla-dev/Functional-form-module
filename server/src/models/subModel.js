@@ -14,7 +14,7 @@ const subSchema = new Schema({
 	},
 	details: {
 		type: Map,
-		of: Array,
+		of: Object,
 		required: true,
 	},
 	paymentStatus: {
@@ -40,12 +40,11 @@ const subSchema = new Schema({
 		type: Date,
 		default: Date.now,
 	},
-	userId: {
+	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',
 		required: true,
 	},
-	timestamps: true,
 })
 
-export default mongoose.model('Subscription', subSchema)
+export const Subscription = mongoose.model('Subscription', subSchema)

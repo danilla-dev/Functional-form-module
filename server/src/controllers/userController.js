@@ -1,10 +1,10 @@
 import { User } from '../models/userModel.js'
+import { Subscription } from '../models/subModel.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import crypto from 'crypto'
-
-import { sendRegistrationEmail } from '../Utils/sendSignUpMail.js'
+import mongoose from 'mongoose'
 
 dotenv.config()
 
@@ -32,12 +32,11 @@ export const createUser = async (req, res) => {
 			isVerified: false,
 			activeSub: false,
 			verificationCode: verifyCode,
+			subscription: null,
 		})
 		newUser.save()
 
 		const token = jwt.sign({ email: newUser.email, id: newUser._id }, process.env.SECRET, { expiresIn: '5h' })
-
-		// await sendRegistrationEmail(newUser.email, verifyToken, verifyCode)
 
 		res
 			.status(201) // Najpierw ustaw status
@@ -48,6 +47,7 @@ export const createUser = async (req, res) => {
 				isVerified: newUser.isVerified,
 				activateToken: verifyToken,
 				verificationCode: verifyCode,
+				subscription: null,
 			})
 	} catch (error) {
 		console.error('Error creating user:', error)
@@ -80,6 +80,7 @@ export const loginUser = async (req, res) => {
 }
 
 export const fetchUserDetails = async (req, res) => {
+	console.log('fetchUserDetails is running')
 	const token = req.cookies.token
 	const verifyToken = req.query.token
 
@@ -96,16 +97,17 @@ export const fetchUserDetails = async (req, res) => {
 			return res
 				.cookie('token', token, { httpOnly: true, sameSite: 'Strict', secure: process.env.NODE_ENV !== 'development' })
 				.status(200)
-				.json({ user: { email: user.email, id: user._id, isVerified: user.isVerified } })
+				.json({
+					user: { email: user.email, id: user._id, isVerified: user.isVerified, subscription: user.subscription },
+				})
 		}
 
 		const decoded = jwt.verify(token, process.env.SECRET)
 
 		const user = await User.findOne({ email: decoded.email })
 		if (!user) return res.status(404).json({ message: 'User not found' })
-		console.log(decoded)
 
-		res.status(200).json({ user: { ...decoded, isVerified: user.isVerified } })
+		res.status(200).json({ user: { ...decoded, isVerified: user.isVerified, subscription: user.subscription } })
 	} catch (error) {
 		if (error.name === 'TokenExpiredError') {
 			return res.status(401).json({ message: 'Token has expired' })

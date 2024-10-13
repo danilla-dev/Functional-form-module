@@ -1,9 +1,5 @@
-import { useState } from 'react'
-import { useAuth } from '../hooks/useAuth'
-
-const useSubscribe = () => {
-	const { currentUser } = useAuth()
-	return <div>useSubscribe</div>
+import { useContext } from 'react'
+import { SubscriptionContext } from '../contexts/SubscriptionContext'
+export const useSubscribe = () => {
+	return useContext(SubscriptionContext)
 }
-
-export default useSubscribe

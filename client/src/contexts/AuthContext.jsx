@@ -14,8 +14,13 @@ if (mode === 'development') {
 export const AuthProvider = ({ children }) => {
 	const location = useLocation()
 	const navigate = useNavigate()
-	const [currentUser, setCurrentUser] = useState(null)
+	const [currentUser, setCurrentUser] = useState({
+		email: '',
+		isVerified: false,
+		subscription: null,
+	})
 
+	console.log(currentUser)
 	const {
 		data: authData,
 		isLoading,
@@ -34,7 +39,6 @@ export const AuthProvider = ({ children }) => {
 			return response.data
 		},
 		refetchOnWindowFocus: false,
-		enabled: !!location.search,
 	})
 
 	useEffect(() => {
@@ -60,12 +64,14 @@ export const AuthProvider = ({ children }) => {
 
 	const registerUser = useMutation({
 		mutationFn: async credentials => {
+			console.log('registerUser mutationFn is running')
 			const response = await axios.post(`${API_URL}/api/auth/register`, credentials, {
 				withCredentials: true,
 			})
 			return response.data
 		},
 		onSuccess: data => {
+			console.log(data)
 			setCurrentUser(data)
 		},
 		onError: error => {

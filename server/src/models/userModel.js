@@ -10,6 +10,7 @@ const userSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
+		unique: true,
 	},
 	password: {
 		type: String,
@@ -32,6 +33,10 @@ const userSchema = new Schema({
 		type: Boolean,
 		default: false,
 		required: true,
+	},
+	subscription: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Subscription',
 	},
 	createdAt: {
 		type: Date,
