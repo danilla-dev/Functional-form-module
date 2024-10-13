@@ -48,7 +48,6 @@ const steps = [
 	{ title: 'Sign up', description: null },
 	{ title: 'Verify', description: null },
 	{ title: 'Details', description: null },
-	{ title: 'Payment', description: null },
 ]
 
 const StepperComponent = ({ index }) => {
@@ -102,9 +101,6 @@ const SubscriptionForm = () => {
 					break
 				case isVerified && subscription === null:
 					setActiveStep(2)
-					break
-				case isVerified && subscription !== null:
-					setActiveStep(3)
 					break
 				default:
 					break

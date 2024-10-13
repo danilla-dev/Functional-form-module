@@ -32,7 +32,7 @@ export const SubscriptionProvider = ({ children }) => {
 
 	const payForSubscription = useMutation({
 		mutationFn: async credentials => {
-			const response = await axios.post(`${API_URL}/api/payment`, credentials, {
+			const response = await axios.post(`${API_URL}/api/payment/`, credentials, {
 				withCredentials: true,
 			})
 			return response.data

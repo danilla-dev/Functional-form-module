@@ -15,16 +15,22 @@ export const postUserSubscription = async (req, res) => {
 	}
 	try {
 		const user = await User.findOne(userID)
-		const newSubscription = new Subscription({
-			name: 'Basic',
-			price: 99,
-			details: details,
-			paymentStatus: 'pending',
-			subscriptionDurationType: 'months',
-			subscriptionEndDate: new Date(),
-			user: user._id,
-		})
-		const newSub = await newSubscription.save()
+
+		const newSub = await Subscription.findOneAndUpdate(
+			{ user: user._id },
+			{
+				$set: {
+					user: user._id,
+					name: 'Basic',
+					price: 99,
+					details: details,
+					paymentStatus: 'pending',
+					subscriptionDurationType: 'months',
+					subscriptionEndDate: new Date(),
+				},
+			},
+			{ new: true }
+		)
 
 		await User.findByIdAndUpdate(
 			user._id,

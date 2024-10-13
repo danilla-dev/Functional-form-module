@@ -34,7 +34,17 @@ export const createUser = async (req, res) => {
 			verificationCode: verifyCode,
 			subscription: null,
 		})
-		newUser.save()
+		const newSub = new Subscription({
+			user: newUser._id,
+			name: 'none',
+			price: 0,
+			details: { data: 'none' },
+			paymentStatus: 'pending',
+			subscriptionDurationType: 'months',
+			subscriptionEndDate: new Date(),
+		})
+		await newUser.save()
+		await newSub.save()
 
 		const token = jwt.sign({ email: newUser.email, id: newUser._id }, process.env.SECRET, { expiresIn: '5h' })
 
@@ -44,6 +54,8 @@ export const createUser = async (req, res) => {
 			.json({
 				email: newUser.email,
 				id: newUser._id,
+				details: {},
+				paymentStatus: 'pending',
 				isVerified: newUser.isVerified,
 				activateToken: verifyToken,
 				verificationCode: verifyCode,
