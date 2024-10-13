@@ -16,8 +16,6 @@ export const AuthProvider = ({ children }) => {
 	const navigate = useNavigate()
 	const [currentUser, setCurrentUser] = useState(null)
 
-	console.log(currentUser && currentUser)
-
 	const {
 		data: authData,
 		isLoading,
@@ -47,7 +45,6 @@ export const AuthProvider = ({ children }) => {
 
 	const loginUser = useMutation({
 		mutationFn: async credentials => {
-			console.log(credentials)
 			const response = await axios.post(`${API_URL}/api/auth/login`, credentials, {
 				withCredentials: true,
 			})
@@ -63,11 +60,9 @@ export const AuthProvider = ({ children }) => {
 
 	const registerUser = useMutation({
 		mutationFn: async credentials => {
-			console.log(credentials)
 			const response = await axios.post(`${API_URL}/api/auth/register`, credentials, {
 				withCredentials: true,
 			})
-			console.log(response.data)
 			return response.data
 		},
 		onSuccess: data => {
@@ -93,7 +88,6 @@ export const AuthProvider = ({ children }) => {
 	const verifyCode = useMutation({
 		mutationFn: async credentials => {
 			const response = await axios.post(`${API_URL}/api/auth/verify`, credentials, { withCredentials: true })
-			console.log(response)
 			return response
 		},
 		onSuccess: () => {

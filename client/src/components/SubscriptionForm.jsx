@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
 	Text,
 	Box,
@@ -17,6 +17,7 @@ import {
 	Stack,
 	useToast,
 } from '@chakra-ui/react'
+import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
 import { useUI } from '../hooks/useUI'
 import SignUp from './formSteps/SignUp'
@@ -88,7 +89,6 @@ const SubscriptionForm = () => {
 	})
 
 	useEffect(() => {
-		console.log(currentUser)
 		if (currentUser && currentUser.email) {
 			if (currentUser.isVerified) {
 				setActiveStep(2)
@@ -98,16 +98,46 @@ const SubscriptionForm = () => {
 		}
 	}, [currentUser])
 
+	const handleSendEmail = async emailData => {
+		const emailParams = {
+			user_email: emailData.user_email,
+			activateToken: emailData.activateToken,
+			verificationCode: emailData.verificationCode,
+			from_name: 'AiAgent Team',
+		}
+		emailjs
+			.send('service_lz7paam', 'template_xom0uko', emailParams, {
+				publicKey: '04XVAlf182bnevLBl',
+			})
+			.then(
+				() => {
+					console.log('SUCCESS!')
+				},
+				error => {
+					console.log('FAILED...', error.text)
+				}
+			)
+	}
 	const handleRegister = async data => {
-		const result = await registerUser.mutate(data)
-		console.log(result)
+		const result = await registerUser.mutateAsync(data)
 		if (result.email) {
-			setActiveStep(1)
+			const emailData = {
+				user_email: result.email,
+				activateToken: result.activateToken,
+				verificationCode: result.verificationCode,
+			}
+			try {
+				await handleSendEmail(emailData)
+				setActiveStep(1)
+			} catch (err) {
+				console.log(err)
+			}
 		}
 	}
+
 	const handleVerifyCode = async data => {
 		const { verificationCode } = data
-		const result = await verifyCode.mutate({ verificationCode, email: currentUser.email })
+		const result = await verifyCode.mutateAsync({ verificationCode, email: currentUser.email })
 		if (result.isVerified) {
 			setActiveStep(2)
 		}
@@ -129,7 +159,7 @@ const SubscriptionForm = () => {
 		}
 	}
 
-	const prevStep = () => setActiveStep(activeStep - 1)
+	// const prevStep = () => setActiveStep(activeStep - 1)
 
 	return (
 		<Box

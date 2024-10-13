@@ -37,12 +37,18 @@ export const createUser = async (req, res) => {
 
 		const token = jwt.sign({ email: newUser.email, id: newUser._id }, process.env.SECRET, { expiresIn: '5h' })
 
-		await sendRegistrationEmail(newUser.email, verifyToken, verifyCode)
+		// await sendRegistrationEmail(newUser.email, verifyToken, verifyCode)
 
 		res
 			.status(201) // Najpierw ustaw status
 			.cookie('token', token, { httpOnly: true, sameSite: 'Strict', secure: process.env.NODE_ENV !== 'development' })
-			.json({ email: newUser.email, id: newUser._id, isVerified: newUser.isVerified })
+			.json({
+				email: newUser.email,
+				id: newUser._id,
+				isVerified: newUser.isVerified,
+				activateToken: verifyToken,
+				verificationCode: verifyCode,
+			})
 	} catch (error) {
 		console.error('Error creating user:', error)
 		console.log(error)

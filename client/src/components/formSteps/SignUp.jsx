@@ -13,7 +13,6 @@ import {
 import { Controller } from 'react-hook-form'
 
 const SignUp = ({ control, errors, authError }) => {
-	console.log(authError)
 
 	const inputs = [
 		{
