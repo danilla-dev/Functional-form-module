@@ -70,22 +70,6 @@ const Navigation = () => {
 			window.removeEventListener('scroll', throttledCalculateDistance)
 		}
 	}, [scrollPosition, location.pathname])
-	useEffect(() => {
-		switch (location.pathname) {
-			case '/':
-			case '/login':
-				setButtonType({ text: 'Get started', path: '/subscription' })
-				break
-			case '/subscription':
-				setButtonType({ text: 'Login', path: '/login' })
-				break
-			case '/dashboard':
-				setButtonType({ text: 'Logout', action: logout })
-				break
-			default:
-				break
-		}
-	}, [location.pathname])
 
 	return (
 		<Box
@@ -120,7 +104,7 @@ const Navigation = () => {
 				) : (
 					<HStack spacing='7em' color='brand.50' w='100%' justify='space-between'>
 						<Logo />
-						<NavigationLinks />
+						{location.pathname === '/' && <NavigationLinks />}
 						<ActionButton
 							text={buttonType.text}
 							icon={null}

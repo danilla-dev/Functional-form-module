@@ -1,6 +1,7 @@
 import React from 'react'
 import { Stack, Text } from '@chakra-ui/react'
 import { Link } from 'react-scroll'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { useUI } from '../../hooks/useUI'
 

@@ -44,6 +44,8 @@ export const AuthProvider = ({ children }) => {
 		},
 		refetchOnWindowFocus: false,
 		enabled: !!currentUser.email && location.pathname !== '/dashboard',
+		staleTime: 1000 * 60 * 2,
+		cacheTime: 1000 * 60 * 5,
 	})
 
 	useEffect(() => {

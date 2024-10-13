@@ -46,6 +46,8 @@ export const SubscriptionProvider = ({ children }) => {
 		},
 		refetchOnWindowFocus: false,
 		enabled: !!subscriptionDetails.name && location.pathname !== '/dashboard',
+		staleTime: 1000 * 60 * 2,
+		cacheTime: 1000 * 60 * 5,
 	})
 
 	useEffect(() => {
