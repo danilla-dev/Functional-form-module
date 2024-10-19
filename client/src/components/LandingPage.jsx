@@ -5,6 +5,7 @@ import BestFeatures from './MainSections/BestFeatures'
 import Pricing from './MainSections/Pricing'
 import FAQ from './MainSections/FAQ'
 import Contact from './MainSections/Contact'
+import Header from './header/Header'
 
 import { useUI } from '../hooks/useUI'
 
@@ -13,6 +14,7 @@ const LandingPage = () => {
 
 	return (
 		<>
+			<Header />
 			<Flex as='section' id='About' direction='column' align='center' bgColor='brand.100'>
 				<HowItWorks />
 				<BestFeatures />

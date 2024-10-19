@@ -63,7 +63,7 @@ const Checkboxes = ({ control, errors }) => {
 const Selects = ({ control, errors }) => {
 	const selectsContext = [
 		{
-			label: 'Communication preferences',
+			label: 'Notification preferences',
 			options: ['Daily', 'Hourly', '12-hour'],
 			name: 'communicationPreferences',
 		},

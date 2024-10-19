@@ -71,6 +71,8 @@ const Navigation = () => {
 		}
 	}, [scrollPosition, location.pathname])
 
+	const bgColor = scrollPosition > 100 || location.pathname === '/dashboard' ? 'brand.300' : 'transparent'
+
 	return (
 		<Box
 			as='nav'
@@ -79,14 +81,14 @@ const Navigation = () => {
 			m={0}
 			position='fixed'
 			zIndex={15}
-			bgColor={scrollPosition > 100 ? 'brand.300' : 'transparent'}
+			bgColor={bgColor}
 			backdropFilter='blur(1px)'
 			boxShadow={`0 2px 10px rgba(12, 1, 58, 0.5)`}
 		>
 			<Stack
 				direction='row'
 				w='100%'
-				maxW={1400}
+				maxW={1600}
 				align='center'
 				justify={isDesktop ? 'start' : 'end'}
 				h='100%'
@@ -102,7 +104,13 @@ const Navigation = () => {
 						</Button>
 					</HStack>
 				) : (
-					<HStack spacing='7em' color='brand.50' w='100%' justify='space-between'>
+					<HStack
+						spacing='7em'
+						color='brand.50'
+						w='100%'
+						justify='space-between'
+						pl={location.pathname === '/dashboard' && isDesktop ? 200 : 0}
+					>
 						<Logo />
 						{location.pathname === '/' && <NavigationLinks />}
 						<ActionButton

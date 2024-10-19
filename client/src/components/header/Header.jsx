@@ -34,16 +34,14 @@ const Header = () => {
 			align='center'
 			position='relative'
 			id='Home'
-			h='100%'
+			h='100vh'
 			w='100%'
 			ref={componentRef}
 			minH='100vh'
 			as='header'
 			backgroundImage={isDesktop ? heroImageLG : heroImageSM}
-			bgSize={'cover'}
 			bgPosition={'center'}
 			bgRepeat={'no-repeat'}
-			overflow='hidden'
 		>
 			<Stack
 				direction={isDesktop ? 'row' : 'column'}
