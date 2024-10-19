@@ -20,22 +20,22 @@ import {
 } from '@chakra-ui/react'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
-import { useUI } from '../hooks/useUI'
-import SignUp from './formSteps/SignUp'
+import { useUI } from '../../hooks/useUI'
+import SignUp from '../formSteps/SignUp'
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md'
 import { IoIosSend } from 'react-icons/io'
 
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import signUpImage from '../assets/signup-img.webp'
-import Details from './formSteps/Details'
-import VerifyCode from './formSteps/VerifyCode'
-import ActionButton from './common/ActionButton'
-import { detailsSchema, signUpSchema, validationSchema } from '../utils/YupSchemas'
+import signUpImage from '../../assets/signUp-img.webp'
+import Details from '../formSteps/Details'
+import VerifyCode from '../formSteps/VerifyCode'
+import ActionButton from '../common/ActionButton'
+import { detailsSchema, signUpSchema, validationSchema } from '../../utils/YupSchemas'
 
-import useRegister from '../hooks/useRegister'
-import { useAuth } from '../hooks/useAuth'
-import { useSubscribe } from '../hooks/useSubscribe'
+import useRegister from '../../hooks/useRegister'
+import { useAuth } from '../../hooks/useAuth'
+import { useSubscribe } from '../../hooks/useSubscribe'
 
 const MotionBox = motion(Box)
 const animationVariants = {

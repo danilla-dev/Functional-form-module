@@ -1,5 +1,5 @@
 import React from 'react'
-import { useUI } from '../hooks/useUI'
+import { useUI } from '../../hooks/useUI'
 import {
 	Text,
 	Box,
@@ -24,11 +24,11 @@ import {
 	FormErrorMessage,
 } from '@chakra-ui/react'
 import { Controller, useForm } from 'react-hook-form'
-import signUpImage from '../assets/signup-img.webp'
-import ActionButton from './common/ActionButton'
-import { LoginFormSchema } from '../utils/YupSchemas'
+import signUpImage from '../../assets/signup-img.webp'
+import ActionButton from '../common/ActionButton'
+import { LoginFormSchema } from '../../utils/YupSchemas'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 
 const inputs = [

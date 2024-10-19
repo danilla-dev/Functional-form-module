@@ -2,7 +2,7 @@ import React from 'react'
 import { VStack, Text, Box } from '@chakra-ui/react'
 import { useLocation, useNavigate, NavLink } from 'react-router-dom'
 
-import { useUI } from '../hooks/useUI'
+import { useUI } from '../../hooks/useUI'
 
 const DashboardMenuLinks = ({ onClose }) => {
 	const { isDesktop } = useUI()

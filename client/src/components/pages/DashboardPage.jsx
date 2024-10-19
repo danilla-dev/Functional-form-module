@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { useAuth } from '../hooks/useAuth'
-import { useSubscribe } from '../hooks/useSubscribe'
+import { useAuth } from '../../hooks/useAuth'
+import { useSubscribe } from '../../hooks/useSubscribe'
 import {
 	Text,
 	Box,
@@ -26,9 +26,9 @@ import {
 	Grid,
 	GridItem,
 } from '@chakra-ui/react'
-import DashboardWidget from './DashboardWidget'
-import Footer from './Footer'
-import DashboardMenuLinks from './DashboardMenuLinks'
+import DashboardWidget from '../common/DashboardWidget'
+import Footer from '../Footer'
+import DashboardMenuLinks from '../common/DashboardMenuLinks'
 
 const DashboardPage = () => {
 	const { currentUser, authIsLoading, refetch: userRefetch } = useAuth()

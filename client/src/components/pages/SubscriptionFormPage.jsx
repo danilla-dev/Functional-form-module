@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { Center, Grid, GridItem, Heading } from '@chakra-ui/react'
-import SubscriptionForm from './SubscriptionForm'
+import SubscriptionForm from '../forms/SubscriptionForm'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Footer from './Footer'
+import Footer from '../Footer'
 
-import { useAuth } from '../hooks/useAuth'
-import { useSubscribe } from '../hooks/useSubscribe'
+import { useAuth } from '../../hooks/useAuth'
+import { useSubscribe } from '../../hooks/useSubscribe'
 const SubscriptionFormPage = () => {
 	const location = useLocation()
 	const navigate = useNavigate()

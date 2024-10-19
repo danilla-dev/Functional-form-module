@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Center, Heading, Grid, GridItem } from '@chakra-ui/react'
-import LoginForm from './LoginForm'
-import Footer from './Footer'
+import LoginForm from '../forms/LoginForm'
+import Footer from '../Footer'
 
 const LoginPage = () => {
 	return (

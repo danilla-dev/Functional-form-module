@@ -1,13 +1,13 @@
 import React from 'react'
 import { Container, Flex, Heading, Box, Image, useBreakpointValue, Grid, GridItem } from '@chakra-ui/react'
-import HowItWorks from './MainSections/HowItWorks'
-import BestFeatures from './MainSections/BestFeatures'
-import Pricing from './MainSections/Pricing'
-import FAQ from './MainSections/FAQ'
-import Contact from './MainSections/Contact'
-import Header from './header/Header'
-import Footer from './Footer'
-import { useUI } from '../hooks/useUI'
+import HowItWorks from '../MainSections/HowItWorks'
+import BestFeatures from '../MainSections/BestFeatures'
+import Pricing from '../MainSections/Pricing'
+import FAQ from '../MainSections/FAQ'
+import Contact from '../MainSections/Contact'
+import Header from '../header/Header'
+import Footer from '../Footer'
+import { useUI } from '../../hooks/useUI'
 
 const LandingPage = () => {
 	return (
