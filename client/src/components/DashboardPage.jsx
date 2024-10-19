@@ -27,46 +27,8 @@ import {
 	GridItem,
 } from '@chakra-ui/react'
 import DashboardWidget from './DashboardWidget'
-import { divide } from 'lodash'
-
-const UserWidget = ({ userDetails }) => {
-	const { email, isVerified, activeSub } = userDetails
-	return (
-		<Box
-			border='1px solid'
-			borderColor='accent.200'
-			p='2em'
-			borderRadius={10}
-			textAlign='left'
-			justifyContent='flex-start'
-			alignItems='start'
-			h={150}
-			w={250}
-		>
-			<VStack>
-				<Box w='100%'>
-					<Text fontSize='lg'>{email}</Text>
-				</Box>
-				<Box w='100%'>
-					<Text fontSize='md'>
-						Verification status:{' '}
-						<Text as='span' ml='.5em'>
-							{isVerified.toString()}
-						</Text>
-					</Text>
-				</Box>
-				<Box w='100%'>
-					<Text fontSize='md'>
-						Subscription Status:
-						<Text as='span' ml='.5em'>
-							{activeSub.toString()}
-						</Text>
-					</Text>
-				</Box>
-			</VStack>
-		</Box>
-	)
-}
+import Footer from './Footer'
+import DashboardMenuLinks from './DashboardMenuLinks'
 
 const DashboardPage = () => {
 	const { currentUser, authIsLoading, refetch: userRefetch } = useAuth()
@@ -139,32 +101,51 @@ const DashboardPage = () => {
 		fullWidth: false,
 	}
 	return (
-		<Flex
-			as='section'
-			id='dashboard'
-			maxW='100vw'
-			minH='100vh'
-			h='100%'
-			bgColor={'brand.200'}
-			color={'white'}
-			p='1em'
-			pt='3em'
-		>
-			<Container m={0} centerContent p='0 2em' minW='100%' pb='3em'>
-				<Stack
-					maxW={1400}
-					w='100%'
-					flexDir='row'
-					flexWrap='wrap'
-					justify={{ base: 'center', md: 'space-between' }}
-					spacing='2em'
+		<Grid templateColumns={'200px 1fr'} templateRows={'75px 1fr 100px'}>
+			<GridItem
+				colStart={1}
+				colEnd={3}
+				rowStart={1}
+				rowEnd={2}
+				bgColor={'brand.200'}
+				borderBottom={'1px solid'}
+				borderColor={'accent.300'}
+			></GridItem>
+			<GridItem colStart={2} colEnd={3} rowStart={2} rowEnd={3}>
+				<Flex
+					as='section'
+					id='dashboard'
+					maxW='100vw'
+					minH='100vh'
+					h='100%'
+					bgColor={'brand.200'}
+					color={'white'}
+					p='1em'
+					pt='5em'
 				>
-					<DashboardWidget content={subWidgetContent} />
-					<DashboardWidget content={communicationWidgetContent} />
-					<DashboardWidget content={usagePreferencesWidgetContent} />
-				</Stack>
-			</Container>
-		</Flex>
+					<Container m={0} centerContent p='0 2em' minW='100%' pb='3em'>
+						<Stack
+							maxW={1400}
+							w='100%'
+							flexDir='row'
+							flexWrap='wrap'
+							justify={{ base: 'center', md: 'space-between' }}
+							spacing='2em'
+						>
+							<DashboardWidget content={subWidgetContent} />
+							<DashboardWidget content={communicationWidgetContent} />
+							<DashboardWidget content={usagePreferencesWidgetContent} />
+						</Stack>
+					</Container>
+				</Flex>
+			</GridItem>
+			<GridItem colStart={1} colEnd={2} rowStart={2} rowEnd={3}>
+				<DashboardMenuLinks />
+			</GridItem>
+			<GridItem colStart={1} colEnd={3} rowStart={3} rowEnd={4}>
+				<Footer />
+			</GridItem>
+		</Grid>
 	)
 }
 

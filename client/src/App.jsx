@@ -15,11 +15,13 @@ import { useLocation } from 'react-router-dom'
 
 import './App.css'
 import Navigation from './components/navigation/Navigation'
+import DashboardMenuLinks from './components/DashboardMenuLinks'
 
 function App() {
-	const { currentUser, loginUser, logoutUser, registerUser, authIsLoading, isLoading } = useAuth()
-	const { subIsLoading } = useSubscribe()
-	const location = useLocation().pathname
+	const { authIsLoading } = useAuth()
+	const dashboardLocation = useLocation().pathname === '/dashboard'
+
+	console.log(dashboardLocation)
 
 	if (authIsLoading) {
 		return (
@@ -30,40 +32,15 @@ function App() {
 	}
 
 	return (
-		<Grid
-			gridTemplateRows={'75px 1fr 100px'}
-			templateColumns={{ base: '1fr', lg: location === '/dashboard' ? '200px 1fr' : '1fr' }}
-			minH='100vh'
-		>
-			<GridItem colStart={1} rowStart={1} rowEnd={2} colEnd={3} bgColor={location === '/dashboard' && 'brand.300'}>
-				<Navigation />
-			</GridItem>
-
-			{location === '/dashboard' && (
-				<GridItem colSpan={1} rowStart={2} rowEnd={3} bgColor='brand.300'>
-					<Box bgColor='brand.300' h='100%'></Box>
-				</GridItem>
-			)}
-			<GridItem
-				rowStart={location === '/dashboard' ? 2 : 1}
-				rowEnd={3}
-				as='main'
-				minW='100%'
-				minH='100vh'
-				colStart={{ base: 1, lg: location === '/dashboard' ? 2 : 1 }}
-				colEnd={3}
-			>
-				<Routes>
-					<Route path='/' element={<LandingPage />} />
-					<Route path='/subscription' element={<SubscriptionFormPage />} />
-					<Route path='/dashboard' element={<PrivateRouts element={<DashboardPage />} />} />
-					<Route path='/login' element={<LoginPage />} />
-				</Routes>
-			</GridItem>
-			<GridItem colSpan={2} rowStart={3} as='footer' w='100%' h='100px'>
-				<Footer />
-			</GridItem>
-		</Grid>
+		<>
+			<Navigation />
+			<Routes>
+				<Route path='/' element={<LandingPage />} />
+				<Route path='/subscription' element={<SubscriptionFormPage />} />
+				<Route path='/dashboard' element={<PrivateRouts element={<DashboardPage />} />} />
+				<Route path='/login' element={<LoginPage />} />
+			</Routes>
+		</>
 	)
 }
 

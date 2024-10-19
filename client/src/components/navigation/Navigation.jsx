@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { throttle } from 'lodash'
 import { Container, Stack, Button, Text, HStack, useDisclosure, Box, ButtonGroup } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import { GiHamburgerMenu } from 'react-icons/gi'
@@ -81,7 +81,7 @@ const Navigation = () => {
 			m={0}
 			position='fixed'
 			zIndex={15}
-			bgColor={bgColor}
+			bgColor={scrollPosition > 100 ? 'brand.300' : 'transparent'}
 			backdropFilter='blur(1px)'
 			boxShadow={`0 2px 10px rgba(12, 1, 58, 0.5)`}
 		>
@@ -120,7 +120,7 @@ const Navigation = () => {
 							ariaLabel='Sign up'
 							priority='high'
 							type='button'
-							content={<Link to={buttonType.path || null}>{buttonType.text}</Link>}
+							content={<NavLink to={buttonType.path || null}>{buttonType.text}</NavLink>}
 						/>
 					</HStack>
 				)}

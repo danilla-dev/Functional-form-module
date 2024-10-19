@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Center, Heading } from '@chakra-ui/react'
+import { Center, Grid, GridItem, Heading } from '@chakra-ui/react'
 import SubscriptionForm from './SubscriptionForm'
 import { useLocation, useNavigate } from 'react-router-dom'
-import Navigation from './navigation/Navigation'
+import Footer from './Footer'
 
 import { useAuth } from '../hooks/useAuth'
 import { useSubscribe } from '../hooks/useSubscribe'
@@ -19,16 +19,23 @@ const SubscriptionFormPage = () => {
 		}
 	}, [currentUser.activeSub])
 	return (
-		<Center
-			as='section'
-			id='subscription-form'
-			align='center'
-			w='100%'
-			h='100%'
-			bgGradient='radial( brand.300 20%, brand.350)'
-		>
-			<SubscriptionForm />
-		</Center>
+		<Grid gridTemplateRows={'1fr 100px'}>
+			<GridItem rowStart={1} rowEnd={2}>
+				<Center
+					as='section'
+					id='subscription-form'
+					align='center'
+					w='100%'
+					h='100vh'
+					bgGradient='radial( brand.300 20%, brand.350)'
+				>
+					<SubscriptionForm />
+				</Center>
+			</GridItem>
+			<GridItem rowStart={2} rowEnd={3}>
+				<Footer />
+			</GridItem>
+		</Grid>
 	)
 }
 
