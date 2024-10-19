@@ -24,7 +24,7 @@ import {
 	FormErrorMessage,
 } from '@chakra-ui/react'
 import { Controller, useForm } from 'react-hook-form'
-import signUpImage from '../../assets/signup-img.webp'
+import loginImg from '../../assets/register-img.webp'
 import ActionButton from '../common/ActionButton'
 import { LoginFormSchema } from '../../utils/YupSchemas'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -105,7 +105,7 @@ const LoginForm = () => {
 			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }}>
 				{isTablet || isDesktop ? (
 					<Box w='50%' h='100%' m='auto 0'>
-						<Image h='100%' w='auto' src={signUpImage} />
+						<Image h='100%' w='auto' src={loginImg} />
 					</Box>
 				) : null}
 				<Stack w={isDesktop || isTablet ? '50%' : '100%'} align='center' justify='center'>
