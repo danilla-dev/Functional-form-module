@@ -28,7 +28,7 @@ import { IoIosSend } from 'react-icons/io'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Details from '../formSteps/Details'
-import signUpImage from '../../assets/signUp-img.webp'
+import registerImg from '../../assets/register-img.webp'
 import VerifyCode from '../formSteps/VerifyCode'
 import ActionButton from '../common/ActionButton'
 import { detailsSchema, signUpSchema, validationSchema } from '../../utils/YupSchemas'
@@ -206,7 +206,7 @@ const SubscriptionForm = () => {
 			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }}>
 				{isTablet || isDesktop ? (
 					<Box w='50%' h='100%' m='auto 0'>
-						<Image h='100%' w='auto' src={signUpImage} />
+						<Image h='100%' w='auto' src={registerImg} />
 					</Box>
 				) : null}
 				<Stack w={isDesktop || isTablet ? '50%' : '100%'} align='center' justify='space-between'>
