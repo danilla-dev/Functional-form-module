@@ -18,14 +18,13 @@ export const getUserSubscription = async (req, res) => {
 	}
 }
 export const postUserSubscription = async (req, res) => {
-	const userID = req.userId
 	const userEmail = req.userEmail
 
-	const { communicationStyle, preferences, communicationPreferences } = req.body
+	const { communicationStyle, preferences, notificationPreferences } = req.body
 	const details = {
 		communicationStyle,
 		preferences,
-		communicationPreferences,
+		notificationPreferences,
 	}
 	try {
 		const user = await User.findOne({ email: userEmail })

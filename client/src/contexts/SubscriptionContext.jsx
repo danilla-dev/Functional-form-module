@@ -27,6 +27,60 @@ export const SubscriptionProvider = ({ children }) => {
 		subscriptionEndDate: '',
 		user: '',
 	})
+	const pricingOptions = [
+		{
+			name: 'Basic',
+			price: 9.99,
+			description: 'Ideal for casual users who need basic AI assistance in their day-to-day activities.',
+			features: [
+				'Personalized recommendations based on interactions',
+				'Basic Q&A capabilities',
+				'Access to AI insights and suggestions',
+				'Integration with one platform (e.g., calendar, email)',
+			],
+			limits: [
+				'Up to 50 interactions per month',
+				'Limited to text-based interactions only',
+				'1 personalized AI workflow',
+			],
+		},
+		{
+			name: 'Pro',
+			price: 19.99,
+			description: 'For power users who want more customization and advanced capabilities from their AI assistant.',
+			features: [
+				'Everything in Basic Plan',
+				'Advanced personalization and in-depth AI learning',
+				'Voice command support',
+				'Integration with up to 3 platforms (e.g., calendar, email, task management)',
+				'Priority support',
+			],
+			limits: [
+				'Up to 200 interactions per month',
+				'3 personalized AI workflows',
+				'Real-time notifications and updates',
+			],
+			best: true,
+		},
+		{
+			name: 'Premium',
+			price: 39.99,
+			description: 'The ultimate AI plan with unlimited interaction and full integration options.',
+			features: [
+				'Everything in Pro Plan',
+				'Unlimited interactions',
+				'Advanced analytics and insights on behavior',
+				'Full integration with up to 10 platforms (e.g., calendar, email, project management, e-commerce)',
+				'AI-driven automation for tasks and reminders',
+				'Dedicated customer success manager',
+			],
+			limits: [
+				'Unlimited interactions',
+				'Unlimited personalized AI workflows',
+				'Real-time voice and text notifications',
+			],
+		},
+	]
 	const location = useLocation()
 
 	const {
@@ -58,6 +112,7 @@ export const SubscriptionProvider = ({ children }) => {
 
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {
+			console.log('saveSubscriptionDetails mutationFn is running')
 			const response = await axios.post(`${API_URL}/api/sub/details`, credentials, {
 				withCredentials: true,
 			})
@@ -96,6 +151,7 @@ export const SubscriptionProvider = ({ children }) => {
 				setSubscriptionDetails,
 				subIsLoading,
 				refetch,
+				pricingOptions,
 			}}
 		>
 			{children}

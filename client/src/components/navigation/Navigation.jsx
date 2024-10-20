@@ -71,7 +71,6 @@ const Navigation = () => {
 		}
 	}, [scrollPosition, location.pathname])
 
-	const bgColor = scrollPosition > 100 || location.pathname === '/dashboard' ? 'brand.300' : 'transparent'
 
 	return (
 		<Box

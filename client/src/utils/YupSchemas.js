@@ -25,7 +25,7 @@ export const detailsSchema = yup.object().shape({
 		.array()
 		.of(yup.string().required('At least one preference is required'))
 		.min(1, 'At least one preference is required'),
-	communicationPreferences: yup.string().required('Communication preferences are required'),
+	notificationPreferences: yup.string().required('Communication preferences are required'),
 	communicationStyle: yup.string().required('Communication style is required'),
 })
 export const validationSchema = yup.object().shape({

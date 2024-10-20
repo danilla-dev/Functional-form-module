@@ -79,9 +79,9 @@ const DashboardPage = () => {
 		header: 'Communication',
 		body: [
 			{
-				time: {
+				time: { 
 					description: 'Report interval',
-					value: details.communicationPreferences,
+					value: details.notificationPreferences,
 				},
 			},
 			{

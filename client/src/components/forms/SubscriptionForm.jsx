@@ -33,9 +33,11 @@ import VerifyCode from '../formSteps/VerifyCode'
 import ActionButton from '../common/ActionButton'
 import { detailsSchema, signUpSchema, validationSchema } from '../../utils/YupSchemas'
 
+import { useLocation } from 'react-router-dom'
 import useRegister from '../../hooks/useRegister'
 import { useAuth } from '../../hooks/useAuth'
 import { useSubscribe } from '../../hooks/useSubscribe'
+import { set } from 'lodash'
 
 const MotionBox = motion(Box)
 const animationVariants = {
@@ -80,7 +82,9 @@ const SubscriptionForm = () => {
 		count: steps.length,
 	})
 	const { currentUser, login, registerUser, logout, isLoading, verifyCode } = useAuth()
-	const { saveSubscriptionDetails, payForSubscription } = useSubscribe()
+	const { saveSubscriptionDetails, payForSubscription, pricingOptions } = useSubscribe()
+	const [plan, setPlan] = useState({ name: '', price: 0 })
+	const location = useLocation()
 	const {
 		control,
 		handleSubmit,
@@ -89,6 +93,7 @@ const SubscriptionForm = () => {
 	} = useForm({
 		resolver: yupResolver(activeStep === 0 ? signUpSchema : activeStep === 1 ? validationSchema : detailsSchema),
 	})
+	console.log(plan)
 
 	useEffect(() => {
 		const { isVerified, subscription, email } = currentUser
@@ -108,6 +113,16 @@ const SubscriptionForm = () => {
 			setActiveStep(0)
 		}
 	}, [currentUser])
+
+	useEffect(() => {
+		if (location.pathname === '/subscription') {
+			const urlParams = new URLSearchParams(location.search)
+			const plan = urlParams.get('plan')
+			if (plan) {
+				setPlan(pricingOptions.find(option => option.name.toLowerCase() === plan.toLowerCase()))
+			}
+		}
+	}, [location])
 
 	// do przeniesienia do osobnego pliku
 	const handleSendEmail = async emailData => {
@@ -160,6 +175,7 @@ const SubscriptionForm = () => {
 	}
 
 	const handlePayment = async data => {
+		console.log(data)
 		const result = await payForSubscription.mutateAsync(data)
 	}
 
@@ -173,7 +189,7 @@ const SubscriptionForm = () => {
 				break
 			case 2:
 				await handleSaveDetails(data)
-				await handlePayment({ amount: 1000 })
+				await handlePayment({ amount: plan.price })
 				setActiveStep(3)
 				break
 			default:

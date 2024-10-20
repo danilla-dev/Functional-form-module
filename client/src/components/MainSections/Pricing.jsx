@@ -27,6 +27,8 @@ import { FaCheck, FaTimes } from 'react-icons/fa'
 import ActionButton from '../common/ActionButton'
 
 import { useUI } from '../../hooks/useUI'
+import { useSubscribe } from '../../hooks/useSubscribe'
+import { useNavigate } from 'react-router-dom'
 
 const Features = ({ option }) => {
 	return (
@@ -78,6 +80,7 @@ const Limits = ({ option }) => {
 
 const PricingCard = ({ option, index }) => {
 	const { isMobile, isDesktop, isTablet } = useUI()
+	const navigate = useNavigate()
 
 	return (
 		<ListItem flex={1} key={index} w={isDesktop ? 350 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 500 : 700}>
@@ -113,7 +116,7 @@ const PricingCard = ({ option, index }) => {
 					<ActionButton
 						text='Get Started'
 						icon={null}
-						action={() => console.log('GET IT')}
+						action={() => navigate('/subscription?plan=' + option.name.toLowerCase())}
 						ariaLabel='Get subscription'
 						priority='high'
 						type='button'
@@ -126,61 +129,7 @@ const PricingCard = ({ option, index }) => {
 
 const Pricing = () => {
 	const { isMobile, isDesktop, isTablet } = useUI()
-
-	const pricingOptions = [
-		{
-			name: 'Basic',
-			price: 9.99,
-			description: 'Ideal for casual users who need basic AI assistance in their day-to-day activities.',
-			features: [
-				'Personalized recommendations based on interactions',
-				'Basic Q&A capabilities',
-				'Access to AI insights and suggestions',
-				'Integration with one platform (e.g., calendar, email)',
-			],
-			limits: [
-				'Up to 50 interactions per month',
-				'Limited to text-based interactions only',
-				'1 personalized AI workflow',
-			],
-		},
-		{
-			name: 'Pro',
-			price: 19.99,
-			description: 'For power users who want more customization and advanced capabilities from their AI assistant.',
-			features: [
-				'Everything in Basic Plan',
-				'Advanced personalization and in-depth AI learning',
-				'Voice command support',
-				'Integration with up to 3 platforms (e.g., calendar, email, task management)',
-				'Priority support',
-			],
-			limits: [
-				'Up to 200 interactions per month',
-				'3 personalized AI workflows',
-				'Real-time notifications and updates',
-			],
-			best: true,
-		},
-		{
-			name: 'Premium',
-			price: 39.99,
-			description: 'The ultimate AI plan with unlimited interaction and full integration options.',
-			features: [
-				'Everything in Pro Plan',
-				'Unlimited interactions',
-				'Advanced analytics and insights on behavior',
-				'Full integration with up to 10 platforms (e.g., calendar, email, project management, e-commerce)',
-				'AI-driven automation for tasks and reminders',
-				'Dedicated customer success manager',
-			],
-			limits: [
-				'Unlimited interactions',
-				'Unlimited personalized AI workflows',
-				'Real-time voice and text notifications',
-			],
-		},
-	]
+	const { pricingOptions } = useSubscribe()
 
 	return (
 		<Container m={0} p={0} pb='7em' centerContent minW='100%' position='relative'>

@@ -64,8 +64,8 @@ const Selects = ({ control, errors }) => {
 	const selectsContext = [
 		{
 			label: 'Notification preferences',
-			options: ['Daily', 'Hourly', '12-hour'],
-			name: 'communicationPreferences',
+			options: ['Daily', 'Hourly', '12-hour', 'Real-time'],
+			name: 'notificationPreferences',
 		},
 		{
 			label: 'Communication style',

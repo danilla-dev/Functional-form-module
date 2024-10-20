@@ -7,6 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const postPayment = async (req, res) => {
 	const { amount } = req.body
+	console.log('Amount:', amount * 100)
 	const user = await User.findOne({ _id: req.userId })
 	const sub = await Subscription.findOne({ user: user._id })
 	try {
@@ -19,7 +20,7 @@ export const postPayment = async (req, res) => {
 						product_data: {
 							name: 'Basic subscription',
 						},
-						unit_amount: amount,
+						unit_amount: Math.round(amount * 100),
 					},
 					quantity: 1,
 				},
