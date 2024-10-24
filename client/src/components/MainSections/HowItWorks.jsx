@@ -16,7 +16,7 @@ const HowItWorks = () => {
 	const { isBase } = useUI()
 
 	return (
-		<Container mt='150px' centerContent p='0 2em' minW='100%' pb='0'>
+		<Container mt='25px' centerContent p='0 2em' minW='100%' pb='0' zIndex={10}>
 			<Stack maxW={1400} w='100%' align='center'>
 				<Heading
 					as='h2'

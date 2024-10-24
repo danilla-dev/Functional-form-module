@@ -141,16 +141,7 @@ const Pricing = () => {
 	return (
 		<Container m={0} p={0} pb='2em' centerContent minW='100%' position='relative'>
 			<Stack maxW={1400} w='100%' align='center' zIndex={10} position='relative'>
-				<Heading
-					as='h2'
-					mb='1em'
-					color='accent.300'
-					textAlign='center'
-					borderBottom='2px solid'
-					p='0 1em'
-					pb='.25em'
-					fontSize='2xl'
-				>
+				<Heading as='h2' mb='1em' color='accent.300' textAlign='center' borderBottom='2px solid' p='1em' fontSize='2xl'>
 					Pricing
 				</Heading>
 				<List w='100%'>

@@ -65,7 +65,7 @@ const FAQ = () => {
 					mb='0.5em'
 					p='0 1em'
 					pb='.25em'
-					color='accent.200'
+					color='accent.300'
 					fontSize='2xl'
 				>
 					FAQ
@@ -73,15 +73,16 @@ const FAQ = () => {
 				<Accordion
 					allowToggle
 					border='1px solid'
+					borderColor='accent.300'
 					// bgGradient='radial( brand.300 20%, brand.350)'
 					borderRadius={10}
 					w='100%'
 					overflow='hidden'
-					borderColor='accent.200'
-					bgColor='transparent'
+					// bgColor='transparent'
+					bgColor='brand.300'
 					// boxShadow='xl'
 					pt='2em'
-					color='brand.800'
+					color='brand.100'
 				>
 					{askQuestion.map((question, index) => {
 						return (

@@ -37,34 +37,21 @@ const LandingPage = () => {
 					<HowItWorks />
 					<BestFeatures />
 				</Flex>
-				<Flex bgGradient='radial( brand.300 20%, brand.350)' direction='column' p='4em'>
-					<Flex
-						as='section'
-						id='Pricing'
-						direction='column'
-						align='center'
-						position='relative'
-						// _after={{
-						// 	content: '""',
-						// 	position: 'absolute',
-						// 	top: 0,
-						// 	left: 0,
-						// 	width: '100%',
-						// 	height: '15%',
-						// 	backgroundColor: 'brand.100',
-						// 	transform: 'skewY(-3deg)',
-						// 	transformOrigin: 0,
-						// 	zIndex: 5,
-						// }}
-					>
+				<Flex
+					bgGradient='radial( brand.300 20%, brand.350)'
+					direction='column'
+					p='4em'
+					pt={{ base: '4em', md: '15em' }}
+				>
+					<Flex as='section' id='Pricing' direction='column' align='center' position='relative'>
 						<Pricing />
 					</Flex>
-				</Flex>
-				<Flex as='section' id='FAQ' direction='column' align='center'>
-					<FAQ />
-				</Flex>
-				<Flex as='section' id='Contact' direction='column' align='center'>
-					<Contact />
+					<Flex as='section' id='FAQ' direction='column' align='center'>
+						<FAQ />
+					</Flex>
+					<Flex as='section' id='Contact' direction='column' align='center'>
+						<Contact />
+					</Flex>
 				</Flex>
 			</GridItem>
 			<GridItem rowStart={2} rowEnd={3}>

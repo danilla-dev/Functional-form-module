@@ -48,26 +48,29 @@ const BestFeatures = () => {
 	return (
 		<Container
 			m={0}
-			mb='5em'
+			mb={{ base: 0, md: '-15em' }}
 			centerContent
-			p='5em 2em'
+			p='.5em'
 			minW='100%'
-			// bgGradient='radial( brand.300 20%, brand.350)'
+			bgColor={{ base: 'transparent', md: 'brand.900' }}
 		>
 			<Stack maxW={1400} w='100%' align='center'>
-				<Heading
-					as='h2'
-					fontSize='2xl'
-					color='accent.200'
-					textAlign='center'
-					borderBottom='2px solid'
-					p='0 1em'
-					pb='.25em'
-				>
-					Best features
-				</Heading>
-				<HStack justify='space-evenly' align='center' flexDirection='row-reverse' pos='relative' pt='2em'>
-					{isDesktop && (
+				{!isMobile && !isTablet && (
+					<Heading
+						as='h2'
+						fontSize='2xl'
+						color={{ base: 'accent.200', md: 'brand.200' }}
+						textAlign='center'
+						borderBottom='2px solid'
+						p='0 1em'
+						pb='.25em'
+						mb='1em'
+					>
+						Best features
+					</Heading>
+				)}
+				<HStack justify='space-evenly' align='center' flexDirection='row-reverse' pos='relative' pb='2em'>
+					{/* {isDesktop && (
 						<Box w='40%' maxW={400}>
 							<Image
 								src={bestFeaturesImg}
@@ -77,44 +80,48 @@ const BestFeatures = () => {
 								alt='Man with desktops around'
 							/>
 						</Box>
-					)}
-					<Box maxW={isDesktop && '50%'}>
-						<Box>
-							<List spacing='1.5em'>
-								{features.map((feature, index) => {
-									const Icon = feature.icon
-									return (
-										<ListItem key={index}>
-											<Fade key={index} triggerOnce duration={1000} delay={index * 200}>
-												<Card
-													// bgColor='brand.900'
-													bgColor='transparent'
-													border='1px solid'
-													borderColor='accent.200'
-													p='.5em'
-													borderRadius={10}
-													zIndex={10}
-												>
-													<CardHeader pb={0}>
-														<HStack justify={!isDesktop && 'center'}>
-															<ListIcon as={Icon} color='brand.800' fontSize='xl' />
-															<Heading as='h3' fontSize='sm' color='brand.800'>
-																{feature.header}
-															</Heading>
-														</HStack>
-													</CardHeader>
-													<CardBody>
-														<Text color='brand.800' fontSize='sm' textAlign={!isDesktop && 'center'}>
-															{feature.text}
-														</Text>
-													</CardBody>
-												</Card>
-											</Fade>
-										</ListItem>
-									)
-								})}
-							</List>
-						</Box>
+					)} */}
+					<Box w='100%'>
+						<List
+							spacing='1.5em'
+							display='flex'
+							flexDirection={{ base: 'column', md: 'row' }}
+							justifyContent='center'
+							alignItems='center'
+							gap='1em'
+						>
+							{features.map((feature, index) => {
+								const Icon = feature.icon
+								return (
+									<ListItem key={index} h={{ md: 270, lg: 220, xl: 180 }} w={{ base: '80%', md: '33%' }}>
+										<Card
+											bgColor='brand.900'
+											border='1px solid'
+											borderColor='accent.200'
+											p='.5em'
+											borderRadius={10}
+											zIndex={10}
+											h='100%'
+											boxShadow='lg'
+										>
+											<CardHeader pb={0}>
+												<HStack justify={!isDesktop && 'center'}>
+													<ListIcon as={Icon} color='brand.200' fontSize='xl' />
+													<Heading as='h3' fontSize='sm' color='brand.200'>
+														{feature.header}
+													</Heading>
+												</HStack>
+											</CardHeader>
+											<CardBody>
+												<Text color='brand.800' fontSize='sm' textAlign={!isDesktop && 'center'}>
+													{feature.text}
+												</Text>
+											</CardBody>
+										</Card>
+									</ListItem>
+								)
+							})}
+						</List>
 					</Box>
 				</HStack>
 			</Stack>

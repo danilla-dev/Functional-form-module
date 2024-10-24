@@ -48,7 +48,7 @@ const Contact = () => {
 				<Heading
 					as='h2'
 					mb='0.5em'
-					color='accent.200'
+					color='accent.300'
 					textAlign='center'
 					borderBottom='2px solid'
 					p='0 1em'
