@@ -6,7 +6,7 @@ import Stripe from 'stripe'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const postPayment = async (req, res) => {
-	const { amount } = req.body
+	const { amount, name } = req.body
 	console.log('Amount:', amount * 100)
 	const user = await User.findOne({ _id: req.userId })
 	const sub = await Subscription.findOne({ user: user._id })
@@ -18,7 +18,7 @@ export const postPayment = async (req, res) => {
 					price_data: {
 						currency: 'usd',
 						product_data: {
-							name: 'Basic subscription',
+							name: `${name} subscription`,
 						},
 						unit_amount: Math.round(amount * 100),
 					},
@@ -28,7 +28,7 @@ export const postPayment = async (req, res) => {
 			mode: 'payment',
 			success_url: `${process.env.CLIENT_URL}/dashboard`,
 			cancel_url: `${process.env.CLIENT_URL}/cancel`,
-			metadata: { user_id: user._id.toString(), sub_id: sub._id.toString() },
+			metadata: { user_id: user._id.toString(), sub_name: name.toString() },
 		})
 		res.status(200).json({ url: session.url })
 	} catch (error) {
@@ -53,20 +53,22 @@ export const updateDatabase = async (req, res) => {
 	if (event.type === 'checkout.session.completed') {
 		const session = event.data.object
 		const userId = session.metadata.user_id
-		const subscriptionId = session.metadata.sub_id
+		const subName = session.metadata.sub_name
 
 		try {
 			const user = await User.findOne({ _id: userId })
 			const sub = await Subscription.findOne({ user: user._id })
 
 			await user.updateOne({ activeSub: true }, { new: true })
-			await sub.updateOne({ paymentStatus: 'paid' }, { new: true })
+			await sub.updateOne({ paymentStatus: 'paid', name: subName }, { new: true })
 
 			return res.status(200).send('Webhook received and processed')
 		} catch (error) {
 			console.error('Error updating subscription:', error)
 			return res.status(500).send('Webhook processing error')
 		}
+	} else {
+		console.log('error')
 	}
 	res.status(400).send('Unhandled event')
 }

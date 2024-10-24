@@ -189,7 +189,7 @@ const SubscriptionForm = () => {
 				break
 			case 2:
 				await handleSaveDetails(data)
-				await handlePayment({ amount: plan.price })
+				await handlePayment({ amount: plan.price, name: plan.name })
 				setActiveStep(3)
 				break
 			default:
