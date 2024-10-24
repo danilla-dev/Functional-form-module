@@ -74,11 +74,7 @@ export const SubscriptionProvider = ({ children }) => {
 				'AI-driven automation for tasks and reminders',
 				'Dedicated customer success manager',
 			],
-			limits: [
-				'Unlimited interactions',
-				'Unlimited personalized AI workflows',
-				'Real-time voice and text notifications',
-			],
+			limits: ['Everything unlimited!'],
 		},
 	]
 	const location = useLocation()

@@ -91,11 +91,11 @@ const PricingCard = ({ option, index }) => {
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
-				h={isDesktop && 800}
+				h={{ lg: 630, xl: 550 }}
 				bgGradient='radial( brand.300 20%, brand.350)'
 				transform={option.best & isDesktop && 'scale(1.05)'}
 			>
-				<CardHeader>
+				<CardHeader pb={0}>
 					<Stack justify='center'>
 						<Heading as='h3' size='lg' color='brand.100' textAlign='center' m={0}>
 							{option.name}
@@ -105,10 +105,7 @@ const PricingCard = ({ option, index }) => {
 						</Text>
 					</Stack>
 				</CardHeader>
-				<CardBody>
-					<Text color='brand.50' fontSize='md' mb='1em'>
-						{option.description}
-					</Text>
+				<CardBody pt={0}>
 					<Features option={option} />
 					<Limits option={option} />
 				</CardBody>
