@@ -36,14 +36,30 @@ const Contact = () => {
 	]
 
 	return (
-		<Container m={0} centerContent p='2em 1em' minW='100%' pb='3em'>
+		<Container
+			m={0}
+			centerContent
+			p='2em 1em'
+			minW='100%'
+			pb='3em'
+			// bgGradient='radial( brand.300 20%, brand.350)'
+		>
 			<Stack maxW={1100} w='100%' align='center'>
-				<Heading as='h2' mb='0.5em' color='accent.300' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
+				<Heading
+					as='h2'
+					mb='0.5em'
+					color='accent.200'
+					textAlign='center'
+					borderBottom='2px solid'
+					p='0 1em'
+					pb='.25em'
+					fontSize='2xl'
+				>
 					Contact
 				</Heading>
-				<Stack direction='row' w='100%' justify='center' spacing='4em'>
+				<Stack direction='row' w='100%' justify='space-evenly' spacing='4em' pt='2em'>
 					{isDesktop || isTablet ? (
-						<Box w='50%'>
+						<Box w='30%'>
 							<Image
 								w='100%'
 								h='100%'
@@ -53,14 +69,7 @@ const Contact = () => {
 							></Image>
 						</Box>
 					) : null}
-					<Box
-						w={isDesktop ? '50%' : ' 75%'}
-						minW={300}
-						as='form'
-						p='2em'
-						borderRadius={10}
-						onSubmit={e => e.preventDefault()}
-					>
+					<Box w={{ base: '75%', lg: '40%' }} minW={300} as='form' borderRadius={10} onSubmit={e => e.preventDefault()}>
 						<VStack spacing='2em'>
 							<FormControl isRequired>
 								<FormLabel fontSize={['sm', 'md']}>Email address:</FormLabel>

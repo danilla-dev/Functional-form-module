@@ -36,11 +36,13 @@ const Header = () => {
 			id='Home'
 			h='100vh'
 			w='100%'
+			maxW='100vw'
 			ref={componentRef}
 			minH='100vh'
 			as='header'
 			backgroundImage={isDesktop ? heroImageLG : heroImageSM}
 			bgPosition={'center'}
+			bgSize={'cover'}
 			bgRepeat={'no-repeat'}
 		>
 			<Stack

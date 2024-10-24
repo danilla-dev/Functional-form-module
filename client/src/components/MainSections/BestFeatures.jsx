@@ -48,20 +48,27 @@ const BestFeatures = () => {
 	return (
 		<Container
 			m={0}
+			mb='5em'
 			centerContent
-			p='3em 2em'
-			pb='11em'
+			p='5em 2em'
 			minW='100%'
-			pt='2em'
-			bgGradient='radial( brand.300 20%, brand.350)'
+			// bgGradient='radial( brand.300 20%, brand.350)'
 		>
 			<Stack maxW={1400} w='100%' align='center'>
-				<Heading as='h2' mb='0.5em' color='accent.200' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
+				<Heading
+					as='h2'
+					fontSize='2xl'
+					color='accent.200'
+					textAlign='center'
+					borderBottom='2px solid'
+					p='0 1em'
+					pb='.25em'
+				>
 					Best features
 				</Heading>
-				<HStack justify='space-between' align='center' pos='relative'>
+				<HStack justify='space-evenly' align='center' flexDirection='row-reverse' pos='relative' pt='2em'>
 					{isDesktop && (
-						<Box w='35%'>
+						<Box w='40%' maxW={400}>
 							<Image
 								src={bestFeaturesImg}
 								w='100%'
@@ -71,12 +78,7 @@ const BestFeatures = () => {
 							/>
 						</Box>
 					)}
-					<Box maxW={isDesktop && '55%'}>
-						<Text color='brand.50' mb='1em' textAlign={!isDesktop && 'center'}>
-							Discover the powerful features of our AI agent that make it a must-have digital assistant. Designed to
-							enhance your daily life, each feature works seamlessly together to provide you with a personalized and
-							interactive experience.
-						</Text>
+					<Box maxW={isDesktop && '50%'}>
 						<Box>
 							<List spacing='1.5em'>
 								{features.map((feature, index) => {
@@ -85,23 +87,24 @@ const BestFeatures = () => {
 										<ListItem key={index}>
 											<Fade key={index} triggerOnce duration={1000} delay={index * 200}>
 												<Card
-													bgColor='brand.300'
+													// bgColor='brand.900'
+													bgColor='transparent'
 													border='1px solid'
 													borderColor='accent.200'
 													p='.5em'
 													borderRadius={10}
 													zIndex={10}
 												>
-													<CardHeader>
+													<CardHeader pb={0}>
 														<HStack justify={!isDesktop && 'center'}>
-															<ListIcon as={Icon} color='accent.200' fontSize={24} />
-															<Heading as='h3' size='md' color='brand.100'>
+															<ListIcon as={Icon} color='brand.800' fontSize='xl' />
+															<Heading as='h3' fontSize='sm' color='brand.800'>
 																{feature.header}
 															</Heading>
 														</HStack>
 													</CardHeader>
 													<CardBody>
-														<Text color='brand.50' textAlign={!isDesktop && 'center'}>
+														<Text color='brand.800' fontSize='sm' textAlign={!isDesktop && 'center'}>
 															{feature.text}
 														</Text>
 													</CardBody>

@@ -30,6 +30,7 @@ const theme = extendTheme({
 			700: '#F94144', // intense red for highlights
 			800: '#264653', // dark blue-green for button backgrounds (hover)
 			900: '#A8DADC', // light blue for button backgrounds (hover)
+			950: '#A8DADCA9', // light blue for button backgrounds (hover)
 		},
 		accent: {
 			50: '#3cbbc7', // main accent color
@@ -56,7 +57,7 @@ const theme = extendTheme({
 		'6xl': '64px',
 	},
 
-	textStyles: {},
+	components: {},
 
 	styles: {
 		global: props => ({

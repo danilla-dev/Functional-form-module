@@ -2,6 +2,7 @@ import React from 'react'
 import { Stack } from '@chakra-ui/react'
 import NavigationLinks from './common/NavigationLinks'
 import Logo from './common/Logo'
+import Contact from './MainSections/Contact'
 
 const Footer = () => {
 	return (

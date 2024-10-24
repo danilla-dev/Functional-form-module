@@ -33,7 +33,7 @@ import { useNavigate } from 'react-router-dom'
 const Features = ({ option }) => {
 	return (
 		<>
-			<Text color='accent.300' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
+			<Text color='accent.300' fontSize='md' textAlign='center' m='.5em 0' borderBottom='1px solid'>
 				Features:
 			</Text>
 			<List spacing='1em'>
@@ -41,7 +41,7 @@ const Features = ({ option }) => {
 					return (
 						<ListItem key={index}>
 							<HStack align='center' spacing='0.5em'>
-								<ListIcon as={FaCheck} color='accent.300' fontSize={14} />
+								<ListIcon as={FaCheck} color='accent.300' fontSize='xs' />
 								<Text color='brand.50' fontSize='sm'>
 									{feature}
 								</Text>
@@ -57,7 +57,7 @@ const Features = ({ option }) => {
 const Limits = ({ option }) => {
 	return (
 		<>
-			<Text color='accent.300' fontSize='lg' textAlign='center' m='.5em 0' borderBottom='1px solid'>
+			<Text color='accent.300' fontSize='md' textAlign='center' m='.5em 0' borderBottom='1px solid'>
 				Limits:
 			</Text>
 			<List spacing='1em'>
@@ -65,7 +65,7 @@ const Limits = ({ option }) => {
 					return (
 						<ListItem key={index}>
 							<HStack align='center' spacing='0.5em'>
-								<ListIcon as={FaTimes} color='accent.300' fontSize={14} />
+								<ListIcon as={FaTimes} color='accent.300' fontSize='xs' />
 								<Text color='brand.50' fontSize='md'>
 									{limit}
 								</Text>
@@ -83,24 +83,34 @@ const PricingCard = ({ option, index }) => {
 	const navigate = useNavigate()
 
 	return (
-		<ListItem flex={1} key={index} w={isDesktop ? 350 : '100%'} minW={300} m='0 1em' maxW={isDesktop ? 500 : 700}>
+		<ListItem
+			flex={1}
+			key={index}
+			w={isDesktop ? 350 : '100%'}
+			minW={300}
+			m='0 1em'
+			maxW={isDesktop ? 350 : 500}
+			_hover={{ transform: 'translateY(-10px)' }}
+			cursor='pointer'
+			transition='0.3s'
+		>
 			<Card
 				bgColor='brand.300'
-				border={option.best ? '5px solid' : '2px solid'}
-				borderColor={'accent.300'}
+				border={option.best ? '4px solid' : '2px solid'}
+				borderColor='accent.300'
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
-				h={{ lg: 630, xl: 550 }}
+				h={{ lg: 580, xl: 540 }}
 				bgGradient='radial( brand.300 20%, brand.350)'
 				transform={option.best & isDesktop && 'scale(1.05)'}
 			>
 				<CardHeader pb={0}>
 					<Stack justify='center'>
-						<Heading as='h3' size='lg' color='brand.100' textAlign='center' m={0}>
+						<Heading as='h3' fontSize='2xl' color='brand.100' textAlign='center' m={0}>
 							{option.name}
 						</Heading>
-						<Text color='accent.300' fontSize='md' textAlign='center'>
+						<Text color='accent.300' fontSize='sm' textAlign='center'>
 							${option.price}/month
 						</Text>
 					</Stack>
@@ -129,18 +139,27 @@ const Pricing = () => {
 	const { pricingOptions } = useSubscribe()
 
 	return (
-		<Container m={0} p={0} pb='7em' centerContent minW='100%' position='relative'>
-			<Stack maxW={1400} w='100%' align='center' pt='2em' zIndex={10} position='relative'>
-				<Heading as='h2' mb='1em' color='accent.300' textAlign='center' borderBottom='3px solid' w='80%' pb='.25em'>
+		<Container m={0} p={0} pb='2em' centerContent minW='100%' position='relative'>
+			<Stack maxW={1400} w='100%' align='center' zIndex={10} position='relative'>
+				<Heading
+					as='h2'
+					mb='1em'
+					color='accent.300'
+					textAlign='center'
+					borderBottom='2px solid'
+					p='0 1em'
+					pb='.25em'
+					fontSize='2xl'
+				>
 					Pricing
 				</Heading>
 				<List w='100%'>
 					<Stack
-						direction={isDesktop ? 'row' : 'column'}
-						align={isDesktop ? 'start' : 'center'}
+						direction={{ base: 'column', lg: 'row' }}
+						align={{ base: 'center', lg: 'start' }}
 						justify='center'
 						w='100%'
-						p='0 1em'
+						p='1em'
 						gap={5}
 						flex={1}
 						as='li'

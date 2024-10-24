@@ -14,16 +14,12 @@ const LandingPage = () => {
 		<Grid gridTemplateRows={'1fr 100px'}>
 			<GridItem rowStart={1} rowEnd={2}>
 				<Header />
-				<Flex as='section' id='About' direction='column' align='center' bgColor='brand.100'>
-					<HowItWorks />
-					<BestFeatures />
-				</Flex>
 				<Flex
+					position='relative'
 					as='section'
-					id='Pricing'
+					id='About'
 					direction='column'
 					align='center'
-					position='relative'
 					bgColor='brand.100'
 					_after={{
 						content: '""',
@@ -31,19 +27,43 @@ const LandingPage = () => {
 						top: 0,
 						left: 0,
 						width: '100%',
-						height: '50%',
+						height: '150px',
 						backgroundColor: 'brand.100',
 						transform: 'skewY(-3deg)',
 						transformOrigin: 0,
 						zIndex: 5,
 					}}
 				>
-					<Pricing />
+					<HowItWorks />
+					<BestFeatures />
 				</Flex>
-				<Flex as='section' id='FAQ' direction='column' align='center' bgGradient='radial( brand.300 20%, brand.350)'>
+				<Flex bgGradient='radial( brand.300 20%, brand.350)' direction='column' p='4em'>
+					<Flex
+						as='section'
+						id='Pricing'
+						direction='column'
+						align='center'
+						position='relative'
+						// _after={{
+						// 	content: '""',
+						// 	position: 'absolute',
+						// 	top: 0,
+						// 	left: 0,
+						// 	width: '100%',
+						// 	height: '15%',
+						// 	backgroundColor: 'brand.100',
+						// 	transform: 'skewY(-3deg)',
+						// 	transformOrigin: 0,
+						// 	zIndex: 5,
+						// }}
+					>
+						<Pricing />
+					</Flex>
+				</Flex>
+				<Flex as='section' id='FAQ' direction='column' align='center'>
 					<FAQ />
 				</Flex>
-				<Flex as='section' id='Contact' direction='column' align='center' bgColor='brand.50'>
+				<Flex as='section' id='Contact' direction='column' align='center'>
 					<Contact />
 				</Flex>
 			</GridItem>

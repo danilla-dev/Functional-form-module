@@ -58,31 +58,46 @@ const FAQ = () => {
 	return (
 		<Container m={0} p='3em 2em' pb='5em' centerContent minW='100%' position='relative'>
 			<Stack w='100%' maxW={1100} color='brand.100' align='center'>
-				<Heading as='h2' borderBottom='3px solid' w='100%' textAlign='center' mb='0.5em' pb='.25em' color='accent.200'>
+				<Heading
+					as='h2'
+					borderBottom='2px solid'
+					textAlign='center'
+					mb='0.5em'
+					p='0 1em'
+					pb='.25em'
+					color='accent.200'
+					fontSize='2xl'
+				>
 					FAQ
 				</Heading>
 				<Accordion
 					allowToggle
 					border='1px solid'
-					bgGradient='radial( brand.300 20%, brand.350)'
+					// bgGradient='radial( brand.300 20%, brand.350)'
 					borderRadius={10}
 					w='100%'
 					overflow='hidden'
 					borderColor='accent.200'
+					bgColor='transparent'
+					// boxShadow='xl'
+					pt='2em'
+					color='brand.800'
 				>
 					{askQuestion.map((question, index) => {
 						return (
 							<AccordionItem key={index} p='1em'>
-								<Heading as='h3'>
+								<Heading>
 									<AccordionButton>
 										<Box as='span' flex='1' textAlign='left'>
-											<Text fontSize='lg'>{question.question}</Text>
+											<Text as='h3' fontSize='md'>
+												{question.question}
+											</Text>
 										</Box>
 										<AccordionIcon />
 									</AccordionButton>
 								</Heading>
 								<AccordionPanel p='1em' borderTop='1px solid' borderTopColor='brand.100'>
-									<Text fontSize='lg'>{question.answer}</Text>
+									<Text fontSize='sm'>{question.answer}</Text>
 								</AccordionPanel>
 							</AccordionItem>
 						)
