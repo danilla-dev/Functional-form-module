@@ -36,14 +36,7 @@ const Contact = () => {
 	]
 
 	return (
-		<Container
-			m={0}
-			centerContent
-			p='2em 1em'
-			minW='100%'
-			pb='3em'
-			// bgGradient='radial( brand.300 20%, brand.350)'
-		>
+		<Container m={0} centerContent p='2em 1em' minW='100%' pb='3em'>
 			<Stack maxW={1100} w='100%' align='center'>
 				<Heading
 					as='h2'
@@ -64,12 +57,19 @@ const Contact = () => {
 								w='100%'
 								h='100%'
 								src={contactImg}
-								filter='drop-shadow(2px 2px 2px #353535FF)'
+								filter='drop-shadow(2px 2px 2px #9193FFFF)'
 								alt='Two mans looking at a robot'
 							></Image>
 						</Box>
 					) : null}
-					<Box w={{ base: '75%', lg: '40%' }} minW={300} as='form' borderRadius={10} onSubmit={e => e.preventDefault()}>
+					<Box
+						w={{ base: '75%', lg: '40%' }}
+						minW={300}
+						as='form'
+						borderRadius={10}
+						onSubmit={e => e.preventDefault()}
+						color='brand.50'
+					>
 						<VStack spacing='2em'>
 							<FormControl isRequired>
 								<FormLabel fontSize={['sm', 'md']}>Email address:</FormLabel>
@@ -89,7 +89,6 @@ const Contact = () => {
 								<FormLabel fontSize={['sm', 'md']}>How can we help?</FormLabel>
 								<Textarea resize='vertical' maxH={250} borderColor='accent.300' />
 							</FormControl>
-							<Divider />
 							<ActionButton
 								text='Send question'
 								icon={<IoIosSend />}

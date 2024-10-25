@@ -12,7 +12,7 @@ const ActionButton = ({ text, icon, action, ariaLabel, priority, type, content, 
 
 	const highPriorityStyles = {
 		borderColor: 'brand.100',
-		color: 'brand.50',
+		color: 'brand.250',
 		fontWeight: '400',
 		bgColor: 'brand.500',
 		w: '180px',

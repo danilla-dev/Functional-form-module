@@ -13,35 +13,19 @@ const LandingPage = () => {
 	return (
 		<Grid gridTemplateRows={'1fr 100px'}>
 			<GridItem rowStart={1} rowEnd={2}>
-				<Header />
 				<Flex
-					position='relative'
-					as='section'
-					id='About'
 					direction='column'
-					align='center'
-					bgColor='brand.100'
-					_after={{
-						content: '""',
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '150px',
-						backgroundColor: 'brand.100',
-						transform: 'skewY(-3deg)',
-						transformOrigin: 0,
-						zIndex: 5,
-					}}
+					bgImage={'linear-gradient(190deg, brand.200 25%, brand.350 50%, brand.350 75%, brand.200 100%)'}
 				>
-					<HowItWorks />
-					<BestFeatures />
+					<Header />
+					<Flex position='relative' as='section' id='About' direction='column' align='center'>
+						<HowItWorks />
+						<BestFeatures />
+					</Flex>
 				</Flex>
 				<Flex
-					bgGradient='radial( brand.300 20%, brand.350)'
 					direction='column'
-					p='4em'
-					pt={{ base: '4em', md: '15em' }}
+					bgImage={'linear-gradient(190deg, brand.350 0%, brand.200 15%,  brand.200 60%, brand.350 100%)'}
 				>
 					<Flex as='section' id='Pricing' direction='column' align='center' position='relative'>
 						<Pricing />

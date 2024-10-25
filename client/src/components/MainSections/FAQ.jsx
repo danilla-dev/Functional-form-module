@@ -72,15 +72,11 @@ const FAQ = () => {
 				</Heading>
 				<Accordion
 					allowToggle
-					border='1px solid'
 					borderColor='accent.300'
-					// bgGradient='radial( brand.300 20%, brand.350)'
 					borderRadius={10}
 					w='100%'
 					overflow='hidden'
-					// bgColor='transparent'
-					bgColor='brand.300'
-					// boxShadow='xl'
+					bgColor='transparent'
 					pt='2em'
 					color='brand.100'
 				>

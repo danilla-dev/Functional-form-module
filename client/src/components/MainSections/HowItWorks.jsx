@@ -21,7 +21,7 @@ const HowItWorks = () => {
 				<Heading
 					as='h2'
 					mb='0.5em'
-					color='accent.200'
+					color='accent.300'
 					textAlign='center'
 					borderBottom='2px solid'
 					p='0 1em'
@@ -46,7 +46,7 @@ const HowItWorks = () => {
 									borderColor={index !== 2 ? 'brand.950' : 'transparent'}
 								>
 									<Box maxW={!isBase && '40%'} minW='200px' pos='relative'>
-										<Text textAlign={isBase && 'center'} fontSize='md'>
+										<Text textAlign={isBase && 'center'} fontSize='md' color='brand.50'>
 											{text}
 										</Text>
 									</Box>

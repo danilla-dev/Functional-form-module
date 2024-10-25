@@ -14,7 +14,7 @@ import { useUI } from '../../hooks/useUI'
 import { calculateDistance } from '../../utils/calculateScroll'
 
 const Header = () => {
-	const { isDesktop } = useUI()
+	const { isDesktop, isMobile } = useUI()
 
 	const componentRef = useRef(null)
 
@@ -35,7 +35,7 @@ const Header = () => {
 			position='relative'
 			id='Home'
 			h='100vh'
-			w='100%'
+			minW='100%'
 			maxW='100vw'
 			ref={componentRef}
 			minH='100vh'
@@ -58,7 +58,7 @@ const Header = () => {
 				p='65px 2em'
 			>
 				<HeaderText distance={distanceFromTop} />
-				<HeaderImage />
+				{isDesktop && <HeaderImage />}
 			</Stack>
 		</Flex>
 	)

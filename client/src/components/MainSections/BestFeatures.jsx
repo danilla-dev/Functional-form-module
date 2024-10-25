@@ -15,6 +15,7 @@ import {
 	UnorderedList,
 	Card,
 	CardBody,
+	Divider,
 	CardHeader,
 } from '@chakra-ui/react'
 import { FaUserCog, FaComments, FaPlug } from 'react-icons/fa'
@@ -48,72 +49,44 @@ const BestFeatures = () => {
 	return (
 		<Container
 			m={0}
-			mb={{ base: 0, md: '-15em' }}
 			centerContent
 			p='.5em'
 			minW='100%'
-			bgColor={{ base: 'transparent', md: 'brand.900' }}
+			bgColor='brand.200'
+			boxShadow='0 -4px 12px #A7A7A778, 0 4px 12px #a7a7a778'
 		>
 			<Stack maxW={1400} w='100%' align='center'>
-				{!isMobile && !isTablet && (
-					<Heading
-						as='h2'
-						fontSize='2xl'
-						color={{ base: 'accent.200', md: 'brand.200' }}
-						textAlign='center'
-						borderBottom='2px solid'
-						p='0 1em'
-						pb='.25em'
-						mb='1em'
-					>
-						Best features
-					</Heading>
-				)}
 				<HStack justify='space-evenly' align='center' flexDirection='row-reverse' pos='relative' pb='2em'>
-					{/* {isDesktop && (
-						<Box w='40%' maxW={400}>
-							<Image
-								src={bestFeaturesImg}
-								w='100%'
-								h='100%'
-								filter='drop-shadow(2px 2px 2px #B9B6B6FF)'
-								alt='Man with desktops around'
-							/>
-						</Box>
-					)} */}
 					<Box w='100%'>
 						<List
 							spacing='1.5em'
 							display='flex'
 							flexDirection={{ base: 'column', md: 'row' }}
 							justifyContent='center'
-							alignItems='center'
-							gap='1em'
+							alignItems={{ base: 'center', md: 'baseline' }}
 						>
 							{features.map((feature, index) => {
 								const Icon = feature.icon
 								return (
-									<ListItem key={index} h={{ md: 270, lg: 220, xl: 180 }} w={{ base: '80%', md: '33%' }}>
-										<Card
-											bgColor='brand.900'
-											border='1px solid'
-											borderColor='accent.200'
-											p='.5em'
-											borderRadius={10}
-											zIndex={10}
-											h='100%'
-											boxShadow='lg'
-										>
+									<ListItem
+										key={index}
+										h={{ base: '100%', md: '33%' }}
+										w={{ base: '80%', md: '33%' }}
+										borderTop={{ base: '1px solid', md: 'none' }}
+										borderColor={'brand.50'}
+										border={index === 0 && { base: 'none', md: '1px solid' }}
+									>
+										<Card bgColor='transparent' p='.5em' borderRadius={10} zIndex={10} h='100%' boxShadow='none'>
 											<CardHeader pb={0}>
-												<HStack justify={!isDesktop && 'center'}>
-													<ListIcon as={Icon} color='brand.200' fontSize='xl' />
-													<Heading as='h3' fontSize='sm' color='brand.200'>
+												<HStack justify='center'>
+													<ListIcon as={Icon} color='brand.500' fontSize='xl' />
+													<Heading as='h3' fontSize='sm' color='brand.500'>
 														{feature.header}
 													</Heading>
 												</HStack>
 											</CardHeader>
 											<CardBody>
-												<Text color='brand.800' fontSize='sm' textAlign={!isDesktop && 'center'}>
+												<Text color='brand.50' fontSize='sm' textAlign='center'>
 													{feature.text}
 												</Text>
 											</CardBody>
