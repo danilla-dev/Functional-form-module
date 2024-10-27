@@ -54,7 +54,7 @@ const HowItWorks = () => {
 										<Box maxW={250} minW={150} h='100%'>
 											<Image
 												src={index === 0 ? processorImage : sectionImage}
-												filter='drop-shadow(2px 2px 2px #696969FF)'
+												filter='drop-shadow(2px 2px 2px #9193FFFF)'
 												w='100%'
 												h='100%'
 												alt='section image'

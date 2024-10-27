@@ -27,7 +27,7 @@ const SubscriptionFormPage = () => {
 					align='center'
 					w='100%'
 					h='100vh'
-					bgGradient='radial( brand.300 20%, brand.350)'
+					bgImage={'linear-gradient(190deg, brand.200 -10%, brand.350 20%, brand.350 75%, brand.200 110%)'}
 				>
 					<SubscriptionForm />
 				</Center>

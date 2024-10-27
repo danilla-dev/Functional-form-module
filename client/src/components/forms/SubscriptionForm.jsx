@@ -17,6 +17,8 @@ import {
 	Stack,
 	useToast,
 	HStack,
+	Radio,
+	RadioGroup,
 } from '@chakra-ui/react'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
@@ -33,7 +35,7 @@ import VerifyCode from '../formSteps/VerifyCode'
 import ActionButton from '../common/ActionButton'
 import { detailsSchema, signUpSchema, validationSchema } from '../../utils/YupSchemas'
 
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import useRegister from '../../hooks/useRegister'
 import { useAuth } from '../../hooks/useAuth'
 import { useSubscribe } from '../../hooks/useSubscribe'
@@ -73,6 +75,24 @@ const StepperComponent = ({ index }) => {
 	)
 }
 
+const SubscriptionSelector = props => {
+	return (
+		<RadioGroup onChange={props.onChange} value={props.value} w='100%'>
+			<HStack spacing='24px' justify='space-evenly'>
+				<Radio size='lg' value='Basic'>
+					Basic
+				</Radio>
+				<Radio size='lg' value='Pro'>
+					Pro
+				</Radio>
+				<Radio size='lg' value='Premium'>
+					Premium
+				</Radio>
+			</HStack>
+		</RadioGroup>
+	)
+}
+
 const SubscriptionForm = () => {
 	const { isDesktop, isTablet } = useUI()
 	const { error: authError } = useRegister()
@@ -84,7 +104,9 @@ const SubscriptionForm = () => {
 	const { currentUser, login, registerUser, logout, isLoading, verifyCode } = useAuth()
 	const { saveSubscriptionDetails, payForSubscription, pricingOptions } = useSubscribe()
 	const [plan, setPlan] = useState({ name: '', price: 0 })
+	const [selectedPlan, setSelectedPlan] = useState(plan.name)
 	const location = useLocation()
+	const navigate = useNavigate()
 	const {
 		control,
 		handleSubmit,
@@ -93,11 +115,9 @@ const SubscriptionForm = () => {
 	} = useForm({
 		resolver: yupResolver(activeStep === 0 ? signUpSchema : activeStep === 1 ? validationSchema : detailsSchema),
 	})
-	console.log(plan)
 
 	useEffect(() => {
 		const { isVerified, subscription, email } = currentUser
-
 		if (email) {
 			switch (true) {
 				case !isVerified:
@@ -123,6 +143,11 @@ const SubscriptionForm = () => {
 			}
 		}
 	}, [location])
+
+	const onChangePlan = e => {
+		setSelectedPlan(e)
+		navigate(`/subscription?plan=${e.toLowerCase()}`)
+	}
 
 	// do przeniesienia do osobnego pliku
 	const handleSendEmail = async emailData => {
@@ -232,6 +257,7 @@ const SubscriptionForm = () => {
 						</Text>
 					)}
 					<StepperComponent index={activeStep} />
+					{activeStep === 0 && <SubscriptionSelector value={selectedPlan || plan.name} onChange={onChangePlan} />}
 					<MotionBox
 						w='100%'
 						key={activeStep}

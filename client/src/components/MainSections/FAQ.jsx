@@ -73,9 +73,7 @@ const FAQ = () => {
 				<Accordion
 					allowToggle
 					borderColor='accent.300'
-					borderRadius={10}
 					w='100%'
-					overflow='hidden'
 					bgColor='transparent'
 					pt='2em'
 					color='brand.100'

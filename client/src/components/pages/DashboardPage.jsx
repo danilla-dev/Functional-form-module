@@ -35,10 +35,6 @@ const DashboardPage = () => {
 	const { subscriptionDetails, subIsLoading, refetch } = useSubscribe()
 	const { details, name, subscriptionEndDate } = subscriptionDetails
 
-	console.log('currentUser', currentUser)
-	console.log('subscriptionDetails', subscriptionDetails)
-	console.log('dashboard is running')
-
 	useEffect(() => {
 		if (currentUser.email == '' || subscriptionDetails.name == '') {
 			refetch()
@@ -79,7 +75,7 @@ const DashboardPage = () => {
 		header: 'Communication',
 		body: [
 			{
-				time: { 
+				time: {
 					description: 'Report interval',
 					value: details.notificationPreferences,
 				},
@@ -118,7 +114,7 @@ const DashboardPage = () => {
 					maxW='100vw'
 					minH='100vh'
 					h='100%'
-					bgColor={'brand.200'}
+					bgColor={'brand.300'}
 					color={'white'}
 					p='1em'
 					pt='5em'
