@@ -18,6 +18,10 @@ export const signUpSchema = yup.object().shape({
 		.string()
 		.matches(/^[\d\s()+-]*$/, 'Phone number can only contain digits, spaces, and special characters like +, -, (, )')
 		.required('Phone number is required'),
+	subscriptionPlan: yup
+		.string()
+		.oneOf(['Basic', 'Pro', 'Premium'], 'You must select a subscription')
+		.required('Subscription is required'),
 })
 
 export const detailsSchema = yup.object().shape({

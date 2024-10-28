@@ -101,7 +101,7 @@ const PricingCard = ({ option, index }) => {
 				p='1em .5em'
 				borderRadius={15}
 				boxShadow='dark-lg'
-				h={{ lg: 580, xl: 540 }}
+				h={{ lg: 550, xl: 500 }}
 				bgGradient='radial( brand.300 20%, brand.350)'
 				transform={option.best & isDesktop && 'scale(1.05)'}
 			>

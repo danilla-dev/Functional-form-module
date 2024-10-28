@@ -138,6 +138,7 @@ export const SubscriptionProvider = ({ children }) => {
 			console.error('Error paying for subscription:', error)
 		},
 	})
+
 	return (
 		<SubscriptionContext.Provider
 			value={{
