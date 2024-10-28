@@ -19,7 +19,25 @@ import {
 	HStack,
 	Radio,
 	RadioGroup,
+	VStack,
+	Popover,
+	PopoverTrigger,
+	PopoverContent,
+	PopoverHeader,
+	PopoverBody,
+	PopoverFooter,
+	PopoverArrow,
+	PopoverCloseButton,
+	PopoverAnchor,
+	useDisclosure,
+	IconButton,
+	List,
+	ListItem,
+	ListIcon,
+	Divider,
 } from '@chakra-ui/react'
+import { InfoIcon } from '@chakra-ui/icons'
+import { FaCheck, FaTimes } from 'react-icons/fa'
 import emailjs from '@emailjs/browser'
 import { motion } from 'framer-motion'
 import { useUI } from '../../hooks/useUI'
@@ -75,24 +93,86 @@ const StepperComponent = ({ index }) => {
 	)
 }
 
-const SubscriptionSelector = props => {
+const SubscriptionPopover = ({ isOpen }) => {
 	return (
-		<RadioGroup onChange={props.onChange} value={props.value} w='100%'>
-			<HStack spacing='24px' justify='space-evenly'>
-				<Radio size='lg' value='Basic'>
-					Basic
-				</Radio>
-				<Radio size='lg' value='Pro'>
-					Pro
-				</Radio>
-				<Radio size='lg' value='Premium'>
-					Premium
-				</Radio>
+		<Popover isOpen={isOpen}>
+			<PopoverTrigger></PopoverTrigger>
+			<PopoverContent>
+				<PopoverArrow />
+				<PopoverCloseButton />
+				<PopoverHeader>Confirmation!</PopoverHeader>
+				<PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+			</PopoverContent>
+		</Popover>
+	)
+}
+const SubscriptionSelector = ({ onChange, value, subscriptionPlans }) => {
+	return (
+		<RadioGroup onChange={onChange} value={value} w='100%' name='subscription-select'>
+			<HStack spacing='24px' justify='center'>
+				{subscriptionPlans.map((option, index) => {
+					const { isOpen, onToggle, onClose } = useDisclosure()
+
+					return (
+						<VStack
+							key={option.name}
+							border='1px solid'
+							w={100}
+							h={100}
+							justify='center'
+							borderColor={value === option.name ? 'brand.500' : 'brand.100'}
+							borderRadius={10}
+							_hover={{ borderColor: 'brand.500' }}
+							cursor='pointer'
+							onClick={() => onChange(option.name)}
+						>
+							<Radio size='lg' value={option.name} display='none' />
+							<Text>{option.name}</Text>
+							<Text>{option.price} $</Text>
+							<Popover isOpen={isOpen} onClose={onClose} placement='right'>
+								<PopoverTrigger>
+									<IconButton
+										aria-label='show-subscription-info'
+										colorScheme='brand.600'
+										border='transparent'
+										variant='outline'
+										isRound
+										fontSize='sm'
+										icon={<InfoIcon />}
+										p={0}
+										onClick={e => {
+											e.stopPropagation()
+											onToggle()
+										}}
+									/>
+								</PopoverTrigger>
+								<PopoverContent color='brand.200' fontSize='md'>
+									<PopoverArrow />
+									<PopoverCloseButton fontSize='sm' fontWeight={400} />
+									<PopoverHeader>{option.name} plan Info</PopoverHeader>
+									<PopoverBody>
+										<List spacing='1em'>
+											{option.features.map((feature, index) => {
+												return (
+													<ListItem key={index}>
+														<HStack align='center' spacing='0.5em'>
+															<ListIcon as={FaCheck} color='accent.300' fontSize='xs' />
+															<Text fontSize='sm'>{feature}</Text>
+														</HStack>
+													</ListItem>
+												)
+											})}
+										</List>
+									</PopoverBody>
+								</PopoverContent>
+							</Popover>
+						</VStack>
+					)
+				})}
 			</HStack>
 		</RadioGroup>
 	)
 }
-
 const SubscriptionForm = () => {
 	const { isDesktop, isTablet } = useUI()
 	const { error: authError } = useRegister()
@@ -257,7 +337,13 @@ const SubscriptionForm = () => {
 						</Text>
 					)}
 					<StepperComponent index={activeStep} />
-					{activeStep === 0 && <SubscriptionSelector value={selectedPlan || plan.name} onChange={onChangePlan} />}
+					{activeStep === 0 && (
+						<SubscriptionSelector
+							value={selectedPlan || plan.name}
+							onChange={onChangePlan}
+							subscriptionPlans={pricingOptions}
+						/>
+					)}
 					<MotionBox
 						w='100%'
 						key={activeStep}
