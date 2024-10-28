@@ -36,7 +36,7 @@ const Features = ({ option }) => {
 			<Text color='accent.300' fontSize='md' textAlign='center' m='.5em 0' borderBottom='1px solid'>
 				Features:
 			</Text>
-			<List spacing='1em'>
+			<List spacing='0.25em'>
 				{option.features.map((feature, index) => {
 					return (
 						<ListItem key={index}>

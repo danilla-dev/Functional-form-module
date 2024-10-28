@@ -108,13 +108,14 @@ const SubscriptionPopover = ({ isOpen }) => {
 }
 const SubscriptionSelector = ({ onChange, value, subscriptionPlans }) => {
 	return (
-		<RadioGroup onChange={onChange} value={value} w='100%' name='subscription-select'>
-			<HStack spacing='24px' justify='center'>
+		<RadioGroup onChange={onChange} value={value} w='100%' name='subscription-select' m='0.5em  0'>
+			<HStack spacing='24px' justify='space-between'>
 				{subscriptionPlans.map((option, index) => {
 					const { isOpen, onToggle, onClose } = useDisclosure()
 
 					return (
 						<VStack
+							position='relative'
 							key={option.name}
 							border='1px solid'
 							w={100}
@@ -126,46 +127,56 @@ const SubscriptionSelector = ({ onChange, value, subscriptionPlans }) => {
 							cursor='pointer'
 							onClick={() => onChange(option.name)}
 						>
+							<Box position='absolute' top={0} right={0} p='0.25em'>
+								<Popover isOpen={isOpen} onClose={onClose} placement='bottom'>
+									<PopoverTrigger>
+										<IconButton
+											aria-label='show-subscription-info'
+											color='brand.100'
+											border='transparent'
+											variant='outline'
+											isRound
+											fontSize='sm'
+											icon={<InfoIcon />}
+											onClick={e => {
+												e.stopPropagation()
+												onToggle()
+											}}
+											_hover={{ bgColor: 'transparent' }}
+										/>
+									</PopoverTrigger>
+									<PopoverContent
+										color='brand.100'
+										fontSize='md'
+										bgColor='brand.200'
+										borderColor='brand.800'
+										borderRadius={10}
+									>
+										<PopoverArrow bgColor='brand.200' borderColor='brand.800' />
+										<PopoverCloseButton fontSize='sm' fontWeight={400} m='0.25em' />
+										<PopoverHeader>{option.name} plan Info</PopoverHeader>
+										<PopoverBody p='0.5em'>
+											<List spacing='0.25em' textAlign='start'>
+												{option.features.map((feature, index) => {
+													return (
+														<ListItem key={index}>
+															<HStack align='baseline' spacing='0.5em'>
+																<ListIcon as={FaCheck} color='accent.300' fontSize='xs' />
+																<Text fontSize='sm'>{feature}</Text>
+															</HStack>
+														</ListItem>
+													)
+												})}
+											</List>
+										</PopoverBody>
+									</PopoverContent>
+								</Popover>
+							</Box>
 							<Radio size='lg' value={option.name} display='none' />
-							<Text>{option.name}</Text>
-							<Text>{option.price} $</Text>
-							<Popover isOpen={isOpen} onClose={onClose} placement='right'>
-								<PopoverTrigger>
-									<IconButton
-										aria-label='show-subscription-info'
-										colorScheme='brand.600'
-										border='transparent'
-										variant='outline'
-										isRound
-										fontSize='sm'
-										icon={<InfoIcon />}
-										p={0}
-										onClick={e => {
-											e.stopPropagation()
-											onToggle()
-										}}
-									/>
-								</PopoverTrigger>
-								<PopoverContent color='brand.200' fontSize='md'>
-									<PopoverArrow />
-									<PopoverCloseButton fontSize='sm' fontWeight={400} />
-									<PopoverHeader>{option.name} plan Info</PopoverHeader>
-									<PopoverBody>
-										<List spacing='1em'>
-											{option.features.map((feature, index) => {
-												return (
-													<ListItem key={index}>
-														<HStack align='center' spacing='0.5em'>
-															<ListIcon as={FaCheck} color='accent.300' fontSize='xs' />
-															<Text fontSize='sm'>{feature}</Text>
-														</HStack>
-													</ListItem>
-												)
-											})}
-										</List>
-									</PopoverBody>
-								</PopoverContent>
-							</Popover>
+							<Text fontSize='lg' mt='0.25em'>
+								{option.name}
+							</Text>
+							<Text fontSize='md'>{option.price} $</Text>
 						</VStack>
 					)
 				})}
