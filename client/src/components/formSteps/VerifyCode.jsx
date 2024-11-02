@@ -17,10 +17,10 @@ import { useAuth } from '../../hooks/useAuth'
 import { useUI } from '../../hooks/useUI'
 import { Controller } from 'react-hook-form'
 
-const VerifyCode = ({ control, errors }) => {
+const VerifyCode = ({ control, errors, authError }) => {
 	console.log(errors)
 	return (
-		<FormControl isInvalid={errors.verificationCode}>
+		<FormControl isInvalid={errors.verificationCode || authError}>
 			<VStack align='center' justify='center'>
 				<FormLabel>Verification code</FormLabel>
 				<Controller
@@ -47,6 +47,7 @@ const VerifyCode = ({ control, errors }) => {
 					)}
 				/>
 				{errors.verificationCode && <FormErrorMessage>{errors.verificationCode.message}</FormErrorMessage>}
+				{authError && <FormErrorMessage>{authError}</FormErrorMessage>}
 			</VStack>
 		</FormControl>
 	)

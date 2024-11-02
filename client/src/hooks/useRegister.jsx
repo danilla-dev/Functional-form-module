@@ -8,6 +8,7 @@ const useRegister = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 	const { login } = useAuth()
+	console.log(error?.message)
 
 	const handleRegister = async userData => {
 		setLoading(true)
@@ -19,7 +20,7 @@ const useRegister = () => {
 			localStorage.setItem('authToken', token)
 			return 'success'
 		} catch (err) {
-			setError(err.message)
+			setError(err)
 			return err.message
 		} finally {
 			setLoading(false)

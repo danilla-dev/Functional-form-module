@@ -20,8 +20,6 @@ export const handleSendEmail = async ({ emailData }) => {
 }
 
 export const handleRegister = async ({ data, setActiveStep, registerUser }) => {
-	console.log(registerUser)
-	console.log(data)
 	const result = await registerUser.mutateAsync(data)
 	if (result.email) {
 		const emailData = {

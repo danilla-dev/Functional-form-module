@@ -23,8 +23,8 @@ export const AuthProvider = ({ children }) => {
 		activeSub: null,
 	})
 	const [isLoading, setIsLoading] = useState(true)
-	console.log('AuthProvider is running')
-	console.log(currentUser)
+	const [authError, setAuthError] = useState(null)
+	console.log(authError)
 	const {
 		data: authData,
 		isLoading: authIsLoading,
@@ -84,7 +84,8 @@ export const AuthProvider = ({ children }) => {
 			setCurrentUser(data)
 		},
 		onError: error => {
-			console.error('Error registering user:', error)
+			console.error('Error registering user:', error.response.data.message)
+			setAuthError(error.response.data.message)
 		},
 	})
 
@@ -114,13 +115,24 @@ export const AuthProvider = ({ children }) => {
 			refetch()
 		},
 		onError: error => {
-			console.error('Error verifying code:', error)
+			console.error('Error verifying code:', error.response.data.message)
+			setAuthError(error.response.data.message)
 		},
 	})
 
 	return (
 		<AuthContext.Provider
-			value={{ currentUser, loginUser, logoutUser, registerUser, authIsLoading, verifyCode, isLoading, refetch }}
+			value={{
+				currentUser,
+				loginUser,
+				logoutUser,
+				registerUser,
+				authIsLoading,
+				verifyCode,
+				isLoading,
+				refetch,
+				authError,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>

@@ -37,13 +37,12 @@ const steps = [
 
 const SubscriptionForm = () => {
 	const { isDesktop, isTablet } = useUI()
-	const { error: authError } = useRegister()
 	const toast = useToast()
 	const { activeStep, setActiveStep } = useSteps({
 		initialStep: 0,
 		count: steps.length,
 	})
-	const { currentUser, login, registerUser, logout, isLoading, verifyCode } = useAuth()
+	const { currentUser, login, registerUser, logout, isLoading, verifyCode, authError } = useAuth()
 	const { saveSubscriptionDetails, payForSubscription, pricingOptions } = useSubscribe()
 	const [plan, setPlan] = useState({ name: '', price: 0 })
 	const [selectedPlan, setSelectedPlan] = useState(plan.name)
@@ -86,7 +85,6 @@ const SubscriptionForm = () => {
 	}, [location])
 
 	const nextStep = async data => {
-		console.log(registerUser)
 		switch (activeStep) {
 			case 0:
 				await handleRegister({ data, setActiveStep, registerUser })
@@ -160,7 +158,7 @@ const SubscriptionForm = () => {
 						transition={{ duration: 0.3 }}
 					>
 						{activeStep === 0 && <SignUp control={control} errors={errors} authError={authError} />}
-						{activeStep === 1 && <VerifyCode control={control} errors={errors} />}
+						{activeStep === 1 && <VerifyCode control={control} errors={errors} authError={authError} />}
 						{activeStep === 2 && <Details control={control} errors={errors} />}
 					</MotionBox>
 

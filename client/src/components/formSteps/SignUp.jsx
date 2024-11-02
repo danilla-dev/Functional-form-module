@@ -13,7 +13,6 @@ import {
 import { Controller } from 'react-hook-form'
 
 const SignUp = ({ control, errors, authError }) => {
-
 	const inputs = [
 		{
 			label: 'Email address',
@@ -40,6 +39,7 @@ const SignUp = ({ control, errors, authError }) => {
 			defaultValue: 56486,
 		},
 	]
+	console.log(authError)
 	return (
 		<>
 			{inputs.map((input, index) => {
