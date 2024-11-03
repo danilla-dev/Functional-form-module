@@ -6,7 +6,7 @@ import { pricingOptions } from '../data/mainSectionConstants'
 export const SubscriptionContext = createContext()
 
 const mode = import.meta.env.VITE_MODE
-let API_URL = 'https://functional-form-module-1.onrender.com'
+let API_URL = 'https://www.aiagent.petroweb.pl/'
 if (mode === 'development') {
 	API_URL = 'http://localhost:4000'
 }

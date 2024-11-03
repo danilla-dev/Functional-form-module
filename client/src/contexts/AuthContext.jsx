@@ -10,7 +10,7 @@ export const AuthContext = createContext()
 const isLoggedIn = Cookies.get('authStatus')
 
 const mode = import.meta.env.VITE_MODE
-const API_URL = mode === 'development' ? 'http://localhost:4000' : 'https://functional-form-module-1.onrender.com'
+const API_URL = mode === 'development' ? 'http://localhost:4000' : 'https://www.aiagent.petroweb.pl'
 
 export const AuthProvider = ({ children }) => {
 	const location = useLocation()
