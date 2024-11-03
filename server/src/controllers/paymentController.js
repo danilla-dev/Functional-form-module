@@ -7,9 +7,18 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
 export const postPayment = async (req, res) => {
 	const { amount, name } = req.body
-	console.log('Amount:', amount * 100)
+	if (!amount || !name) {
+		return res.status(400).json({ error: 'Amount and name are required' })
+	}
+
 	const user = await User.findOne({ _id: req.userId })
+	if (!user) {
+		return res.status(404).json({ error: 'User not found' })
+	}
 	const sub = await Subscription.findOne({ user: user._id })
+	if (!sub) {
+		return res.status(404).json({ error: 'Subscription not found' })
+	}
 	try {
 		const session = await stripe.checkout.sessions.create({
 			payment_method_types: ['card'],
@@ -57,7 +66,13 @@ export const updateDatabase = async (req, res) => {
 
 		try {
 			const user = await User.findOne({ _id: userId })
+			if (!user) {
+				return res.status(404).send('User not found')
+			}
 			const sub = await Subscription.findOne({ user: user._id })
+			if (!sub) {
+				return res.status(404).send('Subscription not found')
+			}
 
 			await user.updateOne({ activeSub: true }, { new: true })
 			await sub.updateOne({ paymentStatus: 'paid', name: subName }, { new: true })

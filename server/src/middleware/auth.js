@@ -1,13 +1,12 @@
-// src/middleware/auth.js
 import jwt from 'jsonwebtoken'
 
 const auth = (req, res, next) => {
 	const token = req.cookies.token
 	const verifyToken = req.query.token
 
-	console.log('auth middleware is running')
+	console.log('Auth middleware is running')
 
-	if (!token && !verifyToken) {
+	if (!token && (!verifyToken || verifyToken === 'null')) {
 		return res.status(403).json({ message: 'No token, authorization denied' })
 	}
 
@@ -17,15 +16,14 @@ const auth = (req, res, next) => {
 			req.userId = decoded.id
 			req.userEmail = decoded.email
 		}
-
-		if (verifyToken) {
+		if (verifyToken && verifyToken !== 'null') {
 			req.verifyToken = verifyToken
 		}
 
 		next()
 	} catch (error) {
 		console.error('Token verification error:', error)
-		res.status(401).json({ message: 'Token is not valid' })
+		return res.status(401).json({ message: 'Token is not valid' })
 	}
 }
 

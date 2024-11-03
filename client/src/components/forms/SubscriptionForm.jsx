@@ -21,6 +21,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import useRegister from '../../hooks/useRegister'
 import { useAuth } from '../../hooks/useAuth'
 import { useSubscribe } from '../../hooks/useSubscribe'
+import useSubscriptionForm from '../../hooks/useSubscriptionForm'
+import { formSteps } from '../../data/formsConstants'
 
 const MotionBox = motion(Box)
 const animationVariants = {
@@ -29,18 +31,12 @@ const animationVariants = {
 	exit: { opacity: 0, x: -100 },
 }
 
-const steps = [
-	{ title: 'Sign up', description: null },
-	{ title: 'Verify', description: null },
-	{ title: 'Details', description: null },
-]
-
 const SubscriptionForm = () => {
 	const { isDesktop, isTablet } = useUI()
 	const toast = useToast()
 	const { activeStep, setActiveStep } = useSteps({
 		initialStep: 0,
-		count: steps.length,
+		count: formSteps.length,
 	})
 	const { currentUser, login, registerUser, logout, isLoading, verifyCode, authError } = useAuth()
 	const { saveSubscriptionDetails, payForSubscription, pricingOptions } = useSubscribe()
@@ -54,58 +50,24 @@ const SubscriptionForm = () => {
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(activeStep === 0 ? signUpSchema : activeStep === 1 ? validationSchema : detailsSchema),
+		defaultValues: { subscriptionPlan: plan.name },
 	})
 
-	useEffect(() => {
-		const { isVerified, subscription, email } = currentUser
-		if (email) {
-			switch (true) {
-				case !isVerified:
-					setActiveStep(1)
-					break
-				case isVerified && subscription === null:
-					setActiveStep(2)
-					break
-				default:
-					break
-			}
-		} else {
-			setActiveStep(0)
-		}
-	}, [currentUser])
+	const { nextStep, errors: formErrors } = useSubscriptionForm(activeStep, setActiveStep, plan)
 
 	useEffect(() => {
-		if (location.pathname === '/subscription') {
-			const urlParams = new URLSearchParams(location.search)
-			const plan = urlParams.get('plan')
-			if (plan) {
-				setPlan(pricingOptions.find(option => option.name.toLowerCase() === plan.toLowerCase()))
-			}
+		const urlParams = new URLSearchParams(location.search)
+		const planName = urlParams.get('plan')?.toLowerCase()
+		if (planName) {
+			const selectedPlan = pricingOptions.find(option => option.name.toLowerCase() === planName)
+			if (selectedPlan) setPlan(selectedPlan)
 		}
-	}, [location])
+	}, [location.search, pricingOptions])
 
-	const nextStep = async data => {
-		switch (activeStep) {
-			case 0:
-				await handleRegister({ data, setActiveStep, registerUser })
-				break
-			case 1:
-				await handleVerifyCode({ data, setActiveStep, verifyCode, currentUser })
-				break
-			case 2:
-				await handleSaveDetails({ data, saveSubscriptionDetails })
-				await handlePayment({ data: { amount: plan.price, name: plan.name }, payForSubscription })
-				setActiveStep(3)
-				break
-			default:
-				toast({
-					title: 'Sukces!',
-					description: 'Formularz został pomyślnie przesłany.',
-					status: 'success',
-					duration: 5000,
-					isClosable: true,
-				})
-		}
+	const stepComponents = {
+		0: <SignUp control={control} errors={errors} authError={authError.email} />,
+		1: <VerifyCode control={control} errors={errors} authError={authError.code} />,
+		2: <Details control={control} errors={errors} />,
 	}
 
 	return (
@@ -146,6 +108,7 @@ const SubscriptionForm = () => {
 							errors={errors}
 							subscriptionPlans={pricingOptions}
 							planName={plan.name}
+							setValue={setValue}
 						/>
 					)}
 					<MotionBox
@@ -157,11 +120,8 @@ const SubscriptionForm = () => {
 						exit='exit'
 						transition={{ duration: 0.3 }}
 					>
-						{activeStep === 0 && <SignUp control={control} errors={errors} authError={authError} />}
-						{activeStep === 1 && <VerifyCode control={control} errors={errors} authError={authError} />}
-						{activeStep === 2 && <Details control={control} errors={errors} />}
+						{stepComponents[activeStep]}
 					</MotionBox>
-
 					<ButtonGroup justifyContent='space-around' w='100%' mt='1.5em'>
 						<ActionButton
 							text={activeStep === 2 ? 'Pay' : 'Next'}

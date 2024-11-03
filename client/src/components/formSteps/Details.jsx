@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
 	FormControl,
 	FormLabel,
@@ -12,33 +11,12 @@ import {
 	FormErrorMessage,
 } from '@chakra-ui/react'
 import { Controller } from 'react-hook-form'
+import { checkboxesContext, selectsContext } from '../../data/formsConstants'
 
 const Checkboxes = ({ control, errors }) => {
-	const checkboxesContext = [
-		{
-			text: 'Calendar management',
-			value: 'calendar',
-		},
-		{
-			text: 'Setting reminders',
-			value: 'reminders',
-		},
-		{
-			text: 'Data analysis',
-			value: 'analysis',
-		},
-		{
-			text: 'Report generation',
-			value: 'report',
-		},
-		{
-			text: 'Task automation',
-			value: 'task',
-		},
-	]
 	return (
-		<FormControl isRequired isInvalid={errors.preferences}>
-			<FormLabel fontSize={['sm', 'md']}>Assist preferences: </FormLabel>
+		<FormControl isRequired isInvalid={!!errors.preferences}>
+			<FormLabel fontSize={['sm', 'md']}>Assist preferences:</FormLabel>
 			<Controller
 				name='preferences'
 				control={control}
@@ -46,8 +24,8 @@ const Checkboxes = ({ control, errors }) => {
 				render={({ field }) => (
 					<CheckboxGroup value={field.value} onChange={field.onChange}>
 						<Stack spacing={[1, 5]} direction={['column', 'row']} wrap='wrap'>
-							{checkboxesContext.map((checkbox, index) => (
-								<Checkbox key={index} value={checkbox.value} size='lg' spacing='0.5em'>
+							{checkboxesContext.map(checkbox => (
+								<Checkbox key={checkbox.value} value={checkbox.value} size='lg' spacing='0.5em'>
 									{checkbox.text}
 								</Checkbox>
 							))}
@@ -55,44 +33,32 @@ const Checkboxes = ({ control, errors }) => {
 					</CheckboxGroup>
 				)}
 			/>
-			{errors && <FormErrorMessage>{errors.preferences && errors.preferences.message}</FormErrorMessage>}
+			<FormErrorMessage>{errors.preferences?.message}</FormErrorMessage>
 		</FormControl>
 	)
 }
 
 const Selects = ({ control, errors }) => {
-	const selectsContext = [
-		{
-			label: 'Notification preferences',
-			options: ['Daily', 'Hourly', '12-hour', 'Real-time'],
-			name: 'notificationPreferences',
-		},
-		{
-			label: 'Communication style',
-			options: ['Formal', 'Informal'],
-			name: 'communicationStyle',
-		},
-	]
 	return (
 		<>
-			{selectsContext.map((select, index) => (
-				<FormControl key={index} isRequired m='1em 0' isInvalid={errors[select.name]}>
-					<FormLabel fontSize={['sm', 'md']}>{select.label}: </FormLabel>
+			{selectsContext.map(select => (
+				<FormControl key={select.name} isRequired m='1em 0' isInvalid={!!errors[select.name]}>
+					<FormLabel fontSize={['sm', 'md']}>{select.label}:</FormLabel>
 					<Controller
 						name={select.name}
 						control={control}
 						defaultValue={select.options[0]}
 						render={({ field }) => (
 							<Select {...field}>
-								{select.options.map((option, index) => (
-									<option key={index} value={option} className='option-dark'>
+								{select.options.map(option => (
+									<option key={option} value={option} className='option-dark'>
 										{option}
 									</option>
 								))}
 							</Select>
 						)}
 					/>
-					{errors && <FormErrorMessage>{errors[select.name] && errors[select.name].message}</FormErrorMessage>}
+					<FormErrorMessage>{errors[select.name]?.message}</FormErrorMessage>
 				</FormControl>
 			))}
 		</>

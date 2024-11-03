@@ -10,14 +10,16 @@ const SubscriptionFormPage = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const { subscriptionDetails } = useSubscribe()
-	const { currentUser } = useAuth()
+	const { currentUser, authIsLoading, userData } = useAuth()
 
-	console.log('currentUser-', currentUser)
+	console.log('currentUser-', userData)
+
 	useEffect(() => {
-		if (currentUser.activeSub) {
+		if (currentUser?.activeSub) {
 			navigate('/dashboard')
 		}
-	}, [currentUser.activeSub])
+	}, [currentUser, userData, navigate, authIsLoading])
+
 	return (
 		<Grid gridTemplateRows={'1fr 100px'}>
 			<GridItem rowStart={1} rowEnd={2}>

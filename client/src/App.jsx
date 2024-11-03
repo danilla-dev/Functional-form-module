@@ -19,11 +19,13 @@ import DashboardMenuLinks from './components/common/DashboardMenuLinks'
 
 function App() {
 	const { authIsLoading } = useAuth()
+	const { setSubscriptionDetails, subscriptionDetails, subIsLoading, refetch, subData } = useSubscribe()
 	const dashboardLocation = useLocation().pathname === '/dashboard'
 
 	console.log(dashboardLocation)
+	console.log('subisloading:', subIsLoading)
 
-	if (authIsLoading) {
+	if (authIsLoading || subIsLoading) {
 		return (
 			<Center h='100vh'>
 				<Spinner size='xl' />

@@ -22,18 +22,10 @@ import contactImg from '../../assets/contact-img.webp'
 import ActionButton from '../common/ActionButton'
 
 import { useUI } from '../../hooks/useUI'
+import { subjectsOptions } from '../../data/mainSectionConstants'
 
 const Contact = () => {
 	const { isMobile, isDesktop, isTablet } = useUI()
-
-	const subjectsOptions = [
-		{ value: 'Product Information', label: 'Product Information' },
-		{ value: 'Technical Support', label: 'Technical Support' },
-		{ value: 'Billing and Payments', label: 'Billing and Payments' },
-		{ value: 'Troubleshooting', label: 'Troubleshooting' },
-		{ value: 'Feedback or Suggestions', label: 'Feedback or Suggestions' },
-		{ value: 'Other', label: 'Other' },
-	]
 
 	return (
 		<Container m={0} centerContent p='2em 1em' minW='100%' pb='3em'>

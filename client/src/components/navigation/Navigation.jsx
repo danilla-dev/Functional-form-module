@@ -14,10 +14,11 @@ import ActionButton from '../common/ActionButton'
 import { useUI } from '../../hooks/useUI'
 import { useAuth } from '../../hooks/useAuth'
 import { useSubscribe } from '../../hooks/useSubscribe'
+import Cookies from 'js-cookie'
 
 const Navigation = () => {
 	const { isDesktop } = useUI()
-	const { logoutUser } = useAuth()
+	const { logoutUser, userData, currentUser, authStatus } = useAuth()
 	const { setSubscriptionDetails } = useSubscribe()
 
 	const { isOpen, onOpen, onClose } = useDisclosure()
@@ -43,10 +44,16 @@ const Navigation = () => {
 		})
 		navigate('/')
 	}
-
 	useEffect(() => {
+		const isLoggedIn = Cookies.get('authStatus') === 'true'
+
 		switch (location.pathname) {
 			case '/':
+				setButtonType({
+					text: userData?.activeSub && isLoggedIn ? 'Dashboard' : 'Get started',
+					path: '/subscription',
+				})
+				break
 			case '/login':
 				setButtonType({ text: 'Get started', path: '/subscription' })
 				break
@@ -70,7 +77,6 @@ const Navigation = () => {
 			window.removeEventListener('scroll', throttledCalculateDistance)
 		}
 	}, [scrollPosition, location.pathname])
-
 
 	return (
 		<Box

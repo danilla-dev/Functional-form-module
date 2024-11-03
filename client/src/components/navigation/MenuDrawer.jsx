@@ -25,9 +25,9 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 	const [buttonType, setButtonType] = useState({ text: '', path: '' })
 
 	const location = useLocation()
-	isDesktop && onClose()
 
 	useEffect(() => {
+		isDesktop && onClose()
 		switch (location.pathname) {
 			case '/':
 				setButtonType({ text: 'Get started', path: '/subscription' })

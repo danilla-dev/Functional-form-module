@@ -5,49 +5,60 @@ export const handleSendEmail = async ({ emailData }) => {
 		verificationCode: emailData.verificationCode,
 		from_name: 'AiAgent Team',
 	}
-	emailjs
-		.send('service_lz7paam', 'template_xom0uko', emailParams, {
+	try {
+		await emailjs.send('service_lz7paam', 'template_xom0uko', emailParams, {
 			publicKey: '04XVAlf182bnevLBl',
 		})
-		.then(
-			() => {
-				console.log('SUCCESS!')
-			},
-			error => {
-				console.log('FAILED...', error.text)
-			}
-		)
+		console.log('Email sent successfully!')
+	} catch (error) {
+		console.error('Failed to send email:', error.text)
+	}
 }
 
 export const handleRegister = async ({ data, setActiveStep, registerUser }) => {
-	const result = await registerUser.mutateAsync(data)
-	if (result.email) {
-		const emailData = {
-			user_email: result.email,
-			activateToken: result.activateToken,
-			verificationCode: result.verificationCode,
-		}
-		try {
-			await handleSendEmail(emailData)
+	try {
+		const result = await registerUser.mutateAsync(data)
+		if (result.email) {
+			const emailData = {
+				user_email: result.email,
+				activateToken: result.activateToken,
+				verificationCode: result.verificationCode,
+			}
+			await handleSendEmail({ emailData })
 			setActiveStep(1)
-		} catch (err) {
-			console.log(err)
 		}
+	} catch (error) {
+		console.error('Registration failed:', error)
 	}
 }
+
 export const handleVerifyCode = async ({ data, setActiveStep, verifyCode, currentUser }) => {
 	const { verificationCode } = data
-	const result = await verifyCode.mutateAsync({ verificationCode, email: currentUser.email })
-	if (result.isVerified) {
-		setActiveStep(2)
+	console.log(verificationCode)
+	try {
+		const result = await verifyCode.mutateAsync({ verificationCode, email: currentUser.email })
+		if (result.status === 200) {
+			setActiveStep(2)
+		}
+	} catch (error) {
+		console.error('Verification failed:', error)
 	}
 }
 
 export const handleSaveDetails = async ({ data, saveSubscriptionDetails }) => {
-	const result = await saveSubscriptionDetails.mutateAsync(data)
+	try {
+		const result = await saveSubscriptionDetails.mutateAsync(data)
+		console.log('Subscription details saved:', result)
+	} catch (error) {
+		console.error('Failed to save subscription details:', error)
+	}
 }
 
 export const handlePayment = async ({ data, payForSubscription }) => {
-	console.log(payForSubscription)
-	const result = await payForSubscription.mutateAsync(data)
+	try {
+		const result = await payForSubscription.mutateAsync(data)
+		console.log('Payment processed:', result)
+	} catch (error) {
+		console.error('Payment failed:', error)
+	}
 }

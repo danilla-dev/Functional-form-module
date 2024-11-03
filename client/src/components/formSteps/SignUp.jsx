@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
 	FormControl,
 	FormLabel,
@@ -10,68 +9,55 @@ import {
 	ListItem,
 	UnorderedList,
 } from '@chakra-ui/react'
+import { WarningTwoIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import { Controller } from 'react-hook-form'
+import { signupInputs, passwordRequirements } from '../../data/formsConstants'
+
+const PasswordHelperText = ({ value }) => (
+	<FormHelperText color='brand.100' textAlign='left'>
+		Password must contain:
+		<UnorderedList>
+			<List color='brand.100'>
+				{passwordRequirements.map((requirement, index) => (
+					<ListItem key={index}>
+						{value.match(requirement.regExp) ? (
+							<CheckCircleIcon color='green.500' mr='0.5em' />
+						) : (
+							<WarningTwoIcon color='red.500' mr='0.5em' />
+						)}
+						{requirement.text}
+					</ListItem>
+				))}
+			</List>
+		</UnorderedList>
+	</FormHelperText>
+)
+
+const FormInput = ({ input, control, errors, authError }) => (
+	<FormControl isRequired isInvalid={errors[input.name] || (input.name === 'email' && authError)}>
+		<FormLabel>{input.label}</FormLabel>
+		<Controller
+			name={input.name}
+			control={control}
+			defaultValue={input.defaultValue}
+			render={({ field }) => (
+				<>
+					<Input type={input.type} borderColor='accent.300' {...field} />
+					{input.name === 'password' && <PasswordHelperText value={field.value} />}
+				</>
+			)}
+		/>
+		{errors[input.name] && <FormErrorMessage>{errors[input.name].message}</FormErrorMessage>}
+		{input.name === 'email' && authError && <FormErrorMessage>{authError}</FormErrorMessage>}
+	</FormControl>
+)
 
 const SignUp = ({ control, errors, authError }) => {
-	const inputs = [
-		{
-			label: 'Email address',
-			type: 'email',
-			name: 'email',
-			defaultValue: '',
-		},
-		{
-			label: 'Password',
-			type: 'password',
-			name: 'password',
-			defaultValue: '123456789Ab.',
-		},
-		{
-			label: 'Repeat password',
-			type: 'password',
-			name: 'confirmPassword',
-			defaultValue: '123456789Ab.',
-		},
-		{
-			label: 'Phone number',
-			type: 'number',
-			name: 'phoneNumber',
-			defaultValue: 56486,
-		},
-	]
-	console.log(authError)
 	return (
 		<>
-			{inputs.map((input, index) => {
-				return (
-					<FormControl isRequired key={index} isInvalid={errors[input.name] || (input.name === 'email' && authError)}>
-						<FormLabel> {input.label} </FormLabel>
-						<Controller
-							name={input.name}
-							control={control}
-							defaultValue={input.defaultValue}
-							render={({ field }) => <Input type={input.type} borderColor='accent.300' {...field} />}
-						/>
-						{input.name === 'password' && (
-							<FormHelperText color='brand.100' textAlign='left'>
-								Password must contain:
-								<UnorderedList>
-									<List color='brand.100'>
-										<ListItem>at least 8 characters</ListItem>
-										<ListItem>one uppercase</ListItem>
-										<ListItem>one lowercase</ListItem>
-										<ListItem>one number</ListItem>
-										<ListItem>special character</ListItem>
-									</List>
-								</UnorderedList>
-							</FormHelperText>
-						)}
-						{errors && <FormErrorMessage>{errors[input.name] && errors[input.name].message}</FormErrorMessage>}
-
-						{input.name === 'email' && authError && <FormErrorMessage>{authError}</FormErrorMessage>}
-					</FormControl>
-				)
-			})}
+			{signupInputs.map((input, index) => (
+				<FormInput key={index} input={input} control={control} errors={errors} authError={authError} />
+			))}
 		</>
 	)
 }

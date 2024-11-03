@@ -10,17 +10,13 @@ import {
 	StepIcon,
 	StepSeparator,
 } from '@chakra-ui/react'
+import { formSteps } from '../../data/formsConstants'
 
-const steps = [
-	{ title: 'Sign up', description: null },
-	{ title: 'Verify', description: null },
-	{ title: 'Details', description: null },
-]
 const Stepper = ({ index }) => {
 	return (
 		<Box w='95%' mb='1em'>
 			<ChakraStepper index={index} size='md' flexWrap='wrap' justifyContent='center'>
-				{steps.map((step, index) => (
+				{formSteps.map((step, index) => (
 					<Step key={index} flex='1' p='0 .25em'>
 						<StepIndicator>
 							<StepStatus complete={<StepIcon />} incomplete={<StepNumber />} active={<StepNumber />} />

@@ -18,34 +18,9 @@ import {
 	Divider,
 	CardHeader,
 } from '@chakra-ui/react'
-import { FaUserCog, FaComments, FaPlug } from 'react-icons/fa'
+import { features } from '../../data/mainSectionConstants'
 
-import { Fade } from 'react-awesome-reveal'
-
-import bestFeaturesImg from '../../assets/best-features-img.webp'
-
-import { useUI } from '../../hooks/useUI'
-
-const features = [
-	{
-		icon: FaUserCog,
-		header: 'Personalization',
-		text: 'Our AI agent utilizes cutting-edge machine learning algorithms to adapt to your preferences. The more you interact with it, the better it understands your needs and can provide even more personalized recommendations.',
-	},
-	{
-		icon: FaComments,
-		header: 'Interactivity',
-		text: 'As you engage with the agent, it continuously learns from your choices, refining its understanding of what you like and dislike. This dynamic learning process allows it to anticipate your needs and deliver tailored suggestions that enhance your experience.',
-	},
-	{
-		icon: FaPlug,
-		header: 'integrations',
-		text: 'Our AI agent is designed to seamlessly integrate with your favorite apps and services. This allows you to access all of your tools and information in one place, streamlining your workflow and saving you time.',
-	},
-]
 const BestFeatures = () => {
-	const { isMobile, isDesktop, isTablet } = useUI()
-
 	return (
 		<Container
 			m={0}

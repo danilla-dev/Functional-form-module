@@ -32,15 +32,17 @@ import DashboardMenuLinks from '../common/DashboardMenuLinks'
 
 const DashboardPage = () => {
 	const { currentUser, authIsLoading, refetch: userRefetch } = useAuth()
-	const { subscriptionDetails, subIsLoading, refetch } = useSubscribe()
-	const { details, name, subscriptionEndDate } = subscriptionDetails
+	const { setSubscriptionDetails, subscriptionDetails, subIsLoading, refetch, subData } = useSubscribe()
+	const { details, name, subscriptionEndDate } = subData
 
-	useEffect(() => {
-		if (currentUser.email == '' || subscriptionDetails.name == '') {
-			refetch()
-			userRefetch()
-		}
-	}, [currentUser, subscriptionDetails, refetch, userRefetch])
+	console.log(subscriptionDetails)
+
+	// useEffect(() => {
+	// 	if (subscriptionDetails.name === '') {
+	// 		refetch()
+	// 		userRefetch()
+	// 	}
+	// }, [refetch, userRefetch, subIsLoading, subData, setSubscriptionDetails])
 
 	const normalDate = new Date(subscriptionEndDate)
 	const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
@@ -96,6 +98,7 @@ const DashboardPage = () => {
 		dividerVisibility: false,
 		fullWidth: false,
 	}
+
 	return (
 		<Grid templateColumns={'200px 1fr'} templateRows={'75px 1fr 100px'}>
 			<GridItem

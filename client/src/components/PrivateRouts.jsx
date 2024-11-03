@@ -1,15 +1,28 @@
+import { useEffect, useState } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useSubscribe } from '../hooks/useSubscribe'
 
-const PrivateRouts = ({ element }) => {
-	const { currentUser, isLoading } = useAuth()
-	const { subscriptionDetails } = useSubscribe()
+import Cookies from 'js-cookie'
 
-	if (!isLoading) {
-		if (!currentUser.email) {
-			return <Navigate to='/' />
-		}
+const PrivateRouts = ({ element }) => {
+	const { currentUser, authIsLoading, authData } = useAuth()
+	const { subscriptionDetails, subIsLoading } = useSubscribe()
+	const [isLoggedIn, setIsLoggedIn] = useState(null)
+
+	useEffect(() => {
+		const authStatus = Cookies.get('authStatus') === 'true'
+		setIsLoggedIn(authStatus)
+	}, [])
+
+	if (authIsLoading || subIsLoading) {
+		return <div>Loading...</div>
+	}
+	if (isLoggedIn === null) {
+		return <div>Checking authentication...</div>
+	}
+	if (!isLoggedIn) {
+		return <Navigate to='/' />
 	}
 
 	return element

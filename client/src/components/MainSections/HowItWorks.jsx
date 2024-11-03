@@ -6,12 +6,8 @@ import { Box, Image, Stack, Text, VStack, Heading, Container } from '@chakra-ui/
 import { Fade, Slide, Zoom } from 'react-awesome-reveal'
 
 import { useUI } from '../../hooks/useUI'
+import { howItWorksTexts } from '../../data/mainSectionConstants'
 
-const howItWorksTexts = [
-	'Our AI agent utilizes cutting-edge machine learning algorithms to adapt to your preferences. The more you interact with it, the better it understands your needs and can provide even more personalized recommendations.',
-	'As you engage with the agent, it continuously learns from your choices, refining its understanding of what you like and dislike. This dynamic learning process allows it to anticipate your needs and deliver tailored suggestions that enhance your experience.',
-	'With advanced technology and an ongoing learning process, our AI agent becomes increasingly effective at adjusting to your lifestyle. You can be confident that with each use, the agent will more accurately reflect your preferences, offering recommendations that perfectly match your needs. This way, using the AI agent becomes a pleasure rather than just a functional tool.',
-]
 const HowItWorks = () => {
 	const { isBase } = useUI()
 

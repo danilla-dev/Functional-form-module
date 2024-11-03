@@ -153,7 +153,6 @@ const Pricing = () => {
 						p='1em'
 						gap={5}
 						flex={1}
-						as='li'
 					>
 						{pricingOptions.map((option, index) => {
 							return <PricingCard option={option} key={index} />
