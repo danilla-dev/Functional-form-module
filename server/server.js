@@ -27,7 +27,7 @@ const corsOptions = {
 app.use((req, res, next) => {
 	res.setHeader(
 		'Content-Security-Policy',
-		"default-src 'self'; connect-src 'self' https://functional-form-module-1.onrender.com;"
+		"default-src 'self'; connect-src 'self' https://functional-form-module-1.onrender.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
 	)
 	next()
 })
