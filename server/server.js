@@ -24,6 +24,14 @@ const corsOptions = {
 	credentials: true,
 }
 
+app.use((req, res, next) => {
+	res.setHeader(
+		'Content-Security-Policy',
+		"default-src 'self'; connect-src 'self' https://functional-form-module-1.onrender.com;"
+	)
+	next()
+})
+
 app.use(cors(corsOptions))
 app.use(cookieParser())
 
