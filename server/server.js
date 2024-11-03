@@ -19,7 +19,7 @@ const app = express()
 app.use(helmet())
 
 const corsOptions = {
-	origin: 'http://localhost:5173',
+	origin: ['http://localhost:5173', 'https://functional-form-module-1.onrender.com', 'https://aiagent.petroweb.pl'],
 	methods: ['GET', 'POST', 'PUT', 'DELETE'],
 	credentials: true,
 }
