@@ -33,8 +33,9 @@ import DashboardMenuLinks from '../common/DashboardMenuLinks'
 const DashboardPage = () => {
 	const { currentUser, authIsLoading, refetch: userRefetch } = useAuth()
 	const { setSubscriptionDetails, subscriptionDetails, subIsLoading, refetch, subData } = useSubscribe()
-	const { details, name, subscriptionEndDate } = subData
+	const { details, name, subscriptionEndDate } = subData || subscriptionDetails
 
+	console.log(details)
 	console.log(subscriptionDetails)
 
 	// useEffect(() => {
