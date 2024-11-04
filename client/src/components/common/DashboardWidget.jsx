@@ -18,7 +18,7 @@ const DashboardWidget = ({ content }) => {
 	return (
 		<Card
 			border='1px solid'
-			borderColor='accent.200'
+			borderColor='accent.300'
 			bgColor='brand.350'
 			color='brand.100'
 			p='1em'

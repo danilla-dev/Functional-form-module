@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import { useSubscribe } from '../../hooks/useSubscribe'
+import { Routes, Route } from 'react-router-dom'
+
 import {
 	Text,
 	Box,
@@ -26,83 +28,16 @@ import {
 	Grid,
 	GridItem,
 } from '@chakra-ui/react'
-import DashboardWidget from '../common/DashboardWidget'
+import MainDashboard from '../dashboardSections/MainDashboard'
 import Footer from '../Footer'
 import DashboardMenuLinks from '../common/DashboardMenuLinks'
+import { useUI } from '../../hooks/useUI'
 
 const DashboardPage = () => {
-	const { currentUser, authIsLoading, refetch: userRefetch } = useAuth()
-	const { setSubscriptionDetails, subscriptionDetails, subIsLoading, refetch, subData } = useSubscribe()
-	const { details, name, subscriptionEndDate } = subData || subscriptionDetails
-
-	console.log('details', details)
-	console.log('subscriptionDetails', subscriptionDetails)
-	console.log('subData', subscriptionDetails)
-
-	// useEffect(() => {
-	// 	if (subscriptionDetails.name === '') {
-	// 		refetch()
-	// 		userRefetch()
-	// 	}
-	// }, [refetch, userRefetch, subIsLoading, subData, setSubscriptionDetails])
-
-	const normalDate = new Date(subscriptionEndDate)
-	const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
-	const formattedDate = normalDate.toLocaleDateString('pl-PL', options)
-
-	const subWidgetContent = {
-		header: 'Subscription Details',
-		body: [
-			{
-				name: {
-					description: 'Subscription Name',
-					value: name,
-				},
-			},
-			{
-				status: {
-					description: 'Subscription Status',
-					value: currentUser.activeSub ? 'Active' : 'Inactive',
-				},
-			},
-			{
-				expDate: {
-					description: 'Expiration Date',
-					value: formattedDate,
-				},
-			},
-		],
-		dividerVisibility: true,
-		fullWidth: true,
-	}
-	const communicationWidgetContent = {
-		header: 'Communication',
-		body: [
-			{
-				time: {
-					description: 'Report interval',
-					value: details.notificationPreferences,
-				},
-			},
-			{
-				style: {
-					description: 'Report style',
-					value: details.communicationStyle,
-				},
-			},
-		],
-		dividerVisibility: true,
-		fullWidth: false,
-	}
-	const usagePreferencesWidgetContent = {
-		header: 'Usage Preferences',
-		body: details.preferences,
-		dividerVisibility: false,
-		fullWidth: false,
-	}
+	const { isDesktop } = useUI()
 
 	return (
-		<Grid templateColumns={'200px 1fr'} templateRows={'75px 1fr 100px'}>
+		<Grid templateColumns={{ base: '1fr', lg: '200px 1fr' }} templateRows={'75px 1fr 100px'}>
 			<GridItem
 				colStart={1}
 				colEnd={3}
@@ -112,7 +47,7 @@ const DashboardPage = () => {
 				borderBottom={'1px solid'}
 				borderColor={'accent.300'}
 			></GridItem>
-			<GridItem colStart={2} colEnd={3} rowStart={2} rowEnd={3}>
+			<GridItem colStart={{ base: 1, lg: 2 }} colEnd={3} rowStart={2} rowEnd={3}>
 				<Flex
 					as='section'
 					id='dashboard'
@@ -123,26 +58,22 @@ const DashboardPage = () => {
 					color={'white'}
 					p='1em'
 					pt='5em'
+					bgImage={'linear-gradient(50deg, brand.200 2%, brand.350 50%, brand.350 35%, brand.200 100%)'}
 				>
-					<Container m={0} centerContent p='0 2em' minW='100%' pb='3em'>
-						<Stack
-							maxW={1400}
-							w='100%'
-							flexDir='row'
-							flexWrap='wrap'
-							justify={{ base: 'center', md: 'space-between' }}
-							spacing='2em'
-						>
-							<DashboardWidget content={subWidgetContent} />
-							<DashboardWidget content={communicationWidgetContent} />
-							<DashboardWidget content={usagePreferencesWidgetContent} />
-						</Stack>
+					<Container className='dashboard-container' m={0} centerContent p='0 2em' minW='100%' pb='3em'>
+						<Routes>
+							<Route path='/' element={<MainDashboard />} />
+							<Route path='/account' element={<MainDashboard />} />
+							<Route path='/integrations' element={<MainDashboard />} />
+						</Routes>
 					</Container>
 				</Flex>
 			</GridItem>
-			<GridItem colStart={1} colEnd={2} rowStart={2} rowEnd={3}>
-				<DashboardMenuLinks />
-			</GridItem>
+			{isDesktop && (
+				<GridItem colStart={1} colEnd={2} rowStart={2} rowEnd={3}>
+					<DashboardMenuLinks />
+				</GridItem>
+			)}
 			<GridItem colStart={1} colEnd={3} rowStart={3} rowEnd={4}>
 				<Footer />
 			</GridItem>

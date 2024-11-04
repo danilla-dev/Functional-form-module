@@ -5,9 +5,11 @@ import LoginFormInputs from '../formHelpersComponents/LoginFormInputs'
 import useLoginForm from '../../hooks/useLoginForm'
 import loginImg from '../../assets/register-img.webp'
 import ActionButton from '../common/ActionButton'
+import { useUI } from '../../hooks/useUI'
 
 const LoginForm = () => {
 	const { control, handleSubmit, errors, handleLogin } = useLoginForm()
+	const { isTablet, isDesktop } = useUI()
 
 	return (
 		<Box
@@ -24,10 +26,12 @@ const LoginForm = () => {
 			boxShadow='dark-lg'
 		>
 			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }}>
-				<Box w='50%' h='100%' m='auto 0'>
-					<Image h='100%' w='auto' src={loginImg} />
-				</Box>
-				<Stack w='50%' align='center' justify='center'>
+				{isTablet || isDesktop ? (
+					<Box w='50%' h='100%' m='auto 0'>
+						<Image h='100%' w='auto' src={loginImg} />
+					</Box>
+				) : null}
+				<Stack w={{ base: '100%', md: '50%' }} align='center' justify='center'>
 					<Text fontSize='xl' p='0.5em 0'>
 						Welcome back!
 					</Text>

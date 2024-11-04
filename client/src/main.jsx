@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import { border, ChakraProvider, extendTheme, Input } from '@chakra-ui/react'
+import { border, ChakraProvider, extendTheme, Input, textDecoration } from '@chakra-ui/react'
 
 import App from './App.jsx'
 import './index.css'
@@ -11,6 +11,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import { SubscriptionProvider } from './contexts/SubscriptionContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { color } from 'framer-motion'
 
 const theme = extendTheme({
 	// Ustawienia typografii
@@ -112,6 +113,9 @@ const theme = extendTheme({
 
 			'.logo': {
 				fontSize: '24px',
+			},
+			'.active': {
+				color: 'accent.200',
 			},
 		}),
 	},

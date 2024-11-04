@@ -39,7 +39,7 @@ function App() {
 			<Routes>
 				<Route path='/' element={<LandingPage />} />
 				<Route path='/subscription' element={<SubscriptionFormPage />} />
-				<Route path='/dashboard' element={<PrivateRouts element={<DashboardPage />} />} />
+				<Route path='/dashboard/*' element={<PrivateRouts element={<DashboardPage />} />} />
 				<Route path='/login' element={<LoginPage />} />
 			</Routes>
 		</>

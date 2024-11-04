@@ -61,7 +61,7 @@ const Navigation = () => {
 				setButtonType({ text: 'Login', path: '/login' })
 				break
 			case '/dashboard':
-				setButtonType({ text: 'Logout', action: logout })
+				setButtonType({ text: 'Logout', action: logout, path: '/' })
 				break
 			default:
 				break

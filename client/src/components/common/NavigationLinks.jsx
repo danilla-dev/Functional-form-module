@@ -2,23 +2,25 @@ import React from 'react'
 import { Stack, Text } from '@chakra-ui/react'
 import { Link } from 'react-scroll'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { mainNavigationLinks, dashboardNavigationLinks } from '../../data/navigationConstants'
 
 import { useUI } from '../../hooks/useUI'
 
 const NavigationLinks = ({ onClose }) => {
 	const { isDesktop } = useUI()
 
-	const navigationLinks = [
-		{ name: 'Home', link: 'Home' },
-		{ name: 'About', link: 'About' },
-		{ name: 'Pricing', link: 'Pricing' },
-		{ name: 'FAQ', link: 'FAQ' },
-		{ name: 'Contact', link: 'Contact' },
-	]
+	const location = useLocation()
+	console.log(location)
+
+	let links = mainNavigationLinks
+
+	if (location.pathname === '/dashboard') {
+		links = dashboardNavigationLinks
+	}
 
 	return (
 		<Stack direction={isDesktop ? 'row' : 'column'} spacing='3em' flex={1}>
-			{navigationLinks.map((link, index) => (
+			{links.map((link, index) => (
 				<Link
 					key={index}
 					to={link.link}

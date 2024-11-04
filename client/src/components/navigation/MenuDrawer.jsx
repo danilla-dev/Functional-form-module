@@ -35,6 +35,9 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 			case '/subscription':
 				setButtonType({ text: 'Login', path: '/login' })
 				break
+			case '/dashboard':
+				setButtonType({ text: 'Logout', path: '/' })
+				break
 		}
 	}, [location.pathname])
 
