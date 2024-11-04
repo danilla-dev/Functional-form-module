@@ -10,6 +10,7 @@ import helmet from 'helmet'
 import subRoutes from './src/routes/subRoutes.js'
 import userRoutes from './src/routes/userRoutes.js'
 import paymentRoutes from './src/routes/paymentRoutes.js'
+import integrationsRoutes from './src/routes/integrationsRoutes.js'
 import { updateDatabase } from './src/controllers/paymentController.js'
 
 dotenv.config()
@@ -27,7 +28,7 @@ const corsOptions = {
 app.use((req, res, next) => {
 	res.setHeader(
 		'Content-Security-Policy',
-		"default-src 'self'; connect-src 'self' https://functional-form-module-1.onrender.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';"
+		"default-src 'self'; connect-src 'self' https://functional-form-module-1.onrender.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://upload.wikimedia.org;"
 	)
 	next()
 })
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')))
 app.use('/api/payment', paymentRoutes)
 app.use('/api/auth', userRoutes)
 app.use('/api/sub', subRoutes)
+app.use('/api/integrations', integrationsRoutes)
 
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static(path.join(__dirname, '../client/dist')))

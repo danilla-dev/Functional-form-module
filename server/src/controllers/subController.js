@@ -1,7 +1,6 @@
 import { Subscription } from '../models/subModel.js'
 import { User } from '../models/userModel.js'
 import mongoose from 'mongoose'
-
 export const getUserSubscription = async (req, res) => {
 	const userID = req.userId
 	const userEmail = req.userEmail
@@ -73,4 +72,5 @@ export const postUserSubscription = async (req, res) => {
 		res.status(500).json({ message: 'Error creating subscription', error: error.message })
 	}
 }
+
 // Compare this snippet from server/src/controllers/userController.js:

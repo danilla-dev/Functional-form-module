@@ -62,3 +62,12 @@ export const handlePayment = async ({ data, payForSubscription }) => {
 		console.error('Payment failed:', error)
 	}
 }
+export const handleSaveIntegration = async ({ data, postIntegration }) => {
+	console.log(postIntegration)
+	try {
+		const result = await postIntegration.mutateAsync(data)
+		console.log('Integration details saved:', result)
+	} catch (error) {
+		console.error('Failed to save integration details:', error)
+	}
+}

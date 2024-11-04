@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { fetchUser as fetchUserApi } from '../api/authApi' // Zmiana nazwy
-import { useAuth } from './useAuth' // Jeśli używasz kontekstu auth
+import { fetchUser as fetchUserApi } from '../api/authApi' 
+import { useAuth } from './useAuth' 
 
 const useFetchUser = () => {
 	const [error, setError] = useState(null)
