@@ -29,6 +29,8 @@ import {
 	GridItem,
 } from '@chakra-ui/react'
 import MainDashboard from '../dashboardSections/MainDashboard'
+import Account from '../dashboardSections/Account'
+import Integrations from '../dashboardSections/Integrations'
 import Footer from '../Footer'
 import DashboardMenuLinks from '../common/DashboardMenuLinks'
 import { useUI } from '../../hooks/useUI'
@@ -63,8 +65,8 @@ const DashboardPage = () => {
 					<Container className='dashboard-container' m={0} centerContent p='0 2em' minW='100%' pb='3em'>
 						<Routes>
 							<Route path='/' element={<MainDashboard />} />
-							<Route path='/account' element={<MainDashboard />} />
-							<Route path='/integrations' element={<MainDashboard />} />
+							<Route path='/integrations' element={<Integrations />} />
+							<Route path='/account' element={<Account />} />
 						</Routes>
 					</Container>
 				</Flex>

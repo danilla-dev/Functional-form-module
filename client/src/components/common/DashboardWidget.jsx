@@ -25,7 +25,7 @@ const DashboardWidget = ({ content }) => {
 			borderRadius={10}
 			minW={{ base: 350, md: fullWidth ? '100%' : 320 }}
 			w={{ base: '90%', md: '45%' }}
-			// boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
+			boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
 		>
 			<CardHeader>
 				<Heading size='md' color='accent.300'>

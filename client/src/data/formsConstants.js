@@ -1,3 +1,5 @@
+import { all } from 'axios'
+
 export const checkboxesContext = [
 	{ text: 'Calendar management', value: 'calendar' },
 	{ text: 'Setting reminders', value: 'reminders' },
@@ -66,4 +68,36 @@ export const passwordRequirements = [
 	{ text: 'one lowercase', regExp: /[a-z]/ },
 	{ text: 'one number', regExp: /\d/ },
 	{ text: 'special character', regExp: /[!@#$%^&*.,]/ },
+]
+export const integrationOptions = [
+	{
+		value: 'ebay',
+		text: 'e-bay',
+		img: 'https://upload.wikimedia.org/wikipedia/commons/4/48/EBay_logo.png',
+		alt: 'eBay logo',
+	},
+	{
+		value: 'gmail',
+		text: 'Gmail',
+		img: 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg',
+		alt: 'Gmail logo',
+	},
+	{
+		value: 'allegro',
+		text: 'Allegro',
+		img: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Allegro.pl_sklep.svg',
+		alt: 'Allegro logo',
+	},
+	{
+		value: 'google-calendar',
+		text: 'Google Calendar',
+		img: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/Google_Calendar_icon_%282020%29.svg',
+		alt: 'Google Calendar logo',
+	},
+	{
+		value: 'google-drive',
+		text: 'Google Drive',
+		img: 'https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg',
+		alt: 'Google Drive logo',
+	},
 ]

@@ -60,7 +60,9 @@ const Navigation = () => {
 			case '/subscription':
 				setButtonType({ text: 'Login', path: '/login' })
 				break
-			case '/dashboard':
+			case '/dashboard/':
+			case '/dashboard/account':
+			case '/dashboard/integrations':
 				setButtonType({ text: 'Logout', action: logout, path: '/' })
 				break
 			default:

@@ -14,7 +14,7 @@ const NavigationLinks = ({ onClose }) => {
 
 	let links = mainNavigationLinks
 
-	if (location.pathname === '/dashboard') {
+	if (location.pathname === '/dashboard/*') {
 		links = dashboardNavigationLinks
 	}
 

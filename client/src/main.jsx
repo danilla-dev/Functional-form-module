@@ -96,9 +96,6 @@ const theme = extendTheme({
 				lineHeight: '1.6',
 			},
 
-			input: {
-				padding: '1em',
-			},
 			label: {
 				fontSize: ['sm', 'md'],
 				paddingTop: '0.5em',
@@ -107,7 +104,7 @@ const theme = extendTheme({
 				padding: '1em',
 			},
 
-			'.option-dark': {
+			'.option-dark, option': {
 				background: 'brand.250 !important',
 			},
 
