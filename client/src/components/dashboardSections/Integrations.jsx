@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	Stack,
 	Box,
@@ -41,7 +41,11 @@ const IntegrationContainer = () => {
 
 const IntegrationForm = () => {
 	const { platform, setPlatform, apiKey, setApiKey, handleSubmit } = useIntegrations()
-	const { userIntegrations } = useSubscribe()
+	const { userIntegrations, userIntegrationsRefetch, userIntegrationsData } = useSubscribe()
+
+	useEffect(() => {
+		userIntegrationsRefetch()
+	}, [userIntegrationsData])
 
 	return (
 		<HStack as='form' onSubmit={handleSubmit} spacing={3}>

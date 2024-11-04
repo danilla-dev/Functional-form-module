@@ -16,18 +16,11 @@ export const postUserIntegration = async (req, res) => {
 		if (!user) {
 			return res.status(404).json({ message: 'User not found' })
 		}
-
-		const newIntegration = await Integration.findOneAndUpdate(
-			{ user: user._id },
-			{
-				$set: {
-					user: user._id,
-					name: platform,
-					apiKey: apiKey,
-				},
-			},
-			{ new: true, upsert: true }
-		)
+		const newIntegration = await Integration.create({
+			user: user._id,
+			name: platform,
+			apiKey: apiKey,
+		})
 
 		await User.findByIdAndUpdate(
 			user._id,
@@ -45,4 +38,22 @@ export const postUserIntegration = async (req, res) => {
 	}
 }
 
-export const getUserIntegration = async (req, res) => {}
+export const getUserIntegration = async (req, res) => {
+	const userEmail = req.userEmail
+	try {
+		const user = await User.findOne({ email: userEmail })
+		if (!user) {
+			return res.status(404).json({ message: 'User not found' })
+		}
+		const integrations = await Integration.find({ user: user._id })
+		if (!integrations) {
+			return res.status(404).json({ message: 'Integrations not found' })
+		}
+		console.log(integrations)
+		res.status(200).json({ integrations: integrations.map(integration => integration.name) })
+	} catch (error) {
+		console.error('Error getting user integrations:', error)
+		console.log(error)
+		res.status(500).json({ message: 'Error getting integrations', error: error.message })
+	}
+}
