@@ -68,6 +68,9 @@ export const SubscriptionProvider = ({ children }) => {
 		},
 	})
 
+	console.log('subscriptionDetails', subscriptionDetails)
+	console.log('subData', subscriptionDetails)
+
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {
 			console.log('saveSubscriptionDetails mutationFn is running')

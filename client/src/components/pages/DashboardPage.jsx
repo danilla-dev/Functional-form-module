@@ -35,15 +35,16 @@ const DashboardPage = () => {
 	const { setSubscriptionDetails, subscriptionDetails, subIsLoading, refetch, subData } = useSubscribe()
 	const { details, name, subscriptionEndDate } = subData || subscriptionDetails
 
-	console.log(details)
-	console.log(subscriptionDetails)
+	console.log('details', details)
+	console.log('subscriptionDetails',subscriptionDetails)
+	console.log('subData',subscriptionDetails)
 
-	// useEffect(() => {
-	// 	if (subscriptionDetails.name === '') {
-	// 		refetch()
-	// 		userRefetch()
-	// 	}
-	// }, [refetch, userRefetch, subIsLoading, subData, setSubscriptionDetails])
+	useEffect(() => {
+		if (subscriptionDetails.name === '') {
+			refetch()
+			userRefetch()
+		}
+	}, [refetch, userRefetch, subIsLoading, subData, setSubscriptionDetails])
 
 	const normalDate = new Date(subscriptionEndDate)
 	const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
