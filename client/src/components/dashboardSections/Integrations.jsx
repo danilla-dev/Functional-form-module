@@ -24,7 +24,16 @@ import useIntegrations from '../../hooks/useIntegrations'
 const IntegrationContainer = () => {
 	const { integrations } = useIntegrations()
 	return (
-		<HStack justify='center' gap='2em' p='5em 0'>
+		<HStack
+			justify='center'
+			gap='2em'
+			p='5em 0'
+			className='integrations-container'
+			w='90%'
+			ml='auto'
+			mr='auto'
+			flexWrap='wrap'
+		>
 			{integrations.map(integration => (
 				<VStack key={integration.value} w={100} justify='space-between'>
 					<Box bgColor='brand.100' h={100} w={100} p='0.25em'>

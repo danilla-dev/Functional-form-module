@@ -1,4 +1,5 @@
 import emailjs from '@emailjs/browser'
+
 export const handleSendEmail = async ({ emailData }) => {
 	const emailParams = {
 		user_email: emailData.user_email,
