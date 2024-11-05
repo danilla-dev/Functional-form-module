@@ -27,31 +27,17 @@ const Navigation = () => {
 	const location = useLocation()
 	const navigate = useNavigate()
 
-	const logout = async () => {
+	const handleLogout = async () => {
 		await logoutUser.mutateAsync()
-		setSubscriptionDetails({
-			name: '',
-			price: 0,
-			details: {
-				communicationStyle: '',
-				preferences: [],
-				communicationPreferences: '',
-			},
-			paymentStatus: '',
-			subscriptionDurationType: '',
-			subscriptionEndDate: '',
-			user: '',
-		})
-		navigate('/')
 	}
-	useEffect(() => {
-		const isLoggedIn = Cookies.get('authStatus') === 'true'
+	const isLoggedIn = Cookies.get('authStatus') === 'true'
 
+	useEffect(() => {
 		switch (location.pathname) {
 			case '/':
 				setButtonType({
-					text: userData?.activeSub && isLoggedIn ? 'Dashboard' : 'Get started',
-					path: '/subscription',
+					text: isLoggedIn ? 'Dashboard' : 'Get started',
+					path: isLoggedIn ? '/dashboard' : '/subscription',
 				})
 				break
 			case '/login':
@@ -60,10 +46,10 @@ const Navigation = () => {
 			case '/subscription':
 				setButtonType({ text: 'Login', path: '/login' })
 				break
-			case '/dashboard/':
+			case '/dashboard':
 			case '/dashboard/account':
 			case '/dashboard/integrations':
-				setButtonType({ text: 'Logout', action: logout, path: '/' })
+				setButtonType({ text: 'Logout', action: handleLogout, path: '/' })
 				break
 			default:
 				break
@@ -100,7 +86,7 @@ const Navigation = () => {
 				justify={isDesktop ? 'start' : 'end'}
 				h='100%'
 				m='0 auto'
-				p='0 2em'
+				p='2em 1em'
 				zIndex={20}
 			>
 				{!isDesktop ? (
@@ -116,7 +102,7 @@ const Navigation = () => {
 						color='brand.50'
 						w='100%'
 						justify='space-between'
-						pl={location.pathname === '/dashboard' && isDesktop ? 200 : 0}
+						// pl={location.pathname === '/dashboard' && isDesktop ? 200 : 0}
 					>
 						<Logo />
 						{location.pathname === '/' && <NavigationLinks />}
@@ -127,7 +113,17 @@ const Navigation = () => {
 							ariaLabel='Sign up'
 							priority='high'
 							type='button'
-							content={<NavLink to={buttonType.path || null}>{buttonType.text}</NavLink>}
+							content={
+								buttonType.text !== 'Logout' ? (
+									<NavLink style={{ zIndex: 5 }} to={buttonType.path || null}>
+										{buttonType.text}
+									</NavLink>
+								) : (
+									<Text fontWeight={400} as='span' zIndex={5}>
+										{buttonType.text}
+									</Text>
+								)
+							}
 						/>
 					</HStack>
 				)}

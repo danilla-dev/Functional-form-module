@@ -39,7 +39,7 @@ const DashboardPage = () => {
 	const { isDesktop } = useUI()
 
 	return (
-		<Grid templateColumns={{ base: '1fr', lg: '200px 1fr' }} templateRows={'75px 1fr 100px'}>
+		<Grid templateColumns={{ base: '1fr', lg: '160px 1fr' }} templateRows={'75px 1fr 100px'}>
 			<GridItem
 				colStart={1}
 				colEnd={3}
@@ -53,16 +53,17 @@ const DashboardPage = () => {
 				<Flex
 					as='section'
 					id='dashboard'
+					justify='center'
 					maxW='100vw'
 					minH='100vh'
 					h='100%'
 					bgColor={'brand.300'}
 					color={'white'}
-					p='1em'
+					p='0 1em'
 					pt='5em'
 					bgImage={'linear-gradient(50deg, brand.200 2%, brand.350 50%, brand.350 35%, brand.200 100%)'}
 				>
-					<Container className='dashboard-container' m={0} centerContent p='0 2em' minW='100%' pb='3em'>
+					<Container className='dashboard-container' maxW={1600} centerContent p='0 1em' w='100%' pb='3em'>
 						<Routes>
 							<Route path='/' element={<MainDashboard />} />
 							<Route path='/integrations' element={<Integrations />} />

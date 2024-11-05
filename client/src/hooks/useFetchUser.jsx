@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { fetchUser as fetchUserApi } from '../api/authApi' 
-import { useAuth } from './useAuth' 
 
 const useFetchUser = () => {
 	const [error, setError] = useState(null)

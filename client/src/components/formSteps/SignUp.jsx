@@ -42,7 +42,7 @@ const FormInput = ({ input, control, errors, authError }) => (
 			defaultValue={input.defaultValue}
 			render={({ field }) => (
 				<>
-					<Input type={input.type} borderColor='accent.300' {...field} />
+					<Input size='lg' type={input.type} borderColor='accent.300' {...field} />
 					{input.name === 'password' && <PasswordHelperText value={field.value} />}
 				</>
 			)}

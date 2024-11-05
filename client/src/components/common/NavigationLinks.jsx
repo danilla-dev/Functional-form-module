@@ -10,7 +10,6 @@ const NavigationLinks = ({ onClose }) => {
 	const { isDesktop } = useUI()
 
 	const location = useLocation()
-	console.log(location)
 
 	let links = mainNavigationLinks
 

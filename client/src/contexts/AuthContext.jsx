@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useMemo } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { set } from 'lodash'
 import Cookies from 'js-cookie'
 
@@ -14,12 +14,13 @@ const API_URL = mode === 'development' ? 'http://localhost:4000' : 'https://www.
 
 export const AuthProvider = ({ children }) => {
 	const location = useLocation()
+	const navigate = useNavigate()
 	const [authStatus, setAuthData] = useState(isLoggedIn)
 	const [authError, setAuthError] = useState({ email: '', code: '' })
 	const [currentUser, setCurrentUser] = useState({ email: '', isVerified: false, subscription: null, activeSub: null })
 
-	console.log('auth status', authStatus)
-	console.log(currentUser)
+	console.log('AuthProvider is rendering')
+
 	const {
 		data: userData,
 		isLoading: authIsLoading,
@@ -29,30 +30,31 @@ export const AuthProvider = ({ children }) => {
 		queryFn: async () => {
 			const token = new URLSearchParams(location.search).get('token')
 			const response = await axios.get(`${API_URL}/api/auth/status?token=${token}`, { withCredentials: true })
-			console.log(response.data.user)
+			console.log('POBRANO DANE USERA:', response.data.user)
 			return response.data.user
 		},
 		refetchOnWindowFocus: false,
-		enabled: location.pathname !== '/dashboard' && !authStatus,
+		enabled:
+			!authStatus &&
+			(location.pathname === '/dashboard' || location.pathname === '/login' || location.pathname === '/subscription'),
 		staleTime: 1000 * 60 * 2,
 		cacheTime: 1000 * 60 * 5,
 		onSuccess: data => {
 			setCurrentUser(data || { email: '', isVerified: false, subscription: null, activeSub: null })
 		},
 	})
-	console.log('userData', userData)
 
-	useEffect(() => {
-		if (isLoggedIn === undefined) {
-			Cookies.set('authStatus', 'false', { path: '/' })
-		}
-		if (authStatus === 'true') {
-			refetch()
-		}
-		if (userData?.activeSub) {
-			setCurrentUser(userData)
-		}
-	}, [refetch, userData, authStatus])
+	// useEffect(() => {
+	// 	if (isLoggedIn === undefined) {
+	// 		Cookies.set('authStatus', 'false', { path: '/' })
+	// 	}
+	// 	if (authStatus === 'true') {
+	// 		refetch()
+	// 	}
+	// 	if (userData?.activeSub) {
+	// 		setCurrentUser(userData)
+	// 	}
+	// }, [refetch, userData, authStatus])
 
 	const loginUser = useMutation({
 		mutationFn: async credentials => {
@@ -66,7 +68,6 @@ export const AuthProvider = ({ children }) => {
 		onSuccess: data => {
 			localStorage.setItem('currentUser', JSON.stringify(data))
 			setCurrentUser(data)
-			refetch()
 		},
 		onError: error => {
 			console.error(error.message)
@@ -97,9 +98,8 @@ export const AuthProvider = ({ children }) => {
 			await axios.post(`${API_URL}/api/auth/logout`, {}, { withCredentials: true })
 		},
 		onSuccess: () => {
-			setCurrentUser({ email: '', isVerified: false, subscription: null, activeSub: null })
 			localStorage.removeItem('currentUser')
-			refetch()
+			navigate('/')
 		},
 		onError: error => {
 			console.error('Error logging out:', error.message)
@@ -123,22 +123,32 @@ export const AuthProvider = ({ children }) => {
 		},
 	})
 
-	return (
-		<AuthContext.Provider
-			value={{
-				currentUser,
-				loginUser,
-				logoutUser,
-				registerUser,
-				authIsLoading,
-				verifyCode,
-				refetch,
-				authError,
-				authStatus,
-				userData,
-			}}
-		>
-			{children}
-		</AuthContext.Provider>
+	const providerValue = useMemo(
+		() => ({
+			currentUser,
+			loginUser,
+			logoutUser,
+			registerUser,
+			authIsLoading,
+			verifyCode,
+			refetch,
+			authError,
+			authStatus,
+			userData,
+		}),
+		[
+			currentUser,
+			loginUser,
+			logoutUser,
+			registerUser,
+			authIsLoading,
+			verifyCode,
+			refetch,
+			authError,
+			authStatus,
+			userData,
+		]
 	)
+
+	return <AuthContext.Provider value={providerValue}>{children}</AuthContext.Provider>
 }

@@ -14,7 +14,7 @@ const LoginFormInputs = ({ control, errors }) => {
 							name={input.name}
 							control={control}
 							defaultValue={input.defaultValue}
-							render={({ field }) => <Input type={input.type} borderColor='accent.300' {...field} />}
+							render={({ field }) => <Input type={input.type} borderColor='accent.300' {...field} size='lg' />}
 						/>
 						{errors[input.name] && <FormErrorMessage>{errors[input.name].message}</FormErrorMessage>}
 					</FormControl>

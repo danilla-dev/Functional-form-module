@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useMemo } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useLocation } from 'react-router-dom'
@@ -13,21 +13,23 @@ if (mode === 'development') {
 }
 
 export const SubscriptionProvider = ({ children }) => {
-	const [subscriptionDetails, setSubscriptionDetails] = useState({
-		name: '',
-		price: 0,
-		details: {
-			communicationStyle: '',
-			preferences: [],
-			communicationPreferences: '',
-		},
-		paymentStatus: '',
-		subscriptionDurationType: '',
-		subscriptionEndDate: '',
-		user: '',
-	})
+	// const [subscriptionDetails, setSubscriptionDetails] = useState({
+	// 	name: '',
+	// 	price: 0,
+	// 	details: {
+	// 		communicationStyle: '',
+	// 		preferences: [],
+	// 		communicationPreferences: '',
+	// 	},
+	// 	paymentStatus: '',
+	// 	subscriptionDurationType: '',
+	// 	subscriptionEndDate: '',
+	// 	user: '',
+	// })
 	const [userIntegrations, setUserIntegrations] = useState([])
-	console.log('userIntegrations', userIntegrations)
+
+	console.log('subscriptionProvider is rendering')
+	// console.log('subscriptionDetails:', subscriptionDetails)
 
 	const location = useLocation()
 
@@ -40,36 +42,19 @@ export const SubscriptionProvider = ({ children }) => {
 	} = useQuery({
 		queryKey: ['subData'],
 		queryFn: async () => {
-			console.log('subData queryFn is running')
 			const response = await axios.get(`${API_URL}/api/sub/details`, {
 				withCredentials: true,
 			})
-			console.log(response.data.subscription)
+			console.log('POBRANO DANE SUBSKRYPCJI:', response.data.subscription)
 			return response.data.subscription
 		},
 		refetchOnWindowFocus: false,
 		enabled: location.pathname === '/dashboard',
 		staleTime: 1000 * 60 * 2,
 		cacheTime: 1000 * 60 * 5,
-		onSuccess: data => {
-			setCurrentUser(
-				subData || {
-					name: '',
-					price: 0,
-					details: {
-						communicationStyle: '',
-						preferences: [],
-						communicationPreferences: '',
-					},
-					paymentStatus: '',
-					subscriptionDurationType: '',
-					subscriptionEndDate: '',
-					user: '',
-				}
-			)
-			refetch()
-		},
+		// onSuccess: data => {
 	})
+	console.log('subData:', subData)
 
 	const {
 		data: userIntegrationsData,
@@ -83,7 +68,6 @@ export const SubscriptionProvider = ({ children }) => {
 			const response = await axios.get(`${API_URL}/api/integrations`, {
 				withCredentials: true,
 			})
-			console.log('response', response.data.integrations)
 			setUserIntegrations(response.data.integrations)
 			return response.data.integrations
 		},
@@ -91,10 +75,6 @@ export const SubscriptionProvider = ({ children }) => {
 		enabled: location.pathname === '/dashboard',
 		staleTime: 1000 * 60 * 2,
 		cacheTime: 1000 * 60 * 5,
-		onSuccess: data => {
-			console.log('userIntegrationsData', data)
-			setUserIntegrations(data)
-		},
 	})
 
 	const postIntegration = useMutation({
@@ -106,7 +86,6 @@ export const SubscriptionProvider = ({ children }) => {
 			return response.data
 		},
 		onSuccess: data => {
-			console.log('Integration created:', data)
 			setUserIntegrations(prevData => [...prevData, data.integration])
 		},
 		onError: error => {
@@ -114,20 +93,15 @@ export const SubscriptionProvider = ({ children }) => {
 		},
 	})
 
-	console.log('subscriptionDetails', subscriptionDetails)
-	console.log('subData', subscriptionDetails)
-
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {
-			console.log('saveSubscriptionDetails mutationFn is running')
 			const response = await axios.post(`${API_URL}/api/sub/details`, credentials, {
 				withCredentials: true,
 			})
 			return response.data
 		},
 		onSuccess: data => {
-			console.log('Subscription details saved:', data)
-			setSubscriptionDetails(data.subscription)
+			// setSubscriptionDetails(data.subscription)
 		},
 		onError: error => {
 			console.error('Error setting subscription details:', error.response?.data?.message || error.message)
@@ -150,25 +124,34 @@ export const SubscriptionProvider = ({ children }) => {
 		},
 	})
 
-	return (
-		<SubscriptionContext.Provider
-			value={{
-				saveSubscriptionDetails,
-				payForSubscription,
-				subscriptionDetails,
-				setSubscriptionDetails,
-				subIsLoading,
-				refetch,
-				pricingOptions,
-				subData,
-				userIntegrations,
-				setUserIntegrations,
-				postIntegration,
-				userIntegrationsRefetch,
-				userIntegrationsData,
-			}}
-		>
-			{children}
-		</SubscriptionContext.Provider>
+	const providerValue = useMemo(
+		() => ({
+			saveSubscriptionDetails,
+			payForSubscription,
+			// subscriptionDetails,
+			// setSubscriptionDetails,
+			subIsLoading,
+			refetch,
+			pricingOptions,
+			subData,
+			userIntegrations,
+			postIntegration,
+			userIntegrationsRefetch,
+		}),
+		[
+			saveSubscriptionDetails,
+			payForSubscription,
+			// subscriptionDetails,
+			// setSubscriptionDetails,
+			subIsLoading,
+			refetch,
+			pricingOptions,
+			subData,
+			userIntegrations,
+			postIntegration,
+			userIntegrationsRefetch,
+		]
 	)
+
+	return <SubscriptionContext.Provider value={providerValue}>{children}</SubscriptionContext.Provider>
 }

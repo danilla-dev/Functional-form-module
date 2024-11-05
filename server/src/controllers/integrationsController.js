@@ -4,8 +4,6 @@ import { Integration } from '../models/integrationModel.js'
 export const postUserIntegration = async (req, res) => {
 	const userEmail = req.userEmail
 	const { platform, apiKey } = req.body
-	console.log(platform)
-	console.log(apiKey)
 
 	if (!platform || !apiKey) {
 		return res.status(400).json({ message: 'Missing required fields' })
@@ -29,7 +27,6 @@ export const postUserIntegration = async (req, res) => {
 			},
 			{ new: true }
 		)
-		console.log('wykonano zapisanie integracji')
 		res.status(201).json({ message: 'Integration created', integration: newIntegration.name })
 	} catch (error) {
 		console.error('Error creating integration:', error)
@@ -49,7 +46,6 @@ export const getUserIntegration = async (req, res) => {
 		if (!integrations) {
 			return res.status(404).json({ message: 'Integrations not found' })
 		}
-		console.log(integrations)
 		res.status(200).json({ integrations: integrations.map(integration => integration.name) })
 	} catch (error) {
 		console.error('Error getting user integrations:', error)

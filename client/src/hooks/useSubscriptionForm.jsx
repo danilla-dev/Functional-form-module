@@ -1,5 +1,5 @@
 // hooks/useSubscriptionForm.js
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useSubscribe } from '../hooks/useSubscribe'
 import { handleRegister, handleVerifyCode, handleSaveDetails, handlePayment } from '../handlers/subscriptionHandlers'
@@ -23,27 +23,30 @@ const useSubscriptionForm = (activeStep, setActiveStep, plan) => {
 		}
 	}, [currentUser, setActiveStep])
 
-	const nextStep = async data => {
-		try {
-			switch (activeStep) {
-				case 0:
-					await handleRegister({ data, setActiveStep, registerUser })
-					break
-				case 1:
-					await handleVerifyCode({ data, setActiveStep, verifyCode, currentUser })
-					break
-				case 2:
-					await handleSaveDetails({ data, saveSubscriptionDetails })
-					await handlePayment({ data: { amount: plan.price, name: plan.name }, payForSubscription })
-					setActiveStep(3)
-					break
-				default:
-					break
+	const nextStep = useCallback(
+		async data => {
+			try {
+				switch (activeStep) {
+					case 0:
+						await handleRegister({ data, setActiveStep, registerUser })
+						break
+					case 1:
+						await handleVerifyCode({ data, setActiveStep, verifyCode, currentUser })
+						break
+					case 2:
+						await handleSaveDetails({ data, saveSubscriptionDetails })
+						await handlePayment({ data: { amount: plan.price, name: plan.name }, payForSubscription })
+						setActiveStep(3)
+						break
+					default:
+						break
+				}
+			} catch (error) {
+				setErrors(error)
 			}
-		} catch (error) {
-			setErrors(error)
-		}
-	}
+		},
+		[activeStep, registerUser, setActiveStep, saveSubscriptionDetails, payForSubscription, plan]
+	)
 
 	return { nextStep, errors }
 }

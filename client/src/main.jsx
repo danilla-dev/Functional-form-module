@@ -1,4 +1,4 @@
-import { StrictMode } from 'react'
+import React, { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
 import { border, ChakraProvider, extendTheme, Input, textDecoration } from '@chakra-ui/react'
@@ -10,8 +10,10 @@ import { UIProvider } from './contexts/UIContext'
 import { AuthProvider } from './contexts/AuthContext'
 import { SubscriptionProvider } from './contexts/SubscriptionContext'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { IntegrationsProvider } from './contexts/IntegrationsContext.jsx'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { color } from 'framer-motion'
+import { size } from 'lodash'
 
 const theme = extendTheme({
 	// Ustawienia typografii
@@ -58,7 +60,11 @@ const theme = extendTheme({
 		'6xl': '64px',
 	},
 
-	components: {},
+	components: {
+		input: {
+			size: 'lg',
+		},
+	},
 
 	styles: {
 		global: props => ({
@@ -121,20 +127,27 @@ const queryClient = new QueryClient()
 
 const mode = import.meta.env.VITE_MODE
 
+// if (mode === 'development') {
+// 	import('@welldone-software/why-did-you-render').then(whyDidYouRender => {
+// 		whyDidYouRender.default(React)
+// 	})
+// }
 createRoot(document.getElementById('root')).render(
-	<StrictMode>
-		<ChakraProvider theme={theme}>
-			<QueryClientProvider client={queryClient}>
-				<Router>
-					<AuthProvider>
-						<SubscriptionProvider>
+	// <StrictMode>
+	<ChakraProvider theme={theme}>
+		<QueryClientProvider client={queryClient}>
+			<Router>
+				<AuthProvider>
+					<SubscriptionProvider>
+						<IntegrationsProvider>
 							<UIProvider>
 								<App />
 							</UIProvider>
-						</SubscriptionProvider>
-					</AuthProvider>
-				</Router>
-			</QueryClientProvider>
-		</ChakraProvider>
-	</StrictMode>
+						</IntegrationsProvider>
+					</SubscriptionProvider>
+				</AuthProvider>
+			</Router>
+		</QueryClientProvider>
+	</ChakraProvider>
+	// </StrictMode>
 )

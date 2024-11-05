@@ -42,6 +42,7 @@ const ActionButton = ({ text, icon, action, ariaLabel, priority, type, content, 
 			onClick={action}
 			_hover={styles._hover}
 			isDisabled={isDisabled}
+			zIndex={10}
 		>
 			{content ? content : text}
 		</Button>

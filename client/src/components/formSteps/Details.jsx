@@ -49,7 +49,7 @@ const Selects = ({ control, errors }) => {
 						control={control}
 						defaultValue={select.options[0]}
 						render={({ field }) => (
-							<Select {...field}>
+							<Select {...field} size='lg'>
 								{select.options.map(option => (
 									<option key={option} value={option} className='option-dark'>
 										{option}

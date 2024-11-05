@@ -4,6 +4,8 @@ import { createUser, loginUser, fetchUserDetails, verifyUser, logoutUser } from 
 
 const router = express.Router()
 
+console.log('User routes is running')
+
 router.post('/login', loginUser)
 
 router.get('/status', auth, fetchUserDetails)

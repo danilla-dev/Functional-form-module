@@ -65,7 +65,7 @@ const MainDashboard = () => {
 	}
 	return (
 		<Stack
-			maxW={1400}
+			maxW={1600}
 			w='100%'
 			flexDir='row'
 			flexWrap='wrap'

@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react'
 const DashboardWidget = ({ content }) => {
 	const { header, body, dividerVisibility, fullWidth } = content
-	console.log(body)
 	return (
 		<Card
 			border='1px solid'
@@ -35,7 +34,6 @@ const DashboardWidget = ({ content }) => {
 			<CardBody w='100%'>
 				<Stack divider={dividerVisibility && <StackDivider />} spacing='1em'>
 					{body.map((element, index) => {
-						console.log(element)
 						const key = Object.keys(element)[0]
 						return (
 							<Box key={index}>

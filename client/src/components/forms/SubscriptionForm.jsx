@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { Text, Box, useSteps, ButtonGroup, Image, Stack, useToast } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useUI } from '../../hooks/useUI'
@@ -64,21 +64,23 @@ const SubscriptionForm = () => {
 		}
 	}, [location.search, pricingOptions])
 
-	const stepComponents = {
-		0: <SignUp control={control} errors={errors} authError={authError.email} />,
-		1: <VerifyCode control={control} errors={errors} authError={authError.code} />,
-		2: <Details control={control} errors={errors} />,
-	}
+	const stepComponents = useMemo(
+		() => ({
+			0: <SignUp control={control} errors={errors} authError={authError.email} />,
+			1: <VerifyCode control={control} errors={errors} authError={authError.code} />,
+			2: <Details control={control} errors={errors} />,
+		}),
+		[control, errors, authError]
+	)
 
 	return (
 		<Box
 			as='form'
-			maxW={1200}
-			w='90%'
+			maxW={800}
 			maxH='100vh'
 			border='1px solid'
 			borderColor='accent.300'
-			p='2em 1em'
+			p='2em'
 			borderRadius={10}
 			bgColor='brand.300'
 			color='brand.100'
@@ -86,13 +88,13 @@ const SubscriptionForm = () => {
 			onSubmit={handleSubmit(nextStep)}
 			overflow='hidden'
 		>
-			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }}>
+			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }} justify='space-between'>
 				{isTablet || isDesktop ? (
 					<Box w='50%' h='100%' m='auto 0'>
 						<Image h='100%' w='auto' src={registerImg} />
 					</Box>
 				) : null}
-				<Stack w={isDesktop || isTablet ? '50%' : '100%'} align='center' justify='space-between'>
+				<Stack w={isDesktop || isTablet ? '50%' : '100%'} maxW={400} align='center' justify='space-between'>
 					{currentUser && (
 						<Text fontSize='md' p='0.5em 0'>
 							{currentUser.email}

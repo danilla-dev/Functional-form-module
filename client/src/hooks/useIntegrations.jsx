@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { fetchUser as fetchUserApi } from '../api/authApi'
-import { useAuth } from './useAuth'
 import { useSubscribe } from './useSubscribe'
 import { integrationOptions } from '../data/formsConstants'
 import { handleSaveIntegration } from '../handlers/subscriptionHandlers'
