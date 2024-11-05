@@ -1,3 +1,4 @@
+import emailjs from '@emailjs/browser'
 export const handleSendEmail = async ({ emailData }) => {
 	const emailParams = {
 		user_email: emailData.user_email,
@@ -11,7 +12,7 @@ export const handleSendEmail = async ({ emailData }) => {
 		})
 		console.log('Email sent successfully!')
 	} catch (error) {
-		console.error('Failed to send email:', error.text)
+		console.error('Failed to send email:', error)
 	}
 }
 
