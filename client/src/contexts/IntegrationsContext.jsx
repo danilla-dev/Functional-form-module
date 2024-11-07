@@ -1,7 +1,10 @@
-import React, { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect, useMemo } from 'react'
 import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useLocation } from 'react-router-dom'
+import { integrationOptions } from '../data/formsConstants'
+import { handleSaveIntegration } from '../handlers/subscriptionHandlers'
+
 import { pricingOptions } from '../data/mainSectionConstants'
 import { set } from 'lodash'
 
@@ -15,8 +18,28 @@ if (mode === 'development') {
 
 export const IntegrationsProvider = ({ children }) => {
 	const [userIntegrations, setUserIntegrations] = useState([])
+	const [platform, setPlatform] = useState('')
+	const [apiKey, setApiKey] = useState('')
 	const location = useLocation()
 
+	const integrations = integrationOptions.filter(option => userIntegrations.includes(option.value))
+
+	const data = {
+		platform,
+		apiKey,
+	}
+	const handleAddIntegration = newIntegration => {
+		setUserIntegrations([...userIntegrations, newIntegration.platform])
+	}
+
+	const handleSubmit = async e => {
+		e.preventDefault()
+		if (platform && apiKey) {
+			await handleSaveIntegration({ data, postIntegration })
+			setPlatform('')
+			setApiKey('')
+		}
+	}
 	const {
 		data: userIntegrationsData,
 		isLoading: userIntegrationsIsLoading,
@@ -56,15 +79,32 @@ export const IntegrationsProvider = ({ children }) => {
 		},
 	})
 
-	return (
-		<IntegrationsContext.Provider
-			value={{
-				postIntegration,
-				userIntegrationsRefetch,
-				userIntegrationsData,
-			}}
-		>
-			{children}
-		</IntegrationsContext.Provider>
+	const providerValue = useMemo(
+		() => ({
+			handleAddIntegration,
+			integrations,
+			handleSubmit,
+			platform,
+			setPlatform,
+			apiKey,
+			setApiKey,
+			userIntegrations,
+			postIntegration,
+			userIntegrationsRefetch,
+		}),
+		[
+			handleAddIntegration,
+			integrations,
+			handleSubmit,
+			platform,
+			setPlatform,
+			apiKey,
+			setApiKey,
+			userIntegrations,
+			postIntegration,
+			userIntegrationsRefetch,
+		]
 	)
+
+	return <IntegrationsContext.Provider value={providerValue}>{children}</IntegrationsContext.Provider>
 }

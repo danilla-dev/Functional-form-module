@@ -26,10 +26,6 @@ export const SubscriptionProvider = ({ children }) => {
 	// 	subscriptionEndDate: '',
 	// 	user: '',
 	// })
-	const [userIntegrations, setUserIntegrations] = useState([])
-
-	console.log('subscriptionProvider is rendering')
-	// console.log('subscriptionDetails:', subscriptionDetails)
 
 	const location = useLocation()
 
@@ -56,43 +52,6 @@ export const SubscriptionProvider = ({ children }) => {
 	})
 	console.log('subData:', subData)
 
-	const {
-		data: userIntegrationsData,
-		isLoading: userIntegrationsIsLoading,
-		isError: userIntegrationsIsError,
-		error: userIntegrationsError,
-		refetch: userIntegrationsRefetch,
-	} = useQuery({
-		queryKey: ['userIntegrations'],
-		queryFn: async () => {
-			const response = await axios.get(`${API_URL}/api/integrations`, {
-				withCredentials: true,
-			})
-			setUserIntegrations(response.data.integrations)
-			return response.data.integrations
-		},
-		refetchOnWindowFocus: false,
-		enabled: location.pathname === '/dashboard',
-		staleTime: 1000 * 60 * 2,
-		cacheTime: 1000 * 60 * 5,
-	})
-
-	const postIntegration = useMutation({
-		mutationFn: async credentials => {
-			console.log(credentials)
-			const response = await axios.post(`${API_URL}/api/integrations`, credentials, {
-				withCredentials: true,
-			})
-			return response.data
-		},
-		onSuccess: data => {
-			setUserIntegrations(prevData => [...prevData, data.integration])
-		},
-		onError: error => {
-			console.error('Error creating integration:', error.response?.data?.message || error.message)
-		},
-	})
-
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {
 			const response = await axios.post(`${API_URL}/api/sub/details`, credentials, {
@@ -100,9 +59,7 @@ export const SubscriptionProvider = ({ children }) => {
 			})
 			return response.data
 		},
-		onSuccess: data => {
-			// setSubscriptionDetails(data.subscription)
-		},
+		onSuccess: data => {},
 		onError: error => {
 			console.error('Error setting subscription details:', error.response?.data?.message || error.message)
 		},
@@ -134,9 +91,6 @@ export const SubscriptionProvider = ({ children }) => {
 			refetch,
 			pricingOptions,
 			subData,
-			userIntegrations,
-			postIntegration,
-			userIntegrationsRefetch,
 		}),
 		[
 			saveSubscriptionDetails,
@@ -147,9 +101,6 @@ export const SubscriptionProvider = ({ children }) => {
 			refetch,
 			pricingOptions,
 			subData,
-			userIntegrations,
-			postIntegration,
-			userIntegrationsRefetch,
 		]
 	)
 

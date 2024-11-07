@@ -15,11 +15,9 @@ import {
 	CardHeader,
 	CardBody,
 } from '@chakra-ui/react'
-import { useSubscribe } from '../../hooks/useSubscribe'
-import { useAuth } from '../../hooks/useAuth'
+import { useIntegration } from '../../hooks/useIntegration'
 import { CheckIcon } from '@chakra-ui/icons'
 import { integrationOptions } from '../../data/formsConstants'
-import useIntegrations from '../../hooks/useIntegrations'
 import { motion } from 'framer-motion'
 
 const MotionBox = motion(Box)
@@ -29,7 +27,7 @@ const animationVariants = {
 	exit: { opacity: 0, x: -100 },
 }
 const IntegrationContainer = () => {
-	const { integrations } = useIntegrations()
+	const { integrations } = useIntegration()
 	return (
 		<HStack
 			justify='center'
@@ -65,8 +63,17 @@ const IntegrationContainer = () => {
 }
 
 const IntegrationForm = () => {
-	const { platform, setPlatform, apiKey, setApiKey, handleSubmit } = useIntegrations()
-	const { userIntegrations, userIntegrationsRefetch, userIntegrationsData } = useSubscribe()
+	const {} = useIntegration()
+	const {
+		userIntegrations,
+		userIntegrationsRefetch,
+		userIntegrationsData,
+		platform,
+		setPlatform,
+		apiKey,
+		setApiKey,
+		handleSubmit,
+	} = useIntegration()
 
 	useEffect(() => {
 		userIntegrationsRefetch()
@@ -133,7 +140,9 @@ const Integrations = () => {
 				<CardBody>
 					<Stack spacing='1em'>
 						<HStack>
-							<Text w={300}>Platform</Text>
+							<Text minW={120} w='50%' maxW={300}>
+								Platform
+							</Text>
 							<Text>API Key</Text>
 						</HStack>
 						<IntegrationForm />
