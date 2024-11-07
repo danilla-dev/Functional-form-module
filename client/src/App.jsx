@@ -12,6 +12,7 @@ import { useSubscribe } from './hooks/useSubscribe'
 import PrivateRouts from './components/PrivateRouts'
 import LoginPage from './components/pages/LoginPage'
 import { useLocation } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import './App.css'
 import Navigation from './components/navigation/Navigation'
@@ -23,7 +24,12 @@ function App() {
 	const dashboardLocation = useLocation().pathname === '/dashboard'
 
 	console.log('App is rendering')
-
+	useEffect(() => {
+		const isLoggedIn = Cookies.get('authStatus')
+		if (isLoggedIn === undefined) {
+			Cookies.set('authStatus', false)
+		}
+	}, [])
 	if (subIsLoading) {
 		return (
 			<Center h='100vh'>
