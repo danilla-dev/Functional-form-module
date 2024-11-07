@@ -15,6 +15,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { color } from 'framer-motion'
 import { size } from 'lodash'
 
+
 const theme = extendTheme({
 	// Ustawienia typografii
 	colors: {
@@ -127,11 +128,6 @@ const queryClient = new QueryClient()
 
 const mode = import.meta.env.VITE_MODE
 
-// if (mode === 'development') {
-// 	import('@welldone-software/why-did-you-render').then(whyDidYouRender => {
-// 		whyDidYouRender.default(React)
-// 	})
-// }
 createRoot(document.getElementById('root')).render(
 	// <StrictMode>
 	<ChakraProvider theme={theme}>
