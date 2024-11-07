@@ -15,8 +15,6 @@ const SubscriptionFormPage = () => {
 	const { currentUser, authIsLoading, userData } = useAuth()
 	const isLoggedIn = Cookies.get('authStatus') === 'true'
 
-	console.log('SubscriptionFormPage is rendering')
-
 	useEffect(() => {
 		if (isLoggedIn && userData?.activeSubscription) {
 			navigate('/dashboard')

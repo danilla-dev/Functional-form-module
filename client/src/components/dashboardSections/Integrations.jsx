@@ -20,7 +20,14 @@ import { useAuth } from '../../hooks/useAuth'
 import { CheckIcon } from '@chakra-ui/icons'
 import { integrationOptions } from '../../data/formsConstants'
 import useIntegrations from '../../hooks/useIntegrations'
+import { motion } from 'framer-motion'
 
+const MotionBox = motion(Box)
+const animationVariants = {
+	initial: { opacity: 0, x: 100 },
+	animate: { opacity: 1, x: 0 },
+	exit: { opacity: 0, x: -100 },
+}
 const IntegrationContainer = () => {
 	const { integrations } = useIntegrations()
 	return (
@@ -35,15 +42,23 @@ const IntegrationContainer = () => {
 			flexWrap='wrap'
 		>
 			{integrations.map(integration => (
-				<VStack key={integration.value} w={100} justify='space-between'>
-					boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
-					<Box bgColor='brand.100' h={100} w={100} p='1em' borderRadius={15} overflow='hidden'>
-						<Image src={integration.img} h='100%' objectFit='contain' alt={integration.alt} />
-					</Box>
-					<Text textAlign='center' w='100%'>
-						{integration.platform}
-					</Text>
-				</VStack>
+				<MotionBox
+					variants={animationVariants}
+					initial='initial'
+					animate='animate'
+					exit='exit'
+					transition={{ duration: 0.3 }}
+				>
+					<VStack key={integration.value} w={100} justify='space-between'>
+						boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
+						<Box bgColor='brand.100' h={100} w={100} p='1em' borderRadius={15} overflow='hidden'>
+							<Image src={integration.img} h='100%' objectFit='contain' alt={integration.alt} />
+						</Box>
+						<Text textAlign='center' w='100%'>
+							{integration.platform}
+						</Text>
+					</VStack>
+				</MotionBox>
 			))}
 		</HStack>
 	)

@@ -13,6 +13,7 @@ const MainDashboard = () => {
 	const normalDate = new Date(subscriptionEndDate)
 	const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
 	const formattedDate = normalDate.toLocaleDateString('pl-PL', options)
+	
 	const subWidgetContent = {
 		header: 'Subscription Details',
 		body: [
