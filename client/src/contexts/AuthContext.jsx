@@ -44,18 +44,6 @@ export const AuthProvider = ({ children }) => {
 		},
 	})
 
-	// useEffect(() => {
-	// 	if (isLoggedIn === undefined) {
-	// 		Cookies.set('authStatus', 'false', { path: '/' })
-	// 	}
-	// 	if (authStatus === 'true') {
-	// 		refetch()
-	// 	}
-	// 	if (userData?.activeSub) {
-	// 		setCurrentUser(userData)
-	// 	}
-	// }, [refetch, userData, authStatus])
-
 	const loginUser = useMutation({
 		mutationFn: async credentials => {
 			try {

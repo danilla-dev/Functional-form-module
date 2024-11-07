@@ -36,7 +36,8 @@ const IntegrationContainer = () => {
 		>
 			{integrations.map(integration => (
 				<VStack key={integration.value} w={100} justify='space-between'>
-					<Box bgColor='brand.100' h={100} w={100} p='0.25em'>
+					boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
+					<Box bgColor='brand.100' h={100} w={100} p='1em' borderRadius={15} overflow='hidden'>
 						<Image src={integration.img} h='100%' objectFit='contain' alt={integration.alt} />
 					</Box>
 					<Text textAlign='center' w='100%'>
