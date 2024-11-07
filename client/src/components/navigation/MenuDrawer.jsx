@@ -17,6 +17,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import NavigationLinks from '../common/NavigationLinks'
 import Logo from '../common/Logo'
+import Cookies from 'js-cookie'
 
 import { useUI } from '../../hooks/useUI'
 
@@ -26,14 +27,22 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 
 	const location = useLocation()
 
+	const isLoggedIn = Cookies.get('authStatus') === 'true'
+
 	useEffect(() => {
 		isDesktop && onClose()
 		switch (location.pathname) {
 			case '/':
-				setButtonType({ text: 'Get started', path: '/subscription' })
+				setButtonType({
+					text: isLoggedIn ? 'Dashboard' : 'Get started',
+					path: isLoggedIn ? '/dashboard' : '/subscription',
+				})
 				break
 			case '/subscription':
 				setButtonType({ text: 'Login', path: '/login' })
+				break
+			case '/login':
+				setButtonType({ text: 'Get started', path: '/subscription' })
 				break
 			case '/dashboard':
 				setButtonType({ text: 'Logout', path: '/' })
