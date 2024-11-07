@@ -23,14 +23,13 @@ const SubscriptionFormPage = () => {
 
 	return (
 		<Grid gridTemplateRows={'9fr 1fr'} className='signup-page'>
-			<GridItem rowStart={1} rowEnd={2}>
+			<GridItem rowStart={1} rowEnd={2} w='100vw'>
 				<Center
 					as='section'
 					id='subscription-form-page'
 					align='center'
 					w='100%'
 					h='100%'
-					p='0 2em'
 					bgImage={'linear-gradient(190deg, brand.200 -10%, brand.350 20%, brand.350 75%, brand.200 110%)'}
 				>
 					<SubscriptionForm />

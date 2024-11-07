@@ -77,6 +77,7 @@ const SubscriptionForm = () => {
 		<Box
 			as='form'
 			maxW={800}
+			w='90%'
 			maxH='100vh'
 			border='1px solid'
 			borderColor='accent.300'
