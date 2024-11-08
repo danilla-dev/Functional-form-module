@@ -12,7 +12,7 @@ import {
 	Box,
 } from '@chakra-ui/react'
 import ActionButton from '../common/ActionButton'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import NavigationLinks from '../common/NavigationLinks'
@@ -20,14 +20,20 @@ import Logo from '../common/Logo'
 import Cookies from 'js-cookie'
 
 import { useUI } from '../../hooks/useUI'
+import { useAuth } from '../../hooks/useAuth'
 
 const MenuDrawer = ({ isOpen, onClose }) => {
 	const { isDesktop } = useUI()
 	const [buttonType, setButtonType] = useState({ text: '', path: '' })
+	const { logoutUser } = useAuth()
 
 	const location = useLocation()
 
 	const isLoggedIn = Cookies.get('authStatus') === 'true'
+
+	const handleLogout = async () => {
+		await logoutUser.mutateAsync()
+	}
 
 	useEffect(() => {
 		isDesktop && onClose()
@@ -36,16 +42,24 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 				setButtonType({
 					text: isLoggedIn ? 'Dashboard' : 'Get started',
 					path: isLoggedIn ? '/dashboard' : '/subscription',
+					action: onClose,
 				})
 				break
 			case '/subscription':
-				setButtonType({ text: 'Login', path: '/login' })
+				setButtonType({ text: 'Login', path: '/login', action: onClose })
 				break
 			case '/login':
-				setButtonType({ text: 'Get started', path: '/subscription' })
+				setButtonType({ text: 'Get started', path: '/subscription', action: onClose })
 				break
 			case '/dashboard':
-				setButtonType({ text: 'Logout', path: '/' })
+				setButtonType({
+					text: 'Logout',
+					path: '/',
+					action: () => {
+						handleLogout()
+						onClose()
+					},
+				})
 				break
 		}
 	}, [location.pathname])
@@ -73,14 +87,20 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 							<ActionButton
 								text={buttonType.text}
 								icon={null}
-								action={null}
+								action={buttonType.action}
 								ariaLabel='Sign up'
 								priority='high'
 								type='button'
 								content={
-									<Link onClick={onClose} to={buttonType.path}>
-										{buttonType.text}
-									</Link>
+									buttonType.text !== 'Logout' ? (
+										<NavLink style={{ zIndex: 5 }} to={buttonType.path || null}>
+											{buttonType.text}
+										</NavLink>
+									) : (
+										<Text fontWeight={400} as='span' zIndex={5}>
+											{buttonType.text}
+										</Text>
+									)
 								}
 							/>
 						</Box>
