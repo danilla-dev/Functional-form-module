@@ -7,7 +7,7 @@ import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom'
 
 const useLoginForm = () => {
-	const { loginUser } = useAuth()
+	const { loginUser, authError } = useAuth()
 	const navigate = useNavigate()
 
 	const {
@@ -28,7 +28,7 @@ const useLoginForm = () => {
 		[loginUser, navigate]
 	)
 
-	return { control, handleSubmit, errors, handleLogin }
+	return { control, handleSubmit, errors, handleLogin, authError }
 }
 
 export default useLoginForm

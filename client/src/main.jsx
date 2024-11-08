@@ -133,21 +133,21 @@ const mode = import.meta.env.VITE_MODE
 // 	})
 // }
 createRoot(document.getElementById('root')).render(
-	// <StrictMode>
-	<ChakraProvider theme={theme}>
-		<QueryClientProvider client={queryClient}>
-			<Router>
-				<AuthProvider>
-					<SubscriptionProvider>
-						<IntegrationsProvider>
-							<UIProvider>
-								<App />
-							</UIProvider>
-						</IntegrationsProvider>
-					</SubscriptionProvider>
-				</AuthProvider>
-			</Router>
-		</QueryClientProvider>
-	</ChakraProvider>
-	// </StrictMode>
+	<StrictMode>
+		<ChakraProvider theme={theme}>
+			<QueryClientProvider client={queryClient}>
+				<Router>
+					<AuthProvider>
+						<SubscriptionProvider>
+							<IntegrationsProvider>
+								<UIProvider>
+									<App />
+								</UIProvider>
+							</IntegrationsProvider>
+						</SubscriptionProvider>
+					</AuthProvider>
+				</Router>
+			</QueryClientProvider>
+		</ChakraProvider>
+	</StrictMode>
 )

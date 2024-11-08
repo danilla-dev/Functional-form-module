@@ -14,6 +14,7 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
+	FormLabel,
 } from '@chakra-ui/react'
 import { useIntegration } from '../../hooks/useIntegration'
 import { CheckIcon } from '@chakra-ui/icons'

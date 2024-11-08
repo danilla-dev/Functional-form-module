@@ -8,7 +8,7 @@ import ActionButton from '../common/ActionButton'
 import { useUI } from '../../hooks/useUI'
 
 const LoginForm = () => {
-	const { control, handleSubmit, errors, handleLogin } = useLoginForm()
+	const { control, handleSubmit, errors, handleLogin, authError } = useLoginForm()
 	const { isTablet, isDesktop } = useUI()
 
 	return (
@@ -35,7 +35,7 @@ const LoginForm = () => {
 					<Text fontSize='xl' p='0.5em 0'>
 						Welcome back!
 					</Text>
-					<LoginFormInputs control={control} errors={errors} />
+					<LoginFormInputs control={control} errors={errors} authError={authError} />
 					<ButtonGroup justifyContent='space-around' w='100%' mt='1.5em'>
 						<ActionButton
 							text='Login'
