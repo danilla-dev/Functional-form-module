@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 
 const Logo = () => {
 	return (
-		<Center>
+		<Center className='company-logo'>
 			<NavLink to='/'>
 				<HStack fontWeight='bold'>
 					<Text color='accent.50' className='logo'>

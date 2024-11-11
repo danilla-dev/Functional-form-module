@@ -39,7 +39,7 @@ const DashboardPage = () => {
 	const { isDesktop } = useUI()
 
 	return (
-		<Grid templateColumns={{ base: '1fr', lg: '160px 1fr' }} templateRows={'75px 1fr 100px'}>
+		<Grid templateColumns={{ base: '1fr', lg: '160px 1fr' }} templateRows={'75px 1fr 100px'} className='dashboard-page'>
 			<GridItem
 				colStart={1}
 				colEnd={3}

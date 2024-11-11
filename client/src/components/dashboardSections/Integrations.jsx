@@ -14,15 +14,21 @@ import {
 	Card,
 	CardHeader,
 	CardBody,
+	FormLabel,
 } from '@chakra-ui/react'
-import { useSubscribe } from '../../hooks/useSubscribe'
-import { useAuth } from '../../hooks/useAuth'
+import { useIntegration } from '../../hooks/useIntegration'
 import { CheckIcon } from '@chakra-ui/icons'
 import { integrationOptions } from '../../data/formsConstants'
-import useIntegrations from '../../hooks/useIntegrations'
+import { motion } from 'framer-motion'
 
+const MotionBox = motion(Box)
+const animationVariants = {
+	initial: { opacity: 0, x: 100 },
+	animate: { opacity: 1, x: 0 },
+	exit: { opacity: 0, x: -100 },
+}
 const IntegrationContainer = () => {
-	const { integrations } = useIntegrations()
+	const { integrations } = useIntegration()
 	return (
 		<HStack
 			justify='center'
@@ -35,30 +41,47 @@ const IntegrationContainer = () => {
 			flexWrap='wrap'
 		>
 			{integrations.map(integration => (
-				<VStack key={integration.value} w={100} justify='space-between'>
-					boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
-					<Box bgColor='brand.100' h={100} w={100} p='1em' borderRadius={15} overflow='hidden'>
-						<Image src={integration.img} h='100%' objectFit='contain' alt={integration.alt} />
-					</Box>
-					<Text textAlign='center' w='100%'>
-						{integration.platform}
-					</Text>
-				</VStack>
+				<MotionBox
+					variants={animationVariants}
+					initial='initial'
+					animate='animate'
+					exit='exit'
+					transition={{ duration: 0.3 }}
+				>
+					<VStack key={integration.value} w={100} justify='space-between'>
+						boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
+						<Box bgColor='brand.100' h={100} w={100} p='1em' borderRadius={15} overflow='hidden'>
+							<Image src={integration.img} h='100%' objectFit='contain' alt={integration.alt} />
+						</Box>
+						<Text textAlign='center' w='100%'>
+							{integration.platform}
+						</Text>
+					</VStack>
+				</MotionBox>
 			))}
 		</HStack>
 	)
 }
 
 const IntegrationForm = () => {
-	const { platform, setPlatform, apiKey, setApiKey, handleSubmit } = useIntegrations()
-	const { userIntegrations, userIntegrationsRefetch, userIntegrationsData } = useSubscribe()
+	const {} = useIntegration()
+	const {
+		userIntegrations,
+		userIntegrationsRefetch,
+		userIntegrationsData,
+		platform,
+		setPlatform,
+		apiKey,
+		setApiKey,
+		handleSubmit,
+	} = useIntegration()
 
 	useEffect(() => {
 		userIntegrationsRefetch()
 	}, [userIntegrationsData])
 
 	return (
-		<HStack as='form' onSubmit={handleSubmit} spacing={3}>
+		<HStack as='form' onSubmit={handleSubmit} spacing={3} className='integration-add-form'>
 			<FormControl>
 				<HStack spacing={2}>
 					<Select
@@ -100,6 +123,9 @@ const Integrations = () => {
 			flexWrap='wrap'
 			justify={{ base: 'center', md: 'space-between' }}
 			spacing='2em'
+			className='integrations-section'
+			id='dashboard-integrations-section'
+			as='section'
 		>
 			<Card
 				border='1px solid'
@@ -109,16 +135,19 @@ const Integrations = () => {
 				p='1em'
 				borderRadius={10}
 				w='100%'
+				className='integrations-card'
 			>
-				<CardHeader>
+				<CardHeader className='integrations-card-header'>
 					<Heading size='md' color='accent.300'>
 						Integrations
 					</Heading>
 				</CardHeader>
-				<CardBody>
+				<CardBody className='integrations-card-header'>
 					<Stack spacing='1em'>
 						<HStack>
-							<Text w={300}>Platform</Text>
+							<Text minW={120} w='50%' maxW={300}>
+								Platform
+							</Text>
 							<Text>API Key</Text>
 						</HStack>
 						<IntegrationForm />

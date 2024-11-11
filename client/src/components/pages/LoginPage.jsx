@@ -5,7 +5,7 @@ import Footer from '../Footer'
 
 const LoginPage = () => {
 	return (
-		<Grid gridTemplateRows={'1fr 100px'}>
+		<Grid gridTemplateRows={'1fr 100px'} className='login-page'>
 			<GridItem rowStart={1} rowEnd={2}>
 				<Center
 					as='section'

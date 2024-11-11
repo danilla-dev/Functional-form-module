@@ -7,7 +7,7 @@ const HeaderImage = () => {
 	const { isDesktop } = useUI()
 
 	return (
-		<Box w='100%' maxW={isDesktop ? '40%' : 350}>
+		<Box w='100%' maxW={isDesktop ? '40%' : 350} className='header-image'>
 			<Image
 				src={robotAI}
 				h='100%'

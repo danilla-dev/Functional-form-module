@@ -11,7 +11,7 @@ import { useUI } from '../../hooks/useUI'
 
 const LandingPage = () => {
 	return (
-		<Grid gridTemplateRows={'1fr 100px'}>
+		<Grid gridTemplateRows={'1fr 100px'} className='landing-page'>
 			<GridItem rowStart={1} rowEnd={2}>
 				<Flex
 					direction='column'

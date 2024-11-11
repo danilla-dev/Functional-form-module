@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { IntegrationsContext } from '../contexts/IntegrationsContext'
 
-export const userIntegrations = () => {
+export const useIntegration = () => {
 	return useContext(IntegrationsContext)
 }

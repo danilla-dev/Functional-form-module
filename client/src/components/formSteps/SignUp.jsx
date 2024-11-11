@@ -16,7 +16,7 @@ import { signupInputs, passwordRequirements } from '../../data/formsConstants'
 const PasswordHelperText = ({ value }) => (
 	<FormHelperText color='brand.100' textAlign='left'>
 		Password must contain:
-		<UnorderedList>
+		<UnorderedList className='signup-subscription-form-step'>
 			<List color='brand.100'>
 				{passwordRequirements.map((requirement, index) => (
 					<ListItem key={index}>

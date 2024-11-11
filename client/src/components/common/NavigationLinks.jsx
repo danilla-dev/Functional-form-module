@@ -21,7 +21,7 @@ const NavigationLinks = ({ onClose }) => {
 	}
 
 	return (
-		<Stack direction={isDesktop ? 'row' : 'column'} spacing='2em' flex={1}>
+		<Stack direction={isDesktop ? 'row' : 'column'} spacing='2em' flex={1} className='navigation-links'>
 			{links.map((link, index) => {
 				if (!isDashboard) {
 					return (

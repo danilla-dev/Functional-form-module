@@ -13,15 +13,13 @@ import {
 	HStack,
 	VStack,
 } from '@chakra-ui/react'
-import { useAuth } from '../../hooks/useAuth'
-import { useUI } from '../../hooks/useUI'
 import { Controller } from 'react-hook-form'
 
 const VerifyCode = ({ control, errors, authError }) => {
 	console.log(errors)
 	return (
 		<FormControl isInvalid={errors.verificationCode || authError}>
-			<VStack align='center' justify='center'>
+			<VStack align='center' justify='center' className='code-subscription-form-step'>
 				<FormLabel>Verification code</FormLabel>
 				<Controller
 					name='verificationCode'

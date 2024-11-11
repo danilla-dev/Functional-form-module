@@ -39,7 +39,6 @@ const SubscriptionSelector = React.memo(
 			setValue
 		)
 
-		console.log('SubscriptionSelector is rendering')
 		return (
 			<FormControl isRequired isInvalid={errors.subscriptionPlan}>
 				<FormLabel>Select a plan:</FormLabel>
@@ -49,7 +48,13 @@ const SubscriptionSelector = React.memo(
 					defaultValue={valueProps}
 					render={({ field: { onChange, value } }) => {
 						return (
-							<RadioGroup onChange={onChange} value={value} w='100%' m='0.5em  0'>
+							<RadioGroup
+								onChange={onChange}
+								value={value}
+								w='100%'
+								m='0.5em  0'
+								className='subscription-plan-form-selector'
+							>
 								<HStack spacing='24px' justify='space-between'>
 									{subscriptionPlans.map(option => {
 										const { isOpen, onToggle, onClose } = useDisclosure()
@@ -69,6 +74,7 @@ const SubscriptionSelector = React.memo(
 													handlePlanChange(option.name)
 													onChange(option.name)
 												}}
+												className='subscription-plan-card'
 											>
 												<Box position='absolute' top={0} right={0} p='0.25em'>
 													<Popover isOpen={isOpen} onClose={onClose} placement='bottom'>

@@ -22,7 +22,7 @@ const Checkboxes = ({ control, errors }) => {
 				control={control}
 				defaultValue={[]}
 				render={({ field }) => (
-					<CheckboxGroup value={field.value} onChange={field.onChange}>
+					<CheckboxGroup value={field.value} onChange={field.onChange} className='details-subscription-form-step'>
 						<Stack spacing={[1, 5]} direction={['column', 'row']} wrap='wrap'>
 							{checkboxesContext.map(checkbox => (
 								<Checkbox key={checkbox.value} value={checkbox.value} size='lg' spacing='0.5em'>

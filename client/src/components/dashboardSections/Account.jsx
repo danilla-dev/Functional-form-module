@@ -48,6 +48,9 @@ const Account = () => {
 			flexWrap='wrap'
 			justify={{ base: 'center', md: 'space-between' }}
 			spacing='2em'
+			as='section'
+			id='dashboard-account-section'
+			className='account-section'
 		>
 			<DashboardWidget content={subWidgetContent} />
 		</Stack>

@@ -14,7 +14,7 @@ import { formSteps } from '../../data/formsConstants'
 
 const Stepper = ({ index }) => {
 	return (
-		<Box w='95%' mb='1em'>
+		<Box w='95%' mb='1em' className='form-stepper'>
 			<ChakraStepper index={index} size='md' flexWrap='wrap' justifyContent='center'>
 				{formSteps.map((step, index) => (
 					<Step key={index} flex='1' p='0 .25em'>

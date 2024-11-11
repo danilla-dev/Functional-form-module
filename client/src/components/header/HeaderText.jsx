@@ -13,7 +13,13 @@ const HeaderText = ({ distance }) => {
 	}
 
 	return (
-		<VStack color='brand.50' maxW={isDesktop ? '55%' : '100%'} align={isDesktop ? 'start' : 'center'} spacing='1em'>
+		<VStack
+			color='brand.50'
+			maxW={isDesktop ? '55%' : '100%'}
+			align={isDesktop ? 'start' : 'center'}
+			spacing='1em'
+			className='header-text'
+		>
 			<Heading as='h1' mb='0.5em' textAlign={!isDesktop && 'center'} minH={50}>
 				Your own modern{' '}
 				<Text as='strong' bgGradient='radial(accent.100, accent.50)' bgClip='text'>

@@ -44,6 +44,8 @@ const Header = () => {
 			bgPosition={'center'}
 			bgSize={'cover'}
 			bgRepeat={'no-repeat'}
+			boxShadow='0px 0px 24px 16px rgba(0,125,121,0.25)'
+			className='header'
 		>
 			<Stack
 				direction={isDesktop ? 'row' : 'column'}

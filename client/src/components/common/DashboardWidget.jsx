@@ -25,13 +25,14 @@ const DashboardWidget = ({ content }) => {
 			minW={{ base: 350, md: fullWidth ? '100%' : 320 }}
 			w={{ base: '90%', md: '45%' }}
 			boxShadow='0px 0px 16px 4px rgba(0,125,121,0.25)'
+			className='dashboard-widget'
 		>
-			<CardHeader>
+			<CardHeader className='dashboard-widget-header'>
 				<Heading size='md' color='accent.300'>
 					{header}
 				</Heading>
 			</CardHeader>
-			<CardBody w='100%'>
+			<CardBody w='100%' className='dashboard-widget-body'>
 				<Stack divider={dividerVisibility && <StackDivider />} spacing='1em'>
 					{body.map((element, index) => {
 						const key = Object.keys(element)[0]

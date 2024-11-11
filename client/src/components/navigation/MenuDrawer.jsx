@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
 	Drawer,
 	DrawerBody,
@@ -8,41 +8,30 @@ import {
 	DrawerOverlay,
 	VStack,
 	Text,
-	Button,
 	Box,
 } from '@chakra-ui/react'
 import ActionButton from '../common/ActionButton'
-import { Link } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import NavigationLinks from '../common/NavigationLinks'
 import Logo from '../common/Logo'
 
 import { useUI } from '../../hooks/useUI'
+import useNavigation from '../../hooks/useNavigation'
 
 const MenuDrawer = ({ isOpen, onClose }) => {
 	const { isDesktop } = useUI()
-	const [buttonType, setButtonType] = useState({ text: '', path: '' })
-
-	const location = useLocation()
+	const { buttonType } = useNavigation(onClose)
+	const { text, path, action } = buttonType
 
 	useEffect(() => {
-		isDesktop && onClose()
-		switch (location.pathname) {
-			case '/':
-				setButtonType({ text: 'Get started', path: '/subscription' })
-				break
-			case '/subscription':
-				setButtonType({ text: 'Login', path: '/login' })
-				break
-			case '/dashboard':
-				setButtonType({ text: 'Logout', path: '/' })
-				break
+		if (isDesktop) {
+			onClose()
 		}
-	}, [location.pathname])
+	}, [isDesktop, onClose])
 
 	return (
-		<Drawer placement='right' onClose={onClose} isOpen={isOpen} size='full'>
+		<Drawer placement='right' onClose={onClose} isOpen={isOpen} size='full' className='menu-drawer'>
 			<DrawerOverlay />
 			<DrawerContent bgColor='brand.200'>
 				<DrawerCloseButton size='lg' fontSize='md' color='#3cbbc7' />
@@ -62,16 +51,22 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 						<NavigationLinks onClose={!isDesktop && onClose} />
 						<Box w='100%' alignContent='center'>
 							<ActionButton
-								text={buttonType.text}
+								text={text}
 								icon={null}
-								action={null}
+								action={action}
 								ariaLabel='Sign up'
 								priority='high'
 								type='button'
 								content={
-									<Link onClick={onClose} to={buttonType.path}>
-										{buttonType.text}
-									</Link>
+									text !== 'Logout' ? (
+										<NavLink style={{ zIndex: 5 }} to={path || null}>
+											{text}
+										</NavLink>
+									) : (
+										<Text fontWeight={400} as='span' zIndex={5}>
+											{text}
+										</Text>
+									)
 								}
 							/>
 						</Box>

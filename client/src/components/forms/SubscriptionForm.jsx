@@ -38,8 +38,8 @@ const SubscriptionForm = () => {
 		initialStep: 0,
 		count: formSteps.length,
 	})
-	const { currentUser, login, registerUser, logout, isLoading, verifyCode, authError } = useAuth()
-	const { saveSubscriptionDetails, payForSubscription, pricingOptions } = useSubscribe()
+	const { currentUser, authError } = useAuth()
+	const { pricingOptions } = useSubscribe()
 	const [plan, setPlan] = useState({ name: '', price: 0 })
 	const [selectedPlan, setSelectedPlan] = useState(plan.name)
 	const location = useLocation()
@@ -64,19 +64,17 @@ const SubscriptionForm = () => {
 		}
 	}, [location.search, pricingOptions])
 
-	const stepComponents = useMemo(
-		() => ({
-			0: <SignUp control={control} errors={errors} authError={authError.email} />,
-			1: <VerifyCode control={control} errors={errors} authError={authError.code} />,
-			2: <Details control={control} errors={errors} />,
-		}),
-		[control, errors, authError]
-	)
+	const stepComponents = {
+		0: <SignUp control={control} errors={errors} authError={authError.email} />,
+		1: <VerifyCode control={control} errors={errors} authError={authError.code} />,
+		2: <Details control={control} errors={errors} />,
+	}
 
 	return (
 		<Box
 			as='form'
 			maxW={800}
+			w='90%'
 			maxH='100vh'
 			border='1px solid'
 			borderColor='accent.300'
@@ -87,6 +85,8 @@ const SubscriptionForm = () => {
 			boxShadow='dark-lg'
 			onSubmit={handleSubmit(nextStep)}
 			overflow='hidden'
+			className='subscription-form'
+			id='subscription-form'
 		>
 			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }} justify='space-between'>
 				{isTablet || isDesktop ? (
@@ -132,7 +132,6 @@ const SubscriptionForm = () => {
 							ariaLabel='Send Question'
 							priority={activeStep === 2 ? 'high' : 'low'}
 							type='button'
-							content={null}
 							isDisabled={false}
 							iconPosition='right'
 						/>

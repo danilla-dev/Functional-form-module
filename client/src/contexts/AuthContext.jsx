@@ -16,10 +16,8 @@ export const AuthProvider = ({ children }) => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [authStatus, setAuthData] = useState(isLoggedIn)
-	const [authError, setAuthError] = useState({ email: '', code: '' })
+	const [authError, setAuthError] = useState({ email: '', code: '', password: '' })
 	const [currentUser, setCurrentUser] = useState({ email: '', isVerified: false, subscription: null, activeSub: null })
-
-	console.log('AuthProvider is rendering')
 
 	const {
 		data: userData,
@@ -30,7 +28,6 @@ export const AuthProvider = ({ children }) => {
 		queryFn: async () => {
 			const token = new URLSearchParams(location.search).get('token')
 			const response = await axios.get(`${API_URL}/api/auth/status?token=${token}`, { withCredentials: true })
-			console.log('POBRANO DANE USERA:', response.data.user)
 			return response.data.user
 		},
 		refetchOnWindowFocus: false,
@@ -50,12 +47,20 @@ export const AuthProvider = ({ children }) => {
 				const response = await axios.post(`${API_URL}/api/auth/login`, credentials, { withCredentials: true })
 				return response.data
 			} catch (error) {
-				throw new Error('Error logging in: ' + error.response?.data?.message)
+				const errorType = error.response?.data?.type
+				const errorMessage = error.response?.data?.message
+				setAuthError(prev => {
+					const updatedErrors = { email: '', code: '', password: '' }
+					updatedErrors[errorType] = errorMessage
+					return updatedErrors
+				})
+				throw new Error('Error logging in: ' + errorMessage)
 			}
 		},
 		onSuccess: data => {
 			localStorage.setItem('currentUser', JSON.stringify(data))
 			setCurrentUser(data)
+			setAuthError({ email: '', password: '', code: '' })
 		},
 		onError: error => {
 			console.error(error.message)
@@ -68,7 +73,8 @@ export const AuthProvider = ({ children }) => {
 				const response = await axios.post(`${API_URL}/api/auth/register`, credentials, { withCredentials: true })
 				return response.data
 			} catch (error) {
-				throw new Error('Error registering user: ' + error.response?.data?.message)
+				const errorMessage = error.response?.data?.message
+				throw new Error('Error registering user: ' + errorMessage)
 			}
 		},
 		onSuccess: data => {

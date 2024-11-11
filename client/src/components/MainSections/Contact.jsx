@@ -28,7 +28,7 @@ const Contact = () => {
 	const { isMobile, isDesktop, isTablet } = useUI()
 
 	return (
-		<Container m={0} centerContent p='2em 1em' minW='100%' pb='3em'>
+		<Container m={0} centerContent p='2em 1em' minW='100%' pb='3em' className='contact'>
 			<Stack maxW={1100} w='100%' align='center'>
 				<Heading
 					as='h2'

@@ -24,14 +24,12 @@ function App() {
 	const dashboardLocation = useLocation().pathname === '/dashboard'
 
 	console.log('App is rendering')
-
 	useEffect(() => {
 		const isLoggedIn = Cookies.get('authStatus')
 		if (isLoggedIn === undefined) {
 			Cookies.set('authStatus', false)
 		}
 	}, [])
-
 	if (subIsLoading) {
 		return (
 			<Center h='100vh'>
