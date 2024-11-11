@@ -13,20 +13,6 @@ if (mode === 'development') {
 }
 
 export const SubscriptionProvider = ({ children }) => {
-	// const [subscriptionDetails, setSubscriptionDetails] = useState({
-	// 	name: '',
-	// 	price: 0,
-	// 	details: {
-	// 		communicationStyle: '',
-	// 		preferences: [],
-	// 		communicationPreferences: '',
-	// 	},
-	// 	paymentStatus: '',
-	// 	subscriptionDurationType: '',
-	// 	subscriptionEndDate: '',
-	// 	user: '',
-	// })
-
 	const location = useLocation()
 
 	const {
@@ -41,7 +27,6 @@ export const SubscriptionProvider = ({ children }) => {
 			const response = await axios.get(`${API_URL}/api/sub/details`, {
 				withCredentials: true,
 			})
-			console.log('POBRANO DANE SUBSKRYPCJI:', response.data.subscription)
 			return response.data.subscription
 		},
 		refetchOnWindowFocus: false,
@@ -50,7 +35,6 @@ export const SubscriptionProvider = ({ children }) => {
 		cacheTime: 1000 * 60 * 5,
 		// onSuccess: data => {
 	})
-	console.log('subData:', subData)
 
 	const saveSubscriptionDetails = useMutation({
 		mutationFn: async credentials => {

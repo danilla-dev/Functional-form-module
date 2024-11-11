@@ -19,8 +19,6 @@ export const AuthProvider = ({ children }) => {
 	const [authError, setAuthError] = useState({ email: '', code: '', password: '' })
 	const [currentUser, setCurrentUser] = useState({ email: '', isVerified: false, subscription: null, activeSub: null })
 
-	console.log('AuthProvider is rendering')
-
 	const {
 		data: userData,
 		isLoading: authIsLoading,
@@ -30,7 +28,6 @@ export const AuthProvider = ({ children }) => {
 		queryFn: async () => {
 			const token = new URLSearchParams(location.search).get('token')
 			const response = await axios.get(`${API_URL}/api/auth/status?token=${token}`, { withCredentials: true })
-			console.log('POBRANO DANE USERA:', response.data.user)
 			return response.data.user
 		},
 		refetchOnWindowFocus: false,

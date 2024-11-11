@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { throttle } from 'lodash'
-import { Container, Stack, Button, Text, HStack, useDisclosure, Box, ButtonGroup } from '@chakra-ui/react'
-import { NavLink } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
-
+// components/Navigation/Navigation.js
+import React from 'react'
+import { Box, Stack, Button, HStack, Text, useDisclosure } from '@chakra-ui/react'
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { NavLink } from 'react-router-dom'
 
 import NavigationLinks from '../common/NavigationLinks'
 import MenuDrawer from './MenuDrawer'
@@ -12,60 +10,12 @@ import Logo from '../common/Logo'
 import ActionButton from '../common/ActionButton'
 
 import { useUI } from '../../hooks/useUI'
-import { useAuth } from '../../hooks/useAuth'
-import { useSubscribe } from '../../hooks/useSubscribe'
-import DashboardMenuLinks from '../common/DashboardMenuLinks'
-import Cookies from 'js-cookie'
+import useNavigation from '../../hooks/useNavigation'
 
 const Navigation = () => {
 	const { isDesktop } = useUI()
-	const { logoutUser, userData, currentUser, authStatus } = useAuth()
-	const { setSubscriptionDetails } = useSubscribe()
-
+	const { scrollPosition, buttonType, handleLogout } = useNavigation()
 	const { isOpen, onOpen, onClose } = useDisclosure()
-	const [scrollPosition, setScrollPosition] = useState(0)
-	const [buttonType, setButtonType] = useState({ text: '', path: '' })
-	const location = useLocation()
-	const navigate = useNavigate()
-
-	const handleLogout = async () => {
-		await logoutUser.mutateAsync()
-	}
-	const isLoggedIn = Cookies.get('authStatus') === 'true'
-
-	useEffect(() => {
-		switch (location.pathname) {
-			case '/':
-				setButtonType({
-					text: isLoggedIn ? 'Dashboard' : 'Get started',
-					path: isLoggedIn ? '/dashboard' : '/subscription',
-				})
-				break
-			case '/login':
-				setButtonType({ text: 'Get started', path: '/subscription' })
-				break
-			case '/subscription':
-				setButtonType({ text: 'Login', path: '/login' })
-				break
-			case '/dashboard':
-			case '/dashboard/account':
-			case '/dashboard/integrations':
-				setButtonType({ text: 'Logout', action: handleLogout, path: '/' })
-				break
-			default:
-				break
-		}
-
-		const calculateDistance = () => {
-			const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-			setScrollPosition(scrollTop)
-		}
-		const throttledCalculateDistance = throttle(calculateDistance, 200)
-		window.addEventListener('scroll', throttledCalculateDistance)
-		return () => {
-			window.removeEventListener('scroll', throttledCalculateDistance)
-		}
-	}, [scrollPosition, location.pathname])
 
 	return (
 		<Box
@@ -77,7 +27,7 @@ const Navigation = () => {
 			zIndex={15}
 			bgColor={scrollPosition > 100 ? 'brand.300' : 'transparent'}
 			backdropFilter='blur(1px)'
-			boxShadow={`0 2px 10px rgba(12, 1, 58, 0.5)`}
+			boxShadow='0 2px 10px rgba(12, 1, 58, 0.5)'
 		>
 			<Stack
 				direction='row'
@@ -98,13 +48,7 @@ const Navigation = () => {
 						</Button>
 					</HStack>
 				) : (
-					<HStack
-						spacing='7em'
-						color='brand.50'
-						w='100%'
-						justify='space-between'
-						// pl={location.pathname === '/dashboard' && isDesktop ? 200 : 0}
-					>
+					<HStack spacing='7em' color='brand.50' w='100%' justify='space-between'>
 						<Logo />
 						{location.pathname === '/' && <NavigationLinks />}
 						<ActionButton

@@ -4,7 +4,6 @@ import { Controller, useForm } from 'react-hook-form'
 import { loginInputs } from '../../data/formsConstants'
 
 const LoginFormInputs = ({ control, errors, authError }) => {
-	console.log(authError)
 	return (
 		<>
 			{loginInputs.map((input, index) => {

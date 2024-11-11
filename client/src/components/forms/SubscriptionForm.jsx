@@ -38,8 +38,8 @@ const SubscriptionForm = () => {
 		initialStep: 0,
 		count: formSteps.length,
 	})
-	const { currentUser, login, registerUser, logout, isLoading, verifyCode, authError } = useAuth()
-	const { saveSubscriptionDetails, payForSubscription, pricingOptions } = useSubscribe()
+	const { currentUser, authError } = useAuth()
+	const { pricingOptions } = useSubscribe()
 	const [plan, setPlan] = useState({ name: '', price: 0 })
 	const [selectedPlan, setSelectedPlan] = useState(plan.name)
 	const location = useLocation()
@@ -64,14 +64,11 @@ const SubscriptionForm = () => {
 		}
 	}, [location.search, pricingOptions])
 
-	const stepComponents = useMemo(
-		() => ({
-			0: <SignUp control={control} errors={errors} authError={authError.email} />,
-			1: <VerifyCode control={control} errors={errors} authError={authError.code} />,
-			2: <Details control={control} errors={errors} />,
-		}),
-		[control, errors, authError]
-	)
+	const stepComponents = {
+		0: <SignUp control={control} errors={errors} authError={authError.email} />,
+		1: <VerifyCode control={control} errors={errors} authError={authError.code} />,
+		2: <Details control={control} errors={errors} />,
+	}
 
 	return (
 		<Box
@@ -133,7 +130,6 @@ const SubscriptionForm = () => {
 							ariaLabel='Send Question'
 							priority={activeStep === 2 ? 'high' : 'low'}
 							type='button'
-							content={null}
 							isDisabled={false}
 							iconPosition='right'
 						/>

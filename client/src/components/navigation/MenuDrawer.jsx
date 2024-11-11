@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import {
 	Drawer,
 	DrawerBody,
@@ -8,61 +8,27 @@ import {
 	DrawerOverlay,
 	VStack,
 	Text,
-	Button,
 	Box,
 } from '@chakra-ui/react'
 import ActionButton from '../common/ActionButton'
 import { NavLink } from 'react-router-dom'
-import { useLocation, useNavigate } from 'react-router-dom'
 
 import NavigationLinks from '../common/NavigationLinks'
 import Logo from '../common/Logo'
-import Cookies from 'js-cookie'
 
 import { useUI } from '../../hooks/useUI'
-import { useAuth } from '../../hooks/useAuth'
+import useNavigation from '../../hooks/useNavigation'
 
 const MenuDrawer = ({ isOpen, onClose }) => {
 	const { isDesktop } = useUI()
-	const [buttonType, setButtonType] = useState({ text: '', path: '' })
-	const { logoutUser } = useAuth()
-
-	const location = useLocation()
-
-	const isLoggedIn = Cookies.get('authStatus') === 'true'
-
-	const handleLogout = async () => {
-		await logoutUser.mutateAsync()
-	}
+	const { buttonType } = useNavigation(onClose)
+	const { text, path, action } = buttonType
 
 	useEffect(() => {
-		isDesktop && onClose()
-		switch (location.pathname) {
-			case '/':
-				setButtonType({
-					text: isLoggedIn ? 'Dashboard' : 'Get started',
-					path: isLoggedIn ? '/dashboard' : '/subscription',
-					action: onClose,
-				})
-				break
-			case '/subscription':
-				setButtonType({ text: 'Login', path: '/login', action: onClose })
-				break
-			case '/login':
-				setButtonType({ text: 'Get started', path: '/subscription', action: onClose })
-				break
-			case '/dashboard':
-				setButtonType({
-					text: 'Logout',
-					path: '/',
-					action: () => {
-						handleLogout()
-						onClose()
-					},
-				})
-				break
+		if (isDesktop) {
+			onClose()
 		}
-	}, [location.pathname])
+	}, [isDesktop, onClose])
 
 	return (
 		<Drawer placement='right' onClose={onClose} isOpen={isOpen} size='full'>
@@ -85,20 +51,20 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 						<NavigationLinks onClose={!isDesktop && onClose} />
 						<Box w='100%' alignContent='center'>
 							<ActionButton
-								text={buttonType.text}
+								text={text}
 								icon={null}
-								action={buttonType.action}
+								action={action}
 								ariaLabel='Sign up'
 								priority='high'
 								type='button'
 								content={
-									buttonType.text !== 'Logout' ? (
-										<NavLink style={{ zIndex: 5 }} to={buttonType.path || null}>
-											{buttonType.text}
+									text !== 'Logout' ? (
+										<NavLink style={{ zIndex: 5 }} to={path || null}>
+											{text}
 										</NavLink>
 									) : (
 										<Text fontWeight={400} as='span' zIndex={5}>
-											{buttonType.text}
+											{text}
 										</Text>
 									)
 								}

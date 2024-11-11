@@ -39,7 +39,6 @@ const SubscriptionSelector = React.memo(
 			setValue
 		)
 
-		console.log('SubscriptionSelector is rendering')
 		return (
 			<FormControl isRequired isInvalid={errors.subscriptionPlan}>
 				<FormLabel>Select a plan:</FormLabel>

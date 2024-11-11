@@ -13,8 +13,6 @@ import {
 	HStack,
 	VStack,
 } from '@chakra-ui/react'
-import { useAuth } from '../../hooks/useAuth'
-import { useUI } from '../../hooks/useUI'
 import { Controller } from 'react-hook-form'
 
 const VerifyCode = ({ control, errors, authError }) => {

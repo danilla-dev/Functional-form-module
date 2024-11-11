@@ -8,7 +8,6 @@ const useRegister = () => {
 	const [loading, setLoading] = useState(false)
 	const [error, setError] = useState(null)
 	const { login } = useAuth()
-	console.log(error?.message)
 
 	const handleRegister = async userData => {
 		setLoading(true)
