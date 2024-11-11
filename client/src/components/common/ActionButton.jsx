@@ -28,6 +28,7 @@ const ActionButton = ({ text, icon, action, ariaLabel, priority, type, content, 
 
 	return (
 		<Button
+			className='action-button'
 			leftIcon={iconPosition === 'left' && icon}
 			rightIcon={iconPosition === 'right' && icon}
 			color={styles.color}

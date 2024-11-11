@@ -29,6 +29,7 @@ const BestFeatures = () => {
 			minW='100%'
 			bgColor='brand.200'
 			boxShadow='0 -4px 12px #A7A7A778, 0 4px 12px #a7a7a778'
+			className='best-features'
 		>
 			<Stack maxW={1400} w='100%' align='center'>
 				<HStack justify='space-evenly' align='center' flexDirection='row-reverse' pos='relative' pb='2em'>

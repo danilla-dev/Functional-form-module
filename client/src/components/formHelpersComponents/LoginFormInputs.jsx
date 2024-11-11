@@ -8,7 +8,7 @@ const LoginFormInputs = ({ control, errors, authError }) => {
 		<>
 			{loginInputs.map((input, index) => {
 				return (
-					<FormControl isRequired key={index} isInvalid={errors[input.name] || authError[input.name]}>
+					<FormControl isRequired key={index} isInvalid={errors[input.name] || authError[input.name]} className='login-input'>
 						<FormLabel> {input.label} </FormLabel>
 						<Controller
 							name={input.name}

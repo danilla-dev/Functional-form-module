@@ -28,6 +28,8 @@ const Navigation = () => {
 			bgColor={scrollPosition > 100 ? 'brand.300' : 'transparent'}
 			backdropFilter='blur(1px)'
 			boxShadow='0 2px 10px rgba(12, 1, 58, 0.5)'
+			className='navigation'
+			id='navigation'
 		>
 			<Stack
 				direction='row'

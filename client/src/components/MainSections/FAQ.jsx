@@ -19,7 +19,7 @@ const FAQ = () => {
 	const { isBase, isMobile, isDesktop, isTablet } = useUI()
 
 	return (
-		<Container m={0} p='3em 2em' pb='5em' centerContent minW='100%' position='relative'>
+		<Container m={0} p='3em 2em' pb='5em' centerContent minW='100%' position='relative' className='faq'>
 			<Stack w='100%' maxW={1100} color='brand.100' align='center'>
 				<Heading
 					as='h2'

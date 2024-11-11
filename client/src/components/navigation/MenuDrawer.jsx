@@ -31,7 +31,7 @@ const MenuDrawer = ({ isOpen, onClose }) => {
 	}, [isDesktop, onClose])
 
 	return (
-		<Drawer placement='right' onClose={onClose} isOpen={isOpen} size='full'>
+		<Drawer placement='right' onClose={onClose} isOpen={isOpen} size='full' className='menu-drawer'>
 			<DrawerOverlay />
 			<DrawerContent bgColor='brand.200'>
 				<DrawerCloseButton size='lg' fontSize='md' color='#3cbbc7' />

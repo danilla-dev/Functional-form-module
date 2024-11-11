@@ -81,7 +81,7 @@ const IntegrationForm = () => {
 	}, [userIntegrationsData])
 
 	return (
-		<HStack as='form' onSubmit={handleSubmit} spacing={3}>
+		<HStack as='form' onSubmit={handleSubmit} spacing={3} className='integration-add-form'>
 			<FormControl>
 				<HStack spacing={2}>
 					<Select
@@ -123,6 +123,9 @@ const Integrations = () => {
 			flexWrap='wrap'
 			justify={{ base: 'center', md: 'space-between' }}
 			spacing='2em'
+			className='integrations-section'
+			id='dashboard-integrations-section'
+			as='section'
 		>
 			<Card
 				border='1px solid'
@@ -132,13 +135,14 @@ const Integrations = () => {
 				p='1em'
 				borderRadius={10}
 				w='100%'
+				className='integrations-card'
 			>
-				<CardHeader>
+				<CardHeader className='integrations-card-header'>
 					<Heading size='md' color='accent.300'>
 						Integrations
 					</Heading>
 				</CardHeader>
-				<CardBody>
+				<CardBody className='integrations-card-header'>
 					<Stack spacing='1em'>
 						<HStack>
 							<Text minW={120} w='50%' maxW={300}>

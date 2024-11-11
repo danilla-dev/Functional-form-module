@@ -13,7 +13,7 @@ const MainDashboard = () => {
 	const normalDate = new Date(subscriptionEndDate)
 	const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
 	const formattedDate = normalDate.toLocaleDateString('pl-PL', options)
-	
+
 	const subWidgetContent = {
 		header: 'Subscription Details',
 		body: [
@@ -72,6 +72,9 @@ const MainDashboard = () => {
 			flexWrap='wrap'
 			justify={{ base: 'center', md: 'space-between' }}
 			spacing='2em'
+			as='section'
+			className='main-dashboard'
+			id='dashboard-main-dashboard-section'
 		>
 			<DashboardWidget content={subWidgetContent} />
 			<DashboardWidget content={communicationWidgetContent} />

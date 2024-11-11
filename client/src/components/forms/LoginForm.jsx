@@ -24,6 +24,8 @@ const LoginForm = () => {
 			bgColor='brand.300'
 			color='brand.100'
 			boxShadow='dark-lg'
+			className='login-form'
+			id='login-form'
 		>
 			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }} justify='center'>
 				{isTablet || isDesktop ? (

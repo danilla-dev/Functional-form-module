@@ -85,6 +85,8 @@ const SubscriptionForm = () => {
 			boxShadow='dark-lg'
 			onSubmit={handleSubmit(nextStep)}
 			overflow='hidden'
+			className='subscription-form'
+			id='subscription-form'
 		>
 			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }} justify='space-between'>
 				{isTablet || isDesktop ? (

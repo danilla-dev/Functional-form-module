@@ -14,6 +14,7 @@ const Footer = () => {
 			align='center'
 			justify='center'
 			className='footer'
+			id='footer'
 		>
 			<Logo />
 		</Stack>
