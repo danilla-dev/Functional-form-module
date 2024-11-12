@@ -73,3 +73,12 @@ export const handleSaveIntegration = async ({ data, postIntegration }) => {
 		console.error('Failed to save integration details:', error)
 	}
 }
+
+export const handleDeleteIntegration = async ({ platform, deleteIntegration }) => {
+	try {
+		const result = await deleteIntegration.mutateAsync(platform)
+		console.log('Integration deleted:', result)
+	} catch (error) {
+		console.error('Failed to delete integration:', error)
+	}
+}

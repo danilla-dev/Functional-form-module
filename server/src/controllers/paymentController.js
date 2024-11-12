@@ -13,7 +13,6 @@ export const postPayment = async (req, res) => {
 	}
 
 	const user = await User.findOne({ _id: req.userId })
-	console.log(user)
 	if (!user) {
 		return res.status(404).json({ error: 'User not found' })
 	}
@@ -56,7 +55,6 @@ export const postPayment = async (req, res) => {
 	}
 }
 export const updateDatabase = async (req, res) => {
-	console.log('Webhook received')
 	const sig = req.headers['stripe-signature']
 	const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 

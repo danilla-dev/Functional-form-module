@@ -3,10 +3,14 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useLocation } from 'react-router-dom'
 import { integrationOptions } from '../data/formsConstants'
-import { handleSaveIntegration } from '../handlers/subscriptionHandlers'
+import { handleSaveIntegration, handleDeleteIntegration } from '../handlers/subscriptionHandlers'
 
 import { pricingOptions } from '../data/mainSectionConstants'
 import { set } from 'lodash'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import { integrationSchema } from '../utils/YupSchemas'
 
 export const IntegrationsContext = createContext()
 
@@ -28,17 +32,45 @@ export const IntegrationsProvider = ({ children }) => {
 		platform,
 		apiKey,
 	}
+
+	const {
+		handleSubmit,
+		control,
+		formState: { errors },
+		reset,
+		setValue,
+		watch,
+	} = useForm({
+		resolver: yupResolver(integrationSchema),
+		defaultValues: {
+			platform: '',
+			apiKey: '',
+		},
+	})
+
 	const handleAddIntegration = newIntegration => {
 		setUserIntegrations([...userIntegrations, newIntegration.platform])
 	}
+	const handlePlatformChange = (value, field) => {
+		field.onChange(value)
+		setPlatform(value)
+	}
 
-	const handleSubmit = async e => {
-		e.preventDefault()
+	const handleApiKeyChange = (value, field) => {
+		field.onChange(value)
+		setApiKey(value)
+	}
+
+	const onSubmit = async e => {
+		console.log(platform, apiKey)
 		if (platform && apiKey) {
 			await handleSaveIntegration({ data, postIntegration })
 			setPlatform('')
 			setApiKey('')
 		}
+	}
+	const onDeletion = async platform => {
+		await handleDeleteIntegration({ platform, deleteIntegration })
 	}
 	const {
 		data: userIntegrationsData,
@@ -79,11 +111,27 @@ export const IntegrationsProvider = ({ children }) => {
 		},
 	})
 
+	const deleteIntegration = useMutation({
+		mutationFn: async platform => {
+			const response = await axios.delete(`${API_URL}/api/integrations`, {
+				data: { platform },
+				withCredentials: true,
+			})
+			return response.data
+		},
+		onSuccess: data => {
+			setUserIntegrations(prevData => prevData.filter(integration => integration !== data.integration))
+		},
+		onError: error => {
+			console.error('Error deleting integration:', error.response?.data?.message || error.message)
+		},
+	})
+
 	const providerValue = useMemo(
 		() => ({
 			handleAddIntegration,
 			integrations,
-			handleSubmit,
+			onSubmit,
 			platform,
 			setPlatform,
 			apiKey,
@@ -91,11 +139,19 @@ export const IntegrationsProvider = ({ children }) => {
 			userIntegrations,
 			postIntegration,
 			userIntegrationsRefetch,
+			handleSubmit,
+			control,
+			errors,
+			handlePlatformChange,
+			handleApiKeyChange,
+			setValue,
+			watch,
+			onDeletion,
 		}),
 		[
 			handleAddIntegration,
 			integrations,
-			handleSubmit,
+			onSubmit,
 			platform,
 			setPlatform,
 			apiKey,
@@ -103,6 +159,9 @@ export const IntegrationsProvider = ({ children }) => {
 			userIntegrations,
 			postIntegration,
 			userIntegrationsRefetch,
+			handleSubmit,
+			control,
+			errors,
 		]
 	)
 

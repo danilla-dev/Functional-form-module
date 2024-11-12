@@ -53,3 +53,38 @@ export const getUserIntegration = async (req, res) => {
 		res.status(500).json({ message: 'Error getting integrations', error: error.message })
 	}
 }
+
+export const deleteUserIntegration = async (req, res) => {
+	const userEmail = req.userEmail
+	const { platform } = req.body
+
+	if (!platform) {
+		return res.status(400).json({ message: 'Missing required fields' })
+	}
+
+	try {
+		const user = await User.findOne({ email: userEmail })
+		if (!user) {
+			return res.status(404).json({ message: 'User not found' })
+		}
+		const integration = await Integration.findOneAndDelete({ user: user._id, name: platform }).populate(
+			'user',
+			'integration'
+		)
+		if (!integration) {
+			return res.status(404).json({ message: 'Integration not found' })
+		}
+		await User.findByIdAndUpdate(
+			user._id,
+			{
+				$unset: { integration: integration._id },
+			},
+			{ new: true }
+		)
+		res.status(200).json({ message: 'Integration deleted', integration: integration.name })
+	} catch (error) {
+		console.error('Error deleting integration:', error)
+		console.log(error)
+		res.status(500).json({ message: 'Error deleting integration', error: error.message })
+	}
+}
