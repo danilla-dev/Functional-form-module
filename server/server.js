@@ -39,7 +39,7 @@ app.use(cookieParser())
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-app.use('/api/payment/webhook', express.raw({ type: 'application/json' }), updateDatabase)
+app.use('/webhook', express.raw({ type: 'application/json' }), updateDatabase)
 
 app.use(express.json())
 

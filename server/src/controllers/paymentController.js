@@ -2,6 +2,7 @@ import { User } from '../models/userModel.js'
 import { Subscription } from '../models/subModel.js'
 
 import Stripe from 'stripe'
+import e from 'express'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 
@@ -12,6 +13,7 @@ export const postPayment = async (req, res) => {
 	}
 
 	const user = await User.findOne({ _id: req.userId })
+	console.log(user)
 	if (!user) {
 		return res.status(404).json({ error: 'User not found' })
 	}
@@ -39,6 +41,7 @@ export const postPayment = async (req, res) => {
 			cancel_url: `${process.env.CLIENT_URL}/cancel`,
 			metadata: { user_id: user._id.toString(), sub_name: name.toString() },
 		})
+		console.log('Session Metadata:', { user_id: user._id.toString(), sub_name: name.toString() })
 		res.status(200).json({ url: session.url })
 	} catch (error) {
 		console.log(error)
@@ -48,7 +51,7 @@ export const postPayment = async (req, res) => {
 export const updateDatabase = async (req, res) => {
 	console.log('Webhook received')
 	const sig = req.headers['stripe-signature']
-	const endpointSecret = 'whsec_c056cf9a1c4190092b9687aa56a31d7c74207b835ef96a534a163036ce202445'
+	const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET
 
 	let event
 
@@ -59,7 +62,10 @@ export const updateDatabase = async (req, res) => {
 		return res.status(400).send(`Webhook Error: ${err.message}`)
 	}
 
-	if (event.type === 'checkout.session.completed') {
+	console.log('session before succsess', event.data.object)
+
+	if (event.type === 'payment_intent.succeeded') {
+		console.log(event.data)
 		const session = event.data.object
 		const userId = session.metadata.user_id
 		const subName = session.metadata.sub_name
@@ -83,7 +89,7 @@ export const updateDatabase = async (req, res) => {
 			return res.status(500).send('Webhook processing error')
 		}
 	} else {
-		console.log('error')
+		console.log(event.type)
 	}
 	res.status(400).send('Unhandled event')
 }

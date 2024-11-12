@@ -14,7 +14,7 @@ const LoginForm = () => {
 	return (
 		<Box
 			as='form'
-			maxW={800}
+			maxW={{ base: 350, md: 800 }}
 			w='90%'
 			maxH='100vh'
 			border='1px solid'
