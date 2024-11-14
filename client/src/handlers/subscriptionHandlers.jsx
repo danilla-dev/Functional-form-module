@@ -18,6 +18,7 @@ export const handleSendEmail = async ({ emailData }) => {
 }
 
 export const handleRegister = async ({ data, setActiveStep, registerUser }) => {
+	console.log(registerUser)
 	try {
 		const result = await registerUser.mutateAsync(data)
 		if (result.email) {
@@ -36,7 +37,6 @@ export const handleRegister = async ({ data, setActiveStep, registerUser }) => {
 
 export const handleVerifyCode = async ({ data, setActiveStep, verifyCode, currentUser }) => {
 	const { verificationCode } = data
-	console.log(verificationCode)
 	try {
 		const result = await verifyCode.mutateAsync({ verificationCode, email: currentUser.email })
 		if (result.status === 200) {
@@ -62,23 +62,5 @@ export const handlePayment = async ({ data, payForSubscription }) => {
 		console.log('Payment processed:', result)
 	} catch (error) {
 		console.error('Payment failed:', error)
-	}
-}
-export const handleSaveIntegration = async ({ data, postIntegration }) => {
-	console.log(postIntegration)
-	try {
-		const result = await postIntegration.mutateAsync(data)
-		console.log('Integration details saved:', result)
-	} catch (error) {
-		console.error('Failed to save integration details:', error)
-	}
-}
-
-export const handleDeleteIntegration = async ({ platform, deleteIntegration }) => {
-	try {
-		const result = await deleteIntegration.mutateAsync(platform)
-		console.log('Integration deleted:', result)
-	} catch (error) {
-		console.error('Failed to delete integration:', error)
 	}
 }

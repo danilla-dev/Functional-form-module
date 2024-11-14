@@ -77,7 +77,7 @@ const IntegrationCard = ({ integration }) => {
 }
 
 const IntegrationContainer = () => {
-	const { integrations, userIntegrationsIsLoading, userIntegrations } = useIntegration()
+	const { userIntegrationsIsLoading, userIntegrations } = useIntegration()
 
 	if (userIntegrationsIsLoading) {
 		return <Text>Loading...</Text>
@@ -111,14 +111,12 @@ const IntegrationForm = () => {
 		handleSubmit,
 		control,
 		errors,
-		handleApiKeyChange,
-		handlePlatformChange,
-		watch,
 	} = useIntegration()
 
 	useEffect(() => {
 		userIntegrationsRefetch()
 	}, [userIntegrationsData])
+
 
 	return (
 		<HStack as='form' onSubmit={handleSubmit(onSubmit)} spacing={3} className='integration-add-form'>
@@ -130,14 +128,19 @@ const IntegrationForm = () => {
 						render={({ field }) => {
 							return (
 								<Select
+									{...field}
 									size='lg'
 									placeholder='Select platform'
-									onChange={e => {
-										handlePlatformChange(e.target.value, field)
-									}}
+									// onChange={e => {
+									// 	handlePlatformChange(e.target.value, field)
+									// }}
 								>
 									{integrationOptions.map(option => (
-										<option key={option.value} value={option.value} disabled={userIntegrations.includes(option.value)}>
+										<option
+											key={option.value}
+											value={option.value}
+											disabled={userIntegrations.some(intergration => intergration.value === option.value)}
+										>
 											{option.text}
 										</option>
 									))}
@@ -155,9 +158,9 @@ const IntegrationForm = () => {
 							<Input
 								{...field}
 								placeholder='API Key'
-								onChange={e => {
-									handleApiKeyChange(e.target.value, field)
-								}}
+								// onChange={e => {
+								// 	handleApiKeyChange(e.target.value, field)
+								// }}
 								size='lg'
 							/>
 						)}

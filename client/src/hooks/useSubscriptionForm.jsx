@@ -3,25 +3,27 @@ import { useEffect, useState, useCallback } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { useSubscribe } from '../hooks/useSubscribe'
 import { handleRegister, handleVerifyCode, handleSaveDetails, handlePayment } from '../handlers/subscriptionHandlers'
+import Cookies from 'js-cookie'
+const isLoggedIn = Cookies.get('authStatus') === 'true'
 
 const useSubscriptionForm = (activeStep, setActiveStep, plan) => {
-	const { currentUser, registerUser, verifyCode } = useAuth()
+	const { currentUser, registerUser, verifyCode, userData } = useAuth()
 	const { saveSubscriptionDetails, payForSubscription } = useSubscribe()
 
 	const [errors, setErrors] = useState(null)
 
+	console.log('currentUser', currentUser)
+
 	useEffect(() => {
-		if (currentUser.email !== '') {
+		if (isLoggedIn) {
 			const { isVerified, subscription } = currentUser
 			if (!isVerified) {
 				setActiveStep(1)
 			} else if (isVerified && subscription === null) {
 				setActiveStep(2)
 			}
-		} else {
-			setActiveStep(0)
 		}
-	}, [currentUser, setActiveStep])
+	}, [userData, setActiveStep])
 
 	const nextStep = useCallback(
 		async data => {

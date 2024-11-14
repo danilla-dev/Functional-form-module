@@ -15,7 +15,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { color } from 'framer-motion'
 import { size } from 'lodash'
 
-
 const theme = extendTheme({
 	// Ustawienia typografii
 	colors: {
@@ -125,26 +124,26 @@ const theme = extendTheme({
 		}),
 	},
 })
-const queryClient = new QueryClient()
+export const queryClient = new QueryClient()
 
 const mode = import.meta.env.VITE_MODE
 
 createRoot(document.getElementById('root')).render(
-	<StrictMode>
-		<ChakraProvider theme={theme}>
-			<QueryClientProvider client={queryClient}>
-				<Router>
-					<AuthProvider>
-						<SubscriptionProvider>
-							<IntegrationsProvider>
-								<UIProvider>
-									<App />
-								</UIProvider>
-							</IntegrationsProvider>
-						</SubscriptionProvider>
-					</AuthProvider>
-				</Router>
-			</QueryClientProvider>
-		</ChakraProvider>
-	</StrictMode>
+	// <StrictMode>
+	<ChakraProvider theme={theme}>
+		<QueryClientProvider client={queryClient}>
+			<Router>
+				<AuthProvider>
+					<SubscriptionProvider>
+						<IntegrationsProvider>
+							<UIProvider>
+								<App />
+							</UIProvider>
+						</IntegrationsProvider>
+					</SubscriptionProvider>
+				</AuthProvider>
+			</Router>
+		</QueryClientProvider>
+	</ChakraProvider>
+	// </StrictMode>
 )

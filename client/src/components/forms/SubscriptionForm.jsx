@@ -24,6 +24,10 @@ import { useSubscribe } from '../../hooks/useSubscribe'
 import useSubscriptionForm from '../../hooks/useSubscriptionForm'
 import { formSteps } from '../../data/formsConstants'
 
+import Cookies from 'js-cookie'
+
+const isLoggedIn = Cookies.get('authStatus') === 'true'
+
 const MotionBox = motion(Box)
 const animationVariants = {
 	initial: { opacity: 0, x: 100 },
@@ -62,7 +66,7 @@ const SubscriptionForm = () => {
 			const selectedPlan = pricingOptions.find(option => option.name.toLowerCase() === planName)
 			if (selectedPlan) setPlan(selectedPlan)
 		}
-	}, [location.search, pricingOptions])
+	}, [location.search])
 
 	const stepComponents = {
 		0: <SignUp control={control} errors={errors} authError={authError.email} />,
@@ -105,7 +109,7 @@ const SubscriptionForm = () => {
 				>
 					{currentUser && (
 						<Text fontSize='md' p='0.5em 0'>
-							{currentUser.email}
+							{isLoggedIn && currentUser.email}
 						</Text>
 					)}
 					<Stepper index={activeStep} />

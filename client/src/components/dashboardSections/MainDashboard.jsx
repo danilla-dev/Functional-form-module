@@ -8,7 +8,9 @@ const MainDashboard = () => {
 	const { subscriptionDetails, subData } = useSubscribe()
 	const { currentUser, authIsLoading, refetch: userRefetch } = useAuth()
 
-	const { details, name, subscriptionEndDate, paymentStatus } = subData || subscriptionDetails
+	console.log(subData, subscriptionDetails)
+
+	const { details, name, subscriptionEndDate, paymentStatus } = subData
 
 	const normalDate = new Date(subscriptionEndDate)
 	const options = { year: 'numeric', month: 'numeric', day: 'numeric' }

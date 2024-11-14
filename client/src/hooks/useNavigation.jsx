@@ -15,6 +15,7 @@ const useNavigation = onClose => {
 
 	const handleLogout = async () => {
 		await logoutUser.mutateAsync()
+		console.log('Logged out')
 		onClose()
 	}
 

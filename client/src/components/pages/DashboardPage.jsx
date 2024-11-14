@@ -1,6 +1,4 @@
 import React, { useEffect } from 'react'
-import { useAuth } from '../../hooks/useAuth'
-import { useSubscribe } from '../../hooks/useSubscribe'
 import { Routes, Route } from 'react-router-dom'
 
 import {
@@ -34,9 +32,21 @@ import Integrations from '../dashboardSections/Integrations'
 import Footer from '../Footer'
 import DashboardMenuLinks from '../common/DashboardMenuLinks'
 import { useUI } from '../../hooks/useUI'
+import { useAuth } from '../../hooks/useAuth'
+import { useSubscribe } from '../../hooks/useSubscribe'
 
 const DashboardPage = () => {
 	const { isDesktop } = useUI()
+	const { authIsLoading } = useAuth()
+	const { subIsLoading } = useSubscribe()
+
+	if (subIsLoading) {
+		return (
+			<Center h='100vh' w='100vw' bgColor='brand.300'>
+				<Spinner size='xl' color='brand.100' />
+			</Center>
+		)
+	}
 
 	return (
 		<Grid templateColumns={{ base: '1fr', lg: '160px 1fr' }} templateRows={'75px 1fr 100px'} className='dashboard-page'>
