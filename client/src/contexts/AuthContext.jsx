@@ -4,6 +4,13 @@ import axios from '../utils/axiosConfig'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { set } from 'lodash'
 import Cookies from 'js-cookie'
+import {
+	getAuthStatus,
+	loginUser as loginUserService,
+	registerUser as registerUserService,
+	logoutUser as logoutUserService,
+	verifyCode as verifyCodeService,
+} from '../services/authServices'
 
 export const AuthContext = createContext()
 
@@ -27,8 +34,7 @@ export const AuthProvider = ({ children }) => {
 		queryKey: ['authStatus'],
 		queryFn: async () => {
 			const token = new URLSearchParams(location.search).get('token')
-			const response = await axios.get(`${API_URL}/api/auth/status?token=${token}`, { withCredentials: true })
-			return response.data.user
+			return await getAuthStatus(token)
 		},
 		refetchOnWindowFocus: false,
 		enabled:
@@ -36,61 +42,43 @@ export const AuthProvider = ({ children }) => {
 			(location.pathname === '/dashboard' || location.pathname === '/login' || location.pathname === '/subscription'),
 		staleTime: 1000 * 60 * 2,
 		cacheTime: 1000 * 60 * 5,
-		onSuccess: data => {
-			setCurrentUser(data || { email: '', isVerified: false, subscription: null, activeSub: null })
-		},
 	})
 
 	const loginUser = useMutation({
-		mutationFn: async credentials => {
-			try {
-				const response = await axios.post(`${API_URL}/api/auth/login`, credentials, { withCredentials: true })
-				return response.data
-			} catch (error) {
-				const errorType = error.response?.data?.type
-				const errorMessage = error.response?.data?.message
-				setAuthError(prev => {
-					const updatedErrors = { email: '', code: '', password: '' }
-					updatedErrors[errorType] = errorMessage
-					return updatedErrors
-				})
-				throw new Error('Error logging in: ' + errorMessage)
-			}
-		},
+		mutationFn: loginUserService,
 		onSuccess: data => {
 			localStorage.setItem('currentUser', JSON.stringify(data))
 			setCurrentUser(data)
 			setAuthError({ email: '', password: '', code: '' })
 		},
 		onError: error => {
-			console.error(error.message)
+			const errorType = error.response?.data?.type
+			const errorMessage = error.response?.data?.message
+			setAuthError(prev => {
+				const updatedErrors = { email: '', code: '', password: '' }
+				updatedErrors[errorType] = errorMessage
+				return updatedErrors
+			})
+			throw new Error('Error logging in: ' + errorMessage)
 		},
 	})
 
 	const registerUser = useMutation({
-		mutationFn: async credentials => {
-			try {
-				const response = await axios.post(`${API_URL}/api/auth/register`, credentials, { withCredentials: true })
-				return response.data
-			} catch (error) {
-				const errorMessage = error.response?.data?.message
-				throw new Error('Error registering user: ' + errorMessage)
-			}
-		},
+		mutationFn: registerUserService,
 		onSuccess: data => {
-			localStorage.setItem('currentUser', JSON.stringify(data))
+			// localStorage.setItem('currentUser', JSON.stringify(data))
 			setCurrentUser(data)
 			refetch()
 		},
 		onError: error => {
-			setAuthError(prev => ({ ...prev, email: error.message }))
+			const errorMessage = error.response?.data?.message
+			setAuthError(prev => ({ ...prev, email: errorMessage }))
+			throw new Error('Error registering user: ' + errorMessage)
 		},
 	})
 
 	const logoutUser = useMutation({
-		mutationFn: async () => {
-			await axios.post(`${API_URL}/api/auth/logout`, {}, { withCredentials: true })
-		},
+		mutationFn: logoutUserService,
 		onSuccess: () => {
 			localStorage.removeItem('currentUser')
 			navigate('/')
@@ -101,19 +89,13 @@ export const AuthProvider = ({ children }) => {
 	})
 
 	const verifyCode = useMutation({
-		mutationFn: async credentials => {
-			try {
-				const response = await axios.post(`${API_URL}/api/auth/verify`, credentials, { withCredentials: true })
-				return response
-			} catch (error) {
-				throw new Error('Error verifying code: ' + error.response?.data?.message)
-			}
-		},
+		mutationFn: verifyCodeService,
 		onSuccess: () => {
 			refetch()
 		},
 		onError: error => {
-			setAuthError(prev => ({ ...prev, code: error.message }))
+			const errorMessage = error.response?.data?.message
+			setAuthError(prev => ({ ...prev, code: errorMessage }))
 		},
 	})
 

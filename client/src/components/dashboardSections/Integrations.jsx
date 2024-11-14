@@ -77,7 +77,11 @@ const IntegrationCard = ({ integration }) => {
 }
 
 const IntegrationContainer = () => {
-	const { integrations } = useIntegration()
+	const { integrations, userIntegrationsIsLoading, userIntegrations } = useIntegration()
+
+	if (userIntegrationsIsLoading) {
+		return <Text>Loading...</Text>
+	}
 
 	return (
 		<HStack
@@ -90,7 +94,7 @@ const IntegrationContainer = () => {
 			mr='auto'
 			flexWrap='wrap'
 		>
-			{integrations.map(integration => (
+			{userIntegrations.map(integration => (
 				<IntegrationCard key={integration.value} integration={integration} />
 			))}
 		</HStack>

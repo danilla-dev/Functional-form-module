@@ -4,6 +4,11 @@ import axios from '../utils/axiosConfig'
 import { useLocation } from 'react-router-dom'
 import { pricingOptions } from '../data/mainSectionConstants'
 import { set } from 'lodash'
+import {
+	getSubscriptionDetails,
+	saveSubscriptionDetails as saveSubscriptionDetailsService,
+	payForSubscription as payForSubscriptionService,
+} from '../services/subServices'
 export const SubscriptionContext = createContext()
 
 const mode = import.meta.env.VITE_MODE
@@ -23,26 +28,15 @@ export const SubscriptionProvider = ({ children }) => {
 		refetch,
 	} = useQuery({
 		queryKey: ['subData'],
-		queryFn: async () => {
-			const response = await axios.get(`${API_URL}/api/sub/details`, {
-				withCredentials: true,
-			})
-			return response.data.subscription
-		},
+		queryFn: getSubscriptionDetails,
 		refetchOnWindowFocus: false,
 		enabled: location.pathname === '/dashboard',
 		staleTime: 1000 * 60 * 2,
 		cacheTime: 1000 * 60 * 5,
-		// onSuccess: data => {
 	})
 
 	const saveSubscriptionDetails = useMutation({
-		mutationFn: async credentials => {
-			const response = await axios.post(`${API_URL}/api/sub/details`, credentials, {
-				withCredentials: true,
-			})
-			return response.data
-		},
+		mutationFn: saveSubscriptionDetailsService,
 		onSuccess: data => {},
 		onError: error => {
 			console.error('Error setting subscription details:', error.response?.data?.message || error.message)
@@ -50,12 +44,7 @@ export const SubscriptionProvider = ({ children }) => {
 	})
 
 	const payForSubscription = useMutation({
-		mutationFn: async credentials => {
-			const response = await axios.post(`${API_URL}/api/payment/`, credentials, {
-				withCredentials: true,
-			})
-			return response.data
-		},
+		mutationFn: payForSubscriptionService,
 		onSuccess: async paymentIntent => {
 			const { url } = paymentIntent
 			window.location.href = url
@@ -69,23 +58,12 @@ export const SubscriptionProvider = ({ children }) => {
 		() => ({
 			saveSubscriptionDetails,
 			payForSubscription,
-			// subscriptionDetails,
-			// setSubscriptionDetails,
 			subIsLoading,
 			refetch,
 			pricingOptions,
 			subData,
 		}),
-		[
-			saveSubscriptionDetails,
-			payForSubscription,
-			// subscriptionDetails,
-			// setSubscriptionDetails,
-			subIsLoading,
-			refetch,
-			pricingOptions,
-			subData,
-		]
+		[saveSubscriptionDetails, payForSubscription, subIsLoading, refetch, pricingOptions, subData]
 	)
 
 	return <SubscriptionContext.Provider value={providerValue}>{children}</SubscriptionContext.Provider>

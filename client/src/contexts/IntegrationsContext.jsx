@@ -12,6 +12,12 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { integrationSchema } from '../utils/YupSchemas'
 
+import {
+	getUserIntegrations,
+	postIntegration as postIntegrationService,
+	deleteIntegration as deleteIntegrationService,
+} from '../services/integrationServices'
+
 export const IntegrationsContext = createContext()
 
 const mode = import.meta.env.VITE_MODE
@@ -26,7 +32,7 @@ export const IntegrationsProvider = ({ children }) => {
 	const [apiKey, setApiKey] = useState('')
 	const location = useLocation()
 
-	const integrations = integrationOptions.filter(option => userIntegrations.includes(option.value))
+	let integrations = []
 
 	const data = {
 		platform,
@@ -72,6 +78,7 @@ export const IntegrationsProvider = ({ children }) => {
 	const onDeletion = async platform => {
 		await handleDeleteIntegration({ platform, deleteIntegration })
 	}
+
 	const {
 		data: userIntegrationsData,
 		isLoading: userIntegrationsIsLoading,
@@ -80,29 +87,28 @@ export const IntegrationsProvider = ({ children }) => {
 		refetch: userIntegrationsRefetch,
 	} = useQuery({
 		queryKey: ['userIntegrations'],
-		queryFn: async () => {
-			const response = await axios.get(`${API_URL}/api/integrations`, {
-				withCredentials: true,
-			})
-			setUserIntegrations(response.data.integrations)
-			return response.data.integrations
-		},
+		queryFn: getUserIntegrations,
 		refetchOnWindowFocus: false,
 		enabled: location.pathname === '/dashboard',
 		staleTime: 1000 * 60 * 2,
 		cacheTime: 1000 * 60 * 5,
 		onSuccess: data => {
+			console.log('Success:', data)
 			setUserIntegrations(data)
+		},
+		onError: error => {
+			console.log('Error:', error)
+			console.error('Error getting user integrations:', error.response?.data?.message || error.message)
 		},
 	})
 
+	useEffect(() => {
+		const filteredIntegrations = integrationOptions.filter(option => userIntegrationsData?.includes(option.value))
+		setUserIntegrations(filteredIntegrations)
+	}, [userIntegrationsIsLoading])
+
 	const postIntegration = useMutation({
-		mutationFn: async credentials => {
-			const response = await axios.post(`${API_URL}/api/integrations`, credentials, {
-				withCredentials: true,
-			})
-			return response.data
-		},
+		mutationFn: postIntegrationService,
 		onSuccess: data => {
 			setUserIntegrations(prevData => [...prevData, data.integration])
 		},
@@ -112,13 +118,7 @@ export const IntegrationsProvider = ({ children }) => {
 	})
 
 	const deleteIntegration = useMutation({
-		mutationFn: async platform => {
-			const response = await axios.delete(`${API_URL}/api/integrations`, {
-				data: { platform },
-				withCredentials: true,
-			})
-			return response.data
-		},
+		mutationFn: deleteIntegrationService,
 		onSuccess: data => {
 			setUserIntegrations(prevData => prevData.filter(integration => integration !== data.integration))
 		},
@@ -147,6 +147,8 @@ export const IntegrationsProvider = ({ children }) => {
 			setValue,
 			watch,
 			onDeletion,
+			userIntegrationsIsLoading,
+			// userIntegrationsData,
 		}),
 		[
 			handleAddIntegration,
@@ -162,6 +164,8 @@ export const IntegrationsProvider = ({ children }) => {
 			handleSubmit,
 			control,
 			errors,
+			userIntegrationsIsLoading,
+			// userIntegrationsData,
 		]
 	)
 
