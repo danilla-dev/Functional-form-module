@@ -8,7 +8,7 @@ const MainDashboard = () => {
 	const { subscriptionDetails, subData } = useSubscribe()
 	const { currentUser, authIsLoading, refetch: userRefetch } = useAuth()
 
-	const { details, name, subscriptionEndDate } = subData || subscriptionDetails
+	const { details, name, subscriptionEndDate, paymentStatus } = subData || subscriptionDetails
 
 	const normalDate = new Date(subscriptionEndDate)
 	const options = { year: 'numeric', month: 'numeric', day: 'numeric' }
@@ -26,7 +26,7 @@ const MainDashboard = () => {
 			{
 				status: {
 					description: 'Subscription Status',
-					value: currentUser.activeSub ? 'Active' : 'Inactive',
+					value: paymentStatus === 'paid' ? 'Active' : 'Inactive',
 				},
 			},
 			{

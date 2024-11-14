@@ -26,7 +26,7 @@ const DashboardMenuLinks = ({ onClose }) => {
 				className='dashboard-aside-menu-links'
 			>
 				{dashboardNavigationLinks.map((link, index) => (
-					<NavLink key={index} to={link.link} zIndex={20} className={({ isActive }) => isActive && 'active'}>
+					<NavLink key={index} to={link.link} zIndex={20} className={({ isActive }) => isActive && 'active'} end>
 						<Text fontSize='xl' _hover={{ color: 'accent.200' }} transition={'0.2s'}>
 							{link.name}
 						</Text>

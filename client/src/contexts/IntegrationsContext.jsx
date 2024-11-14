@@ -3,10 +3,20 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import axios from '../utils/axiosConfig'
 import { useLocation } from 'react-router-dom'
 import { integrationOptions } from '../data/formsConstants'
-import { handleSaveIntegration } from '../handlers/subscriptionHandlers'
+import { handleSaveIntegration, handleDeleteIntegration } from '../handlers/subscriptionHandlers'
 
 import { pricingOptions } from '../data/mainSectionConstants'
 import { set } from 'lodash'
+import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import { integrationSchema } from '../utils/YupSchemas'
+
+import {
+	getUserIntegrations,
+	postIntegration as postIntegrationService,
+	deleteIntegration as deleteIntegrationService,
+} from '../services/integrationServices'
 
 export const IntegrationsContext = createContext()
 
@@ -22,24 +32,53 @@ export const IntegrationsProvider = ({ children }) => {
 	const [apiKey, setApiKey] = useState('')
 	const location = useLocation()
 
-	const integrations = integrationOptions.filter(option => userIntegrations.includes(option.value))
+	let integrations = []
 
 	const data = {
 		platform,
 		apiKey,
 	}
+
+	const {
+		handleSubmit,
+		control,
+		formState: { errors },
+		reset,
+		setValue,
+		watch,
+	} = useForm({
+		resolver: yupResolver(integrationSchema),
+		defaultValues: {
+			platform: '',
+			apiKey: '',
+		},
+	})
+
 	const handleAddIntegration = newIntegration => {
 		setUserIntegrations([...userIntegrations, newIntegration.platform])
 	}
+	const handlePlatformChange = (value, field) => {
+		field.onChange(value)
+		setPlatform(value)
+	}
 
-	const handleSubmit = async e => {
-		e.preventDefault()
+	const handleApiKeyChange = (value, field) => {
+		field.onChange(value)
+		setApiKey(value)
+	}
+
+	const onSubmit = async e => {
+		console.log(platform, apiKey)
 		if (platform && apiKey) {
 			await handleSaveIntegration({ data, postIntegration })
 			setPlatform('')
 			setApiKey('')
 		}
 	}
+	const onDeletion = async platform => {
+		await handleDeleteIntegration({ platform, deleteIntegration })
+	}
+
 	const {
 		data: userIntegrationsData,
 		isLoading: userIntegrationsIsLoading,
@@ -48,29 +87,28 @@ export const IntegrationsProvider = ({ children }) => {
 		refetch: userIntegrationsRefetch,
 	} = useQuery({
 		queryKey: ['userIntegrations'],
-		queryFn: async () => {
-			const response = await axios.get(`${API_URL}/api/integrations`, {
-				withCredentials: true,
-			})
-			setUserIntegrations(response.data.integrations)
-			return response.data.integrations
-		},
+		queryFn: getUserIntegrations,
 		refetchOnWindowFocus: false,
 		enabled: location.pathname === '/dashboard',
 		staleTime: 1000 * 60 * 2,
 		cacheTime: 1000 * 60 * 5,
 		onSuccess: data => {
+			console.log('Success:', data)
 			setUserIntegrations(data)
+		},
+		onError: error => {
+			console.log('Error:', error)
+			console.error('Error getting user integrations:', error.response?.data?.message || error.message)
 		},
 	})
 
+	useEffect(() => {
+		const filteredIntegrations = integrationOptions.filter(option => userIntegrationsData?.includes(option.value))
+		setUserIntegrations(filteredIntegrations)
+	}, [userIntegrationsIsLoading])
+
 	const postIntegration = useMutation({
-		mutationFn: async credentials => {
-			const response = await axios.post(`${API_URL}/api/integrations`, credentials, {
-				withCredentials: true,
-			})
-			return response.data
-		},
+		mutationFn: postIntegrationService,
 		onSuccess: data => {
 			setUserIntegrations(prevData => [...prevData, data.integration])
 		},
@@ -79,11 +117,21 @@ export const IntegrationsProvider = ({ children }) => {
 		},
 	})
 
+	const deleteIntegration = useMutation({
+		mutationFn: deleteIntegrationService,
+		onSuccess: data => {
+			setUserIntegrations(prevData => prevData.filter(integration => integration !== data.integration))
+		},
+		onError: error => {
+			console.error('Error deleting integration:', error.response?.data?.message || error.message)
+		},
+	})
+
 	const providerValue = useMemo(
 		() => ({
 			handleAddIntegration,
 			integrations,
-			handleSubmit,
+			onSubmit,
 			platform,
 			setPlatform,
 			apiKey,
@@ -91,11 +139,21 @@ export const IntegrationsProvider = ({ children }) => {
 			userIntegrations,
 			postIntegration,
 			userIntegrationsRefetch,
+			handleSubmit,
+			control,
+			errors,
+			handlePlatformChange,
+			handleApiKeyChange,
+			setValue,
+			watch,
+			onDeletion,
+			userIntegrationsIsLoading,
+			// userIntegrationsData,
 		}),
 		[
 			handleAddIntegration,
 			integrations,
-			handleSubmit,
+			onSubmit,
 			platform,
 			setPlatform,
 			apiKey,
@@ -103,6 +161,11 @@ export const IntegrationsProvider = ({ children }) => {
 			userIntegrations,
 			postIntegration,
 			userIntegrationsRefetch,
+			handleSubmit,
+			control,
+			errors,
+			userIntegrationsIsLoading,
+			// userIntegrationsData,
 		]
 	)
 

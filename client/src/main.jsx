@@ -74,6 +74,7 @@ const theme = extendTheme({
 				color: 'black',
 				bg: 'white',
 				lineHeight: 'base',
+				maxWidth: '100vw',
 			},
 			'*::placeholder': {
 				color: 'gray.400',

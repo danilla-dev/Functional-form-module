@@ -23,7 +23,7 @@ const SubscriptionFormPage = () => {
 
 	return (
 		<Grid gridTemplateRows={'9fr 1fr'} className='signup-page'>
-			<GridItem rowStart={1} rowEnd={2} w='100vw'>
+			<GridItem rowStart={1} rowEnd={2} maxW='100vw'>
 				<Center
 					as='section'
 					id='subscription-form-page'

@@ -42,6 +42,10 @@ const userSchema = new Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'Integration',
 	},
+	stripeCustomerId: {
+		type: String,
+		required: false,
+	},
 	createdAt: {
 		type: Date,
 		default: Date.now,

@@ -28,7 +28,7 @@ const corsOptions = {
 app.use((req, res, next) => {
 	res.setHeader(
 		'Content-Security-Policy',
-		"default-src 'self'; connect-src 'self' https://functional-form-module-1.onrender.com; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://upload.wikimedia.org;"
+		"default-src 'self'; connect-src 'self' https://functional-form-module-1.onrender.com https://api.emailjs.com https://aiagent.petroweb.pl; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' https://upload.wikimedia.org;"
 	)
 	next()
 })
@@ -39,7 +39,7 @@ app.use(cookieParser())
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-app.use('/api/payment/webhook', express.raw({ type: 'application/json' }), updateDatabase)
+app.use('/webhook', express.raw({ type: 'application/json' }), updateDatabase)
 
 app.use(express.json())
 

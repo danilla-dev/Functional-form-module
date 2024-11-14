@@ -25,7 +25,6 @@ const useNavigation = onClose => {
 					text: isLoggedIn ? 'Dashboard' : 'Get started',
 					action: onClose,
 					path: isLoggedIn ? '/dashboard' : '/subscription',
-					action: onClose,
 				})
 				break
 			case '/login':
@@ -37,7 +36,7 @@ const useNavigation = onClose => {
 			case '/dashboard':
 			case '/dashboard/account':
 			case '/dashboard/integrations':
-				setButtonType({ text: 'Logout', action: handleLogout, path: '/', action: handleLogout })
+				setButtonType({ text: 'Logout', action: handleLogout, path: '/' })
 				break
 			default:
 				break

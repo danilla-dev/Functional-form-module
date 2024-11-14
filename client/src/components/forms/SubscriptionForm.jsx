@@ -73,7 +73,7 @@ const SubscriptionForm = () => {
 	return (
 		<Box
 			as='form'
-			maxW={800}
+			maxW={{ base: 450, md: 800 }}
 			w='90%'
 			maxH='100vh'
 			border='1px solid'
@@ -88,13 +88,21 @@ const SubscriptionForm = () => {
 			className='subscription-form'
 			id='subscription-form'
 		>
-			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }} justify='space-between'>
+			<Stack spacing='2em' direction={{ sm: 'column', md: 'row' }} justify='space-between' flex={1}>
 				{isTablet || isDesktop ? (
 					<Box w='50%' h='100%' m='auto 0'>
 						<Image h='100%' w='auto' src={registerImg} />
 					</Box>
 				) : null}
-				<Stack w={isDesktop || isTablet ? '50%' : '100%'} maxW={400} align='center' justify='space-between'>
+				<Stack
+					w={isDesktop || isTablet ? '50%' : '100%'}
+					maxW={400}
+					align='center'
+					justify='space-between'
+					className='signup-form-context-container'
+					ml={'auto'}
+					mr={'auto'}
+				>
 					{currentUser && (
 						<Text fontSize='md' p='0.5em 0'>
 							{currentUser.email}
