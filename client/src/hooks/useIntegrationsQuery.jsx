@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useLocation } from 'react-router-dom'
 import { getUserIntegrations } from '../services/integrationServices'
@@ -7,6 +8,7 @@ import { useState, useEffect } from 'react'
 export const useIntegrationsQuery = () => {
 	const [userIntegrations, setUserIntegrations] = useState([])
 	const location = useLocation()
+	console.log('USER INTEGRATIONS', userIntegrations)
 
 	const {
 		data: userIntegrationsData,
@@ -31,10 +33,39 @@ export const useIntegrationsQuery = () => {
 		},
 	})
 
+	const integrationsWithKeys = useMemo(() => {
+		if (!userIntegrationsData) return []
+
+		const integrationsPlatforms = userIntegrationsData.map(integration => integration.platform)
+		const filteredIntegrations = integrationOptions.filter(option => integrationsPlatforms.includes(option.value))
+
+		return filteredIntegrations.map(integration => {
+			const apiKey = userIntegrationsData.find(
+				integrationData => integrationData.platform === integration.value
+			)?.apiKey
+			return { ...integration, apiKey }
+		})
+	}, [userIntegrationsData])
+
 	useEffect(() => {
-		const filteredIntegrations = integrationOptions.filter(option => userIntegrationsData?.includes(option.value))
-		setUserIntegrations(filteredIntegrations)
-	}, [userIntegrationsIsLoading, userIntegrationsData])
+		console.log('INTEGRATIONS WITH KEYS:', integrationsWithKeys)
+		setUserIntegrations(integrationsWithKeys)
+	}, [integrationsWithKeys])
+
+	// useEffect(() => {
+	// 	console.log('USER INTEGRATIONS DATA:', userIntegrationsData)
+	// 	const integrationsPlatforms = userIntegrationsData?.map(integration => integration.platform)
+	// 	const filteredIntegrations = integrationOptions.filter(option => {
+	// 		return integrationsPlatforms?.includes(option.value)
+	// 	})
+	// 	console.log('FILTERED INTEGRATIONS:', filteredIntegrations)
+	// 	const integrationsWithKeys = filteredIntegrations.map(integration => {
+	// 		const apiKey = userIntegrationsData.find(integrationData => integrationData.platform === integration.value)
+	// 		return { ...integration, apiKey: apiKey.apiKey }
+	// 	})
+	// 	console.log('INTEGRATIONS WITH KEYS:', integrationsWithKeys)
+	// 	setUserIntegrations(integrationsWithKeys)
+	// }, [userIntegrationsIsLoading, userIntegrationsData])
 
 	return {
 		userIntegrations,

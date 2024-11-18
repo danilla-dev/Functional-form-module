@@ -21,6 +21,7 @@ export const deleteIntegration = async platform => {
 	})
 	return response.data
 }
+
 // const {
 // 	data: userIntegrationsData,
 // 	isLoading: userIntegrationsIsLoading,

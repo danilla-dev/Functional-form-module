@@ -11,7 +11,8 @@ export const useIntegrationsMutations = setUserIntegrations => {
 		mutationFn: postIntegrationService,
 		onSuccess: data => {
 			console.log('Integration created:', data)
-			const newIntegration = integrationOptions.find(option => option.value === data.integration)
+			let newIntegration = integrationOptions.find(option => option.value === data.integration)
+			newIntegration = { ...newIntegration, apiKey: data.integrationKey }
 			setUserIntegrations(prevData => [...prevData, newIntegration])
 		},
 		onError: error => {

@@ -27,7 +27,9 @@ export const postUserIntegration = async (req, res) => {
 			},
 			{ new: true }
 		)
-		res.status(201).json({ message: 'Integration created', integration: newIntegration.name })
+		res
+			.status(201)
+			.json({ message: 'Integration created', integration: newIntegration.name, integrationKey: newIntegration.apiKey })
 	} catch (error) {
 		console.error('Error creating integration:', error)
 		console.log(error)
@@ -46,7 +48,10 @@ export const getUserIntegration = async (req, res) => {
 		if (!integrations) {
 			return res.status(404).json({ message: 'Integrations not found' })
 		}
-		res.status(200).json({ integrations: integrations.map(integration => integration.name) })
+		const integrationsList = integrations.map(integration => {
+			return { platform: integration.name, apiKey: integration.apiKey }
+		})
+		res.status(200).json({ integrations: integrationsList })
 	} catch (error) {
 		console.error('Error getting user integrations:', error)
 		console.log(error)
