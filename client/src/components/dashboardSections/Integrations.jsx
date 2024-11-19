@@ -16,6 +16,7 @@ import {
 	CardBody,
 	FormLabel,
 	FormErrorMessage,
+	useDisclosure,
 } from '@chakra-ui/react'
 import { useIntegration } from '../../hooks/useIntegration'
 import { CheckIcon } from '@chakra-ui/icons'
@@ -23,6 +24,9 @@ import { integrationOptions } from '../../data/formsConstants'
 import { motion } from 'framer-motion'
 import { FaCircleXmark } from 'react-icons/fa6'
 import { HiMiniXMark } from 'react-icons/hi2'
+import IntegrationsModal from '../integrationsModal/IntegrationsModal'
+import { TiInfoLarge } from 'react-icons/ti'
+import { useIntegrationsModal } from '../../hooks/useIntegrationsModal'
 
 import { useForm, Controller } from 'react-hook-form'
 import { set } from 'lodash'
@@ -35,6 +39,9 @@ const animationVariants = {
 }
 const IntegrationCard = ({ integration }) => {
 	const { onDeletion } = useIntegration()
+	const { toggleShowKey, toggleEdit, saveKey } = useIntegrationsModal({ integration })
+	const { onOpen, isOpen, onClose } = useDisclosure()
+
 	return (
 		<MotionBox
 			key={integration.value}
@@ -45,6 +52,7 @@ const IntegrationCard = ({ integration }) => {
 			transition={{ duration: 0.3 }}
 		>
 			<VStack w={{ base: 110, md: 140 }} justify='space-between' position='relative'>
+				<IntegrationsModal integration={integration} isOpen={isOpen} onClose={onClose} />
 				<Button
 					aria-label='button'
 					position='absolute'
@@ -53,10 +61,11 @@ const IntegrationCard = ({ integration }) => {
 					p={0}
 					bgColor='brand.300'
 					color='brand.100'
-					_hover={{ bgColor: 'brand.300', border: 'transparent', color: 'accent.400' }}
-					onClick={() => onDeletion(integration.value)}
+					borderRadius={'0px 5px 0px 5px'}
+					_hover={{ bgColor: 'brand.300', border: 'transparent', color: 'accent.200' }}
+					onClick={onOpen}
 				>
-					<HiMiniXMark />
+					<TiInfoLarge />
 				</Button>
 				<Box
 					bgColor='brand.100'
@@ -102,21 +111,12 @@ const IntegrationContainer = () => {
 }
 
 const IntegrationForm = () => {
-	const {} = useIntegration()
-	const {
-		userIntegrations,
-		userIntegrationsRefetch,
-		userIntegrationsData,
-		onSubmit,
-		handleSubmit,
-		control,
-		errors,
-	} = useIntegration()
+	const { userIntegrations, userIntegrationsRefetch, userIntegrationsData, onSubmit, handleSubmit, control, errors } =
+		useIntegration()
 
 	useEffect(() => {
 		userIntegrationsRefetch()
 	}, [userIntegrationsData])
-
 
 	return (
 		<HStack as='form' onSubmit={handleSubmit(onSubmit)} spacing={3} className='integration-add-form'>

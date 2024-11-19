@@ -93,3 +93,43 @@ export const deleteUserIntegration = async (req, res) => {
 		res.status(500).json({ message: 'Error deleting integration', error: error.message })
 	}
 }
+
+export const updateApiKey = async (req, res) => {
+	const userEmail = req.userEmail
+	const { platform, apiKey } = req.body
+
+	console.log('updateApiKey:', req.body)
+
+	if (!platform || !apiKey) {
+		return res.status(400).json({ message: 'Missing required fields' })
+	}
+
+	try {
+		const user = await User.findOne({
+			email: userEmail,
+		})
+		if (!user) {
+			return res.status(404).json({ message: 'User not found' })
+		}
+		const integration = await Integration.findOneAndUpdate(
+			{
+				user: user._id,
+				name: platform,
+			},
+			{
+				$set: { apiKey: apiKey },
+			},
+			{ new: true }
+		)
+		if (!integration) {
+			return res.status(404).json({ message: 'Integration not found' })
+		}
+		res
+			.status(200)
+			.json({ message: 'Integration updated', integration: integration.name, integrationKey: integration.apiKey })
+	} catch {
+		console.error('Error updating integration:', error)
+		console.log(error)
+		res.status(500).json({ message: 'Error updating integration', error: error.message })
+	}
+}

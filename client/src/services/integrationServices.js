@@ -22,6 +22,11 @@ export const deleteIntegration = async platform => {
 	return response.data
 }
 
+export const updateIntegration = async credentials => {
+	const response = await axios.patch(`${API_URL}/api/integrations`, credentials, { withCredentials: true })
+	console.log('updateIntegration response:', response.data)
+	return response.data
+}
 // const {
 // 	data: userIntegrationsData,
 // 	isLoading: userIntegrationsIsLoading,

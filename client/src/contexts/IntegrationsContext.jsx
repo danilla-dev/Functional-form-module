@@ -17,8 +17,14 @@ export const IntegrationsProvider = ({ children }) => {
 		setUserIntegrations,
 	} = useIntegrationsQuery()
 
-	const { postIntegration, deleteIntegration, handleSaveIntegration, handleDeleteIntegration } =
-		useIntegrationsMutations(setUserIntegrations)
+	const {
+		postIntegration,
+		deleteIntegration,
+		handleSaveIntegration,
+		handleDeleteIntegration,
+		handleUpdateApiKey,
+		updateApiKey,
+	} = useIntegrationsMutations(setUserIntegrations)
 
 	const {
 		handleSubmit,
@@ -59,6 +65,8 @@ export const IntegrationsProvider = ({ children }) => {
 			watch,
 			onDeletion,
 			userIntegrationsIsLoading,
+			handleUpdateApiKey,
+			updateApiKey,
 		}),
 		[
 			onSubmit,
