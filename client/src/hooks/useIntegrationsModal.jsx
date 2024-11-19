@@ -3,7 +3,7 @@ import { useDisclosure } from '@chakra-ui/react'
 import { useIntegration } from './useIntegration'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { integrationSchema } from '../utils/yupSchemas'
+import { integrationSchema } from '../utils/YupSchemas'
 export const useIntegrationsModal = ({ integration }) => {
 	const [isKeyVisible, setIsKeyVisible] = useState()
 	const [isEditing, setIsEditing] = useState()
