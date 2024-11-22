@@ -47,3 +47,13 @@ export const integrationSchema = yup.object().shape({
 		)
 		.required('API Key is required'),
 })
+
+export const editApiKeySchema = yup.object().shape({
+	apiKey: yup
+		.string()
+		.matches(
+			/^[a-zA-Z][a-zA-Z0-9._-]{19,39}$/,
+			'API Key must be 20-40 characters long, start with a letter, and can include letters, numbers, ".", "-", "_"'
+		)
+		.required('API Key is required'),
+})

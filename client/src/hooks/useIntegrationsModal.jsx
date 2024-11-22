@@ -21,8 +21,7 @@ export const useIntegrationsModal = ({ integration }) => {
 		},
 	})
 
-	console.log('isKeyVisible', isKeyVisible)
-	console.log('isEditing', isEditing)
+	console.log('integration.apiKey', integration.apiKey)
 
 	const toggleShowKey = () => {
 		setIsKeyVisible(prevState => !prevState)
@@ -34,9 +33,7 @@ export const useIntegrationsModal = ({ integration }) => {
 	}
 
 	const saveKey = async data => {
-		console.log('saveKey')
-		console.log('formData', data)
-		await handleUpdateApiKey({ data: { apiKey: '123123123123123', platform: integration.value }, updateApiKey })
+		await handleUpdateApiKey({ data: { apiKey: data.apiKey, platform: integration.value }, updateApiKey })
 		toggleEdit()
 	}
 
