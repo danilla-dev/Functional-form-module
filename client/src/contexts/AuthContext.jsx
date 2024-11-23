@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 		registerUser,
 		logoutUser,
 		verifyCode,
+		registerLoading, /// TO DELETION
 		authError: authMutationError,
 	} = useAuthMutations(setCurrentUser, navigate)
 
@@ -24,6 +25,7 @@ export const AuthProvider = ({ children }) => {
 		if (userData) {
 			setCurrentUser(userData)
 		}
+		console.log('REGISTER STATUS', registerLoading)
 	}, [userData, authIsLoading])
 
 	const providerValue = useMemo(
@@ -36,8 +38,19 @@ export const AuthProvider = ({ children }) => {
 			verifyCode,
 			authRefetch,
 			authError: authMutationError,
+			registerLoading, // TO DELETION
 		}),
-		[userData, loginUser, logoutUser, registerUser, authIsLoading, verifyCode, authRefetch, authMutationError]
+		[
+			userData,
+			loginUser,
+			logoutUser,
+			registerUser,
+			authIsLoading,
+			verifyCode,
+			authRefetch,
+			authMutationError,
+			registerLoading,
+		]
 	)
 
 	return <AuthContext.Provider value={providerValue}>{children}</AuthContext.Provider>

@@ -18,7 +18,6 @@ export const handleSendEmail = async ({ emailData }) => {
 }
 
 export const handleRegister = async ({ data, setActiveStep, registerUser }) => {
-	console.log(registerUser)
 	try {
 		const result = await registerUser.mutateAsync(data)
 		if (result.email) {
@@ -27,8 +26,8 @@ export const handleRegister = async ({ data, setActiveStep, registerUser }) => {
 				activateToken: result.activateToken,
 				verificationCode: result.verificationCode,
 			}
-			await handleSendEmail({ emailData })
 			setActiveStep(1)
+			await handleSendEmail({ emailData })
 		}
 	} catch (error) {
 		console.error('Registration failed:', error)

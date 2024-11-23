@@ -1,5 +1,19 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react'
-import { Text, Box, useSteps, ButtonGroup, Image, Stack, useToast } from '@chakra-ui/react'
+import {
+	Text,
+	Box,
+	useSteps,
+	ButtonGroup,
+	Image,
+	Stack,
+	useToast,
+	Center,
+	Spinner,
+	Alert,
+	AlertIcon,
+	AlertTitle,
+	AlertDescription,
+} from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import { useUI } from '../../hooks/useUI'
 import SignUp from '../formSteps/SignUp'
@@ -18,7 +32,7 @@ import { detailsSchema, signUpSchema, validationSchema } from '../../utils/YupSc
 import { handleRegister, handleVerifyCode, handleSaveDetails, handlePayment } from '../../handlers/subscriptionHandlers'
 
 import { useLocation, useNavigate } from 'react-router-dom'
-import useRegister from '../../hooks/useRegister'
+// import useRegister from '../../hooks/useRegister'
 import { useAuth } from '../../hooks/useAuth'
 import { useSubscribe } from '../../hooks/useSubscribe'
 import useSubscriptionForm from '../../hooks/useSubscriptionForm'
@@ -42,7 +56,7 @@ const SubscriptionForm = () => {
 		initialStep: 0,
 		count: formSteps.length,
 	})
-	const { currentUser, authError } = useAuth()
+	const { currentUser, authError, registerLoading } = useAuth()
 	const { pricingOptions } = useSubscribe()
 	const [plan, setPlan] = useState({ name: '', price: 0 })
 	const [selectedPlan, setSelectedPlan] = useState(plan.name)
@@ -107,13 +121,9 @@ const SubscriptionForm = () => {
 					ml={'auto'}
 					mr={'auto'}
 				>
-					{currentUser && (
-						<Text fontSize='md' p='0.5em 0'>
-							{isLoggedIn && currentUser.email}
-						</Text>
-					)}
 					<Stepper index={activeStep} />
-					{activeStep === 0 && (
+
+					{activeStep === 0 && registerLoading === 'idle' && (
 						<SubscriptionSelector
 							selectedPlan={selectedPlan}
 							setSelectedPlan={setSelectedPlan}
@@ -129,9 +139,11 @@ const SubscriptionForm = () => {
 						w='100%'
 						key={activeStep}
 						variants={animationVariants}
+						b
 						initial='initial'
 						animate='animate'
 						exit='exit'
+						h='100%'
 						transition={{ duration: 0.3 }}
 					>
 						{stepComponents[activeStep]}

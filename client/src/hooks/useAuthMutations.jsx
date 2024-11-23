@@ -62,5 +62,6 @@ export const useAuthMutations = (setCurrentUser, navigate) => {
 		logoutUser,
 		verifyCode,
 		authError,
+		registerLoading: registerUser.status, // TO DELETION
 	}
 }

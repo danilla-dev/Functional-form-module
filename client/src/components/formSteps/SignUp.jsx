@@ -8,10 +8,17 @@ import {
 	List,
 	ListItem,
 	UnorderedList,
+	Center,
+	Spinner,
+	Alert,
+	AlertIcon,
+	AlertTitle,
+	AlertDescription,
 } from '@chakra-ui/react'
 import { WarningTwoIcon, CheckCircleIcon } from '@chakra-ui/icons'
 import { Controller } from 'react-hook-form'
 import { signupInputs, passwordRequirements } from '../../data/formsConstants'
+import { useAuth } from '../../hooks/useAuth'
 
 const PasswordHelperText = ({ value }) => (
 	<FormHelperText color='brand.100' textAlign='left'>
@@ -53,8 +60,16 @@ const FormInput = ({ input, control, errors, authError }) => (
 )
 
 const SignUp = ({ control, errors, authError }) => {
+	const { registerLoading } = useAuth()
+	if (registerLoading === 'pending')
+		return (
+			<Center>
+				<Spinner size='xl' />
+			</Center>
+		)
 	return (
 		<>
+			
 			{signupInputs.map((input, index) => (
 				<FormInput key={index} input={input} control={control} errors={errors} authError={authError} />
 			))}
