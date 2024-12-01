@@ -9,12 +9,6 @@ import { useSubscribe } from '../../hooks/useSubscribe'
 import Cookies from 'js-cookie'
 
 const SubscriptionFormPage = () => {
-	const location = useLocation()
-	const navigate = useNavigate()
-	const { subscriptionDetails } = useSubscribe()
-	const { currentUser, authIsLoading, userData } = useAuth()
-	const isLoggedIn = Cookies.get('authStatus') === 'true'
-
 	return (
 		<Grid gridTemplateRows={'9fr 1fr'} className='signup-page'>
 			<GridItem rowStart={1} rowEnd={2} maxW='100vw'>
