@@ -26,12 +26,11 @@ export const AuthProvider = ({ children }) => {
 		if (userData) {
 			setCurrentUser(userData)
 		}
-		console.log('REGISTER STATUS', registerLoading)
 	}, [userData, authIsLoading])
 
 	const providerValue = useMemo(
 		() => ({
-			currentUser: userData,
+			currentUser: userData || currentUser,
 			loginUser,
 			logoutUser,
 			registerUser,
