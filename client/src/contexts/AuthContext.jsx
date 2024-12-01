@@ -17,7 +17,8 @@ export const AuthProvider = ({ children }) => {
 		registerUser,
 		logoutUser,
 		verifyCode,
-		registerLoading, /// TO DELETION
+		registerLoading,
+		verifyCodeLoading,
 		authError: authMutationError,
 	} = useAuthMutations(setCurrentUser, navigate)
 
@@ -38,7 +39,8 @@ export const AuthProvider = ({ children }) => {
 			verifyCode,
 			authRefetch,
 			authError: authMutationError,
-			registerLoading, // TO DELETION
+			registerLoading,
+			verifyCodeLoading,
 		}),
 		[
 			userData,
@@ -50,6 +52,7 @@ export const AuthProvider = ({ children }) => {
 			authRefetch,
 			authMutationError,
 			registerLoading,
+			verifyCodeLoading,
 		]
 	)
 
