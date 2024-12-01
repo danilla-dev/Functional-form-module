@@ -14,26 +14,9 @@ import { Controller } from 'react-hook-form'
 import { checkboxesContext, selectsContext } from '../../data/formsConstants'
 import { useAuth } from '../../hooks/useAuth'
 import { useToast } from '@chakra-ui/react'
+import { useToastNotification } from '../../hooks/useToastNotification'
 
 const Checkboxes = ({ control, errors }) => {
-	const { verifyCodeLoading } = useAuth()
-	const toast = useToast()
-
-	const showToast = () => {
-		toast({
-			title: 'Success',
-			description: 'Code verified successfully',
-			status: 'success',
-			duration: 9000,
-			isClosable: true,
-		})
-	}
-	useEffect(() => {
-		if (verifyCodeLoading === 'success') {
-			showToast()
-		}
-	}, [verifyCodeLoading])
-
 	return (
 		<FormControl isRequired isInvalid={!!errors.preferences}>
 			<FormLabel fontSize={['sm', 'md']}>Assist preferences:</FormLabel>
@@ -86,6 +69,9 @@ const Selects = ({ control, errors }) => {
 }
 
 const Details = ({ control, errors }) => {
+	const { verifyCodeLoading } = useAuth()
+
+	useToastNotification(verifyCodeLoading, 'Success', 'Code verified successfully')
 	return (
 		<Box w='100%' h='100%'>
 			<Checkboxes control={control} errors={errors} />

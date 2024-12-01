@@ -20,26 +20,11 @@ import {
 import { Controller } from 'react-hook-form'
 import { useAuth } from '../../hooks/useAuth'
 import { useToast } from '@chakra-ui/react'
+import { useToastNotification } from '../../hooks/useToastNotification'
 
 const VerifyCode = ({ control, errors, authError }) => {
 	const { registerLoading } = useAuth()
-	const toast = useToast()
-
-	const showToast = () => {
-		toast({
-			title: 'Success',
-			description: 'You have successfully registered',
-			status: 'success',
-			duration: 9000,
-			isClosable: true,
-		})
-	}
-	useEffect(() => {
-		if (registerLoading === 'success') {
-			showToast()
-		}
-	}, [registerLoading])
-
+	useToastNotification(registerLoading, 'Success', 'You have successfully registered')
 	return (
 		<VStack h='100%' w='100%' justify='space-evenly'>
 			<FormControl isInvalid={errors.verificationCode || authError}>
