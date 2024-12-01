@@ -17,6 +17,8 @@ import {
 	FormLabel,
 	FormErrorMessage,
 	useDisclosure,
+	Center,
+	Spinner,
 } from '@chakra-ui/react'
 import { useIntegration } from '../../hooks/useIntegration'
 import { CheckIcon } from '@chakra-ui/icons'
@@ -30,6 +32,7 @@ import { useIntegrationsModal } from '../../hooks/useIntegrationsModal'
 
 import { useForm, Controller } from 'react-hook-form'
 import { set } from 'lodash'
+import { useToastNotification } from '../../hooks/useToastNotification'
 
 const MotionBox = motion(Box)
 const animationVariants = {
@@ -86,10 +89,24 @@ const IntegrationCard = ({ integration }) => {
 }
 
 const IntegrationContainer = () => {
-	const { userIntegrationsIsLoading, userIntegrations } = useIntegration()
+	const {
+		userIntegrationsIsLoading,
+		userIntegrations,
+		postIntegrationLoading,
+		deleteIntegrationLoading,
+		updateApiKeyLoading,
+	} = useIntegration()
+
+	useToastNotification(postIntegrationLoading, 'Success', 'Integration added successfully')
+	useToastNotification(updateApiKeyLoading, 'Success', 'Api key updated successfully')
+	useToastNotification(deleteIntegrationLoading, 'Success', 'Integration deleted successfully')
 
 	if (userIntegrationsIsLoading) {
-		return <Text>Loading...</Text>
+		return (
+			<Center>
+				<Spinner size='xl' />
+			</Center>
+		)
 	}
 
 	return (

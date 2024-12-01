@@ -81,5 +81,8 @@ export const useIntegrationsMutations = setUserIntegrations => {
 		handleSaveIntegration,
 		handleDeleteIntegration,
 		handleUpdateApiKey,
+		postIntegrationLoading: postIntegration.status,
+		updateApiKeyLoading: updateApiKey.status,
+		deleteIntegrationLoading: deleteIntegration.status,
 	}
 }

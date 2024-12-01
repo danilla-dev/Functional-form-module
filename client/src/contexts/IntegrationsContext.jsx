@@ -24,6 +24,9 @@ export const IntegrationsProvider = ({ children }) => {
 		handleDeleteIntegration,
 		handleUpdateApiKey,
 		updateApiKey,
+		postIntegrationLoading,
+		updateApiKeyLoading,
+		deleteIntegrationLoading,
 	} = useIntegrationsMutations(setUserIntegrations)
 
 	const {
@@ -67,6 +70,9 @@ export const IntegrationsProvider = ({ children }) => {
 			userIntegrationsIsLoading,
 			handleUpdateApiKey,
 			updateApiKey,
+			postIntegrationLoading,
+			updateApiKeyLoading,
+			deleteIntegrationLoading,
 		}),
 		[
 			onSubmit,
@@ -78,6 +84,9 @@ export const IntegrationsProvider = ({ children }) => {
 			errors,
 			userIntegrationsIsLoading,
 			onDeletion,
+			postIntegrationLoading,
+			updateApiKeyLoading,
+			deleteIntegrationLoading,
 		]
 	)
 

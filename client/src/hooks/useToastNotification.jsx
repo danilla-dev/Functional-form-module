@@ -10,7 +10,7 @@ export const useToastNotification = (status, title, description) => {
 				title: title,
 				description: description,
 				status: 'success',
-				duration: 9000,
+				duration: 2500,
 				isClosable: true,
 			})
 		}
