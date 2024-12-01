@@ -17,10 +17,10 @@ const useSubscriptionForm = (activeStep, setActiveStep, plan) => {
 	useEffect(() => {
 		if (isLoggedIn) {
 			const { isVerified, subscription } = currentUser
-			if (!isVerified) {
-				setActiveStep(1)
-			} else if (isVerified && subscription === null) {
+			if (isVerified) {
 				setActiveStep(2)
+			} else if (!isVerified) {
+				setActiveStep(1)
 			}
 		}
 	}, [userData, setActiveStep])

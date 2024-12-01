@@ -16,6 +16,8 @@ import {
 	AlertIcon,
 	AlertTitle,
 	AlertDescription,
+	Center,
+	Spinner,
 } from '@chakra-ui/react'
 import { Controller } from 'react-hook-form'
 import { useAuth } from '../../hooks/useAuth'
@@ -23,8 +25,16 @@ import { useToast } from '@chakra-ui/react'
 import { useToastNotification } from '../../hooks/useToastNotification'
 
 const VerifyCode = ({ control, errors, authError }) => {
-	const { registerLoading } = useAuth()
+	const { registerLoading, verifyCodeLoading } = useAuth()
 	useToastNotification(registerLoading, 'Success', 'You have successfully registered')
+
+	if (verifyCodeLoading === 'pending')
+		return (
+			<Center>
+				<Spinner size='xl' />
+			</Center>
+		)
+
 	return (
 		<VStack h='100%' w='100%' justify='space-evenly'>
 			<FormControl isInvalid={errors.verificationCode || authError}>
