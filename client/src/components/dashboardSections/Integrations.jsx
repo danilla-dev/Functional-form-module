@@ -137,7 +137,7 @@ const IntegrationForm = () => {
 
 	return (
 		<HStack as='form' onSubmit={handleSubmit(onSubmit)} spacing={3} className='integration-add-form'>
-			<HStack spacing={2} w='100%'>
+			<Stack spacing={2} w='100%' direction={{ base: 'column', md: 'row' }}>
 				<FormControl isRequired isInvalid={errors.platform}>
 					<Controller
 						name='platform'
@@ -178,7 +178,7 @@ const IntegrationForm = () => {
 				>
 					<CheckIcon color='accent.200' />
 				</Button>
-			</HStack>
+			</Stack>
 		</HStack>
 	)
 }
