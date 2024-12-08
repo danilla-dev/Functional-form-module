@@ -38,7 +38,10 @@ const IntegrationsModal = ({ integration, isOpen, onClose }) => {
 					</Button>
 					<Button
 						variant='ghost'
-						onClick={onDeletion}
+						onClick={() => {
+							onDeletion(integration.value)
+							onClose()
+						}}
 						color='brand.100'
 						_hover={{
 							color: 'brand.300',

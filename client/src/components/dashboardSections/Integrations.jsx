@@ -144,14 +144,7 @@ const IntegrationForm = () => {
 						control={control}
 						render={({ field }) => {
 							return (
-								<Select
-									{...field}
-									size='lg'
-									placeholder='Select platform'
-									// onChange={e => {
-									// 	handlePlatformChange(e.target.value, field)
-									// }}
-								>
+								<Select {...field} size='lg' placeholder='Select platform'>
 									{integrationOptions.map(option => (
 										<option
 											key={option.value}
@@ -171,16 +164,7 @@ const IntegrationForm = () => {
 					<Controller
 						name='apiKey'
 						control={control}
-						render={({ field }) => (
-							<Input
-								{...field}
-								placeholder='API Key'
-								// onChange={e => {
-								// 	handleApiKeyChange(e.target.value, field)
-								// }}
-								size='lg'
-							/>
-						)}
+						render={({ field }) => <Input {...field} placeholder='API Key' size='lg' />}
 					/>
 					{errors.apiKey && <FormErrorMessage style={{ color: 'red' }}>{errors.apiKey.message}</FormErrorMessage>}
 				</FormControl>

@@ -34,7 +34,7 @@ const DashboardWidget = ({ content }) => {
 			</CardHeader>
 			<CardBody w='100%' className='dashboard-widget-body'>
 				<Stack divider={dividerVisibility && <StackDivider />} spacing='1em'>
-					{body.map((element, index) => {
+					{body?.map((element, index) => {
 						const key = Object.keys(element)[0]
 						return (
 							<Box key={index}>
