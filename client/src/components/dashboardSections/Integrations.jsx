@@ -24,14 +24,10 @@ import { useIntegration } from '../../hooks/useIntegration'
 import { CheckIcon } from '@chakra-ui/icons'
 import { integrationOptions } from '../../data/formsConstants'
 import { motion } from 'framer-motion'
-import { FaCircleXmark } from 'react-icons/fa6'
-import { HiMiniXMark } from 'react-icons/hi2'
 import IntegrationsModal from '../integrationsModal/IntegrationsModal'
 import { TiInfoLarge } from 'react-icons/ti'
-import { useIntegrationsModal } from '../../hooks/useIntegrationsModal'
 
 import { useForm, Controller } from 'react-hook-form'
-import { set } from 'lodash'
 import { useToastNotification } from '../../hooks/useToastNotification'
 
 const MotionBox = motion(Box)
@@ -41,8 +37,6 @@ const animationVariants = {
 	exit: { opacity: 0, x: -100 },
 }
 const IntegrationCard = ({ integration }) => {
-	const { onDeletion } = useIntegration()
-	const { toggleShowKey, toggleEdit, saveKey } = useIntegrationsModal({ integration })
 	const { onOpen, isOpen, onClose } = useDisclosure()
 
 	return (
